@@ -1,0 +1,417 @@
+{
+  "api_name": "v2.logistics.get_operating_hours",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.get_operating_hours endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/get_operating_hours",
+  "query_arrays": {},
+  "response_key": "repsonse",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "instant_operating_hour": {
+        "additionalProperties": true,
+        "properties": {
+          "friday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "monday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "public_holiday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "saturday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "sunday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "thursday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "tuesday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "wednesday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "regular_operating_hour": {
+        "additionalProperties": true,
+        "properties": {
+          "friday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "monday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "public_holiday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "saturday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "sunday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "thursday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "tuesday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "wednesday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "shop_collection_operating_hour": {
+        "additionalProperties": true,
+        "properties": {
+          "friday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "monday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "public_holiday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "saturday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "sunday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "thursday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "tuesday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "wednesday": {
+            "additionalProperties": true,
+            "properties": {
+              "end_time": {
+                "type": "string"
+              },
+              "start_time": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "special_operating_hour": {
+        "additionalProperties": true,
+        "properties": {
+          "end_date": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "operating_hours": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "date": {
+                  "type": "string"
+                },
+                "enable": {
+                  "type": "boolean"
+                },
+                "end_time": {
+                  "type": "string"
+                },
+                "start_time": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "start_date": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_get_operating_hours"
+}

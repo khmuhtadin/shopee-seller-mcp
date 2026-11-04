@@ -1,0 +1,249 @@
+{
+  "api_name": "v2.logistics.get_booking_shipping_document_data_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.get_booking_shipping_document_data_info endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "booking_sn": {
+        "type": "string"
+      },
+      "recipient_address_info": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "key": {
+              "enum": [
+                "name",
+                "phone",
+                "full_address",
+                "town",
+                "district",
+                "city",
+                "state",
+                "region",
+                "zipcode"
+              ],
+              "type": "string"
+            },
+            "style": {
+              "additionalProperties": false,
+              "properties": {
+                "font_size": {
+                  "pattern": "^(?:[1-9]|[1-9][0-9]|10[0-8])$",
+                  "type": "string",
+                  "x-wire-int64": true
+                },
+                "h_align": {
+                  "enum": [
+                    "left",
+                    "center",
+                    "right"
+                  ],
+                  "type": "string"
+                },
+                "image_width": {
+                  "maximum": 30,
+                  "minimum": 0.1,
+                  "type": "number"
+                },
+                "text_color": {
+                  "pattern": "^#[0-9A-Fa-f]{6}$",
+                  "type": "string"
+                },
+                "text_style": {
+                  "items": {
+                    "enum": [
+                      "bold",
+                      "italic"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                }
+              },
+              "required": [],
+              "type": "object"
+            }
+          },
+          "required": [
+            "key"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "booking_sn"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/get_booking_shipping_document_data_info",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "recipient_address_info": {
+        "additionalProperties": true,
+        "properties": {
+          "image": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "shipping_document_info": {
+        "additionalProperties": true,
+        "properties": {
+          "booking_weight": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "create_date_ymd_sl": {
+            "type": "string"
+          },
+          "deliver_area": {
+            "type": "string"
+          },
+          "delivery_hub": {
+            "type": "string"
+          },
+          "destination_base_code": {
+            "type": "string"
+          },
+          "dg_specific_type": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "ec_booking_no": {
+            "type": "string"
+          },
+          "is_lm_dg_bool": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "logistics_channel_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "manufacturers_name": {
+            "type": "string"
+          },
+          "manufacturers_website": {
+            "type": "string"
+          },
+          "pickup_hub": {
+            "type": "string"
+          },
+          "recipient_sort_code": {
+            "additionalProperties": true,
+            "properties": {
+              "first_recipient_sort_code": {
+                "type": "string"
+              },
+              "second_recipient_sort_code": {
+                "type": "string"
+              },
+              "third_recipient_sort_code": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "return_sort_code": {
+            "additionalProperties": true,
+            "properties": {
+              "return_first_sort_code": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "sender_sort_code": {
+            "additionalProperties": true,
+            "properties": {
+              "first_sender_sort_code": {
+                "type": "string"
+              },
+              "second_sender_sort_code": {
+                "type": "string"
+              },
+              "third_sender_sort_code": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "shipping_carrier": {
+            "type": "string"
+          },
+          "spx_receive_station": {
+            "additionalProperties": true,
+            "properties": {
+              "spx_first_receive_station": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "spx_sub_district": {
+            "type": "string"
+          },
+          "tracking_number": {
+            "type": "string"
+          },
+          "zone": {
+            "type": "string"
+          },
+          "zone_code": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_get_booking_shipping_document_data_info"
+}

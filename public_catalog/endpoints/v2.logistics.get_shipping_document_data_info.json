@@ -1,0 +1,549 @@
+{
+  "api_name": "v2.logistics.get_shipping_document_data_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.get_shipping_document_data_info endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "order_sn": {
+        "type": "string"
+      },
+      "package_number": {
+        "type": "string"
+      },
+      "recipient_address_info": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "key": {
+              "enum": [
+                "name",
+                "phone",
+                "full_address",
+                "town",
+                "district",
+                "city",
+                "state",
+                "region",
+                "zipcode"
+              ],
+              "type": "string"
+            },
+            "style": {
+              "additionalProperties": false,
+              "properties": {
+                "font_size": {
+                  "maximum": 108,
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "h_align": {
+                  "enum": [
+                    "left",
+                    "center",
+                    "right"
+                  ],
+                  "type": "string"
+                },
+                "image_width": {
+                  "maximum": 30,
+                  "minimum": 0.1,
+                  "type": "number"
+                },
+                "text_color": {
+                  "pattern": "^#[0-9A-Fa-f]{6}$",
+                  "type": "string"
+                },
+                "text_style": {
+                  "items": {
+                    "enum": [
+                      "bold",
+                      "italic"
+                    ],
+                    "type": "string"
+                  },
+                  "type": "array",
+                  "uniqueItems": true
+                }
+              },
+              "required": [],
+              "type": "object"
+            }
+          },
+          "required": [
+            "key"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "order_sn"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/get_shipping_document_data_info",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "recipient_address_info": {
+        "additionalProperties": true,
+        "properties": {
+          "image": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "shipping_document_info": {
+        "additionalProperties": true,
+        "properties": {
+          "buyer_cpf_id": {
+            "type": "string"
+          },
+          "cod": {
+            "type": "boolean"
+          },
+          "cod_amount": {
+            "type": "string"
+          },
+          "create_date_ymd_sl": {
+            "type": "string"
+          },
+          "deliver_area": {
+            "type": "string"
+          },
+          "delivery_hub": {
+            "type": "string"
+          },
+          "dely_fri_label": {
+            "type": "string"
+          },
+          "dely_sat_label": {
+            "type": "string"
+          },
+          "dely_sun_label": {
+            "type": "string"
+          },
+          "destination_base_code": {
+            "type": "string"
+          },
+          "dg_specific_type": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "ec_order_no": {
+            "type": "string"
+          },
+          "first_mile_name": {
+            "type": "string"
+          },
+          "goods_to_declare": {
+            "type": "boolean"
+          },
+          "high_value": {
+            "type": "boolean"
+          },
+          "hotspot_id": {
+            "type": "string"
+          },
+          "is_lm_dg_bool": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "lane_code": {
+            "type": "string"
+          },
+          "last_mile_name": {
+            "type": "string"
+          },
+          "last_mile_tracking_number": {
+            "type": "string"
+          },
+          "last_third_digits_buyer_phone": {
+            "type": "string"
+          },
+          "logistics_channel_id": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "manufacturers_name": {
+            "type": "string"
+          },
+          "manufacturers_website": {
+            "type": "string"
+          },
+          "mutual_check": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "order_weight": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "parcel_size": {
+            "type": "string"
+          },
+          "pickup_code": {
+            "type": "string"
+          },
+          "pickup_hub": {
+            "type": "string"
+          },
+          "preferred_delivery_option": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "recipient_sort_code": {
+            "additionalProperties": true,
+            "properties": {
+              "first_recipient_sort_code": {
+                "type": "string"
+              },
+              "second_recipient_sort_code": {
+                "type": "string"
+              },
+              "third_recipient_sort_code": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "return_sort_code": {
+            "additionalProperties": true,
+            "properties": {
+              "return_first_sort_code": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "sender_sort_code": {
+            "additionalProperties": true,
+            "properties": {
+              "first_sender_sort_code": {
+                "type": "string"
+              },
+              "second_sender_sort_code": {
+                "type": "string"
+              },
+              "third_sender_sort_code": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "service_code": {
+            "type": "string"
+          },
+          "shipping_carrier": {
+            "type": "string"
+          },
+          "shopee_tracking_number": {
+            "type": "string"
+          },
+          "sod": {
+            "type": "boolean"
+          },
+          "sorting_group": {
+            "type": "string"
+          },
+          "spx_receive_station": {
+            "additionalProperties": true,
+            "properties": {
+              "spx_first_receive_station": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "spx_sub_district": {
+            "type": "string"
+          },
+          "third_party_logistic_info": {
+            "additionalProperties": true,
+            "properties": {
+              "area": {
+                "type": "string"
+              },
+              "barcode": {
+                "type": "string"
+              },
+              "barcode_dc": {
+                "type": "string"
+              },
+              "barcode_no1": {
+                "type": "string"
+              },
+              "barcode_no2": {
+                "type": "string"
+              },
+              "barcode_no3": {
+                "type": "string"
+              },
+              "barcode_no4": {
+                "type": "string"
+              },
+              "barcode_no5": {
+                "type": "string"
+              },
+              "barcode_pr": {
+                "type": "string"
+              },
+              "branch_code": {
+                "type": "string"
+              },
+              "branch_name": {
+                "type": "string"
+              },
+              "buyer_prefer_delivery_time": {
+                "additionalProperties": true,
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "end_time": {
+                    "type": "string"
+                  },
+                  "slot_id": {
+                    "type": "string"
+                  },
+                  "start_time": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "customer_code": {
+                "type": "string"
+              },
+              "deliver_area_txt": {
+                "type": "string"
+              },
+              "deliver_date_ymd": {
+                "type": "string"
+              },
+              "deliver_router": {
+                "type": "string"
+              },
+              "ec_bar_code16": {
+                "type": "string"
+              },
+              "ec_bar_code9": {
+                "type": "string"
+              },
+              "ec_order_number": {
+                "type": "string"
+              },
+              "ec_supplier_name": {
+                "type": "string"
+              },
+              "equipment_id": {
+                "type": "string"
+              },
+              "eshop_id": {
+                "type": "string"
+              },
+              "first_pick_barcode": {
+                "type": "string"
+              },
+              "is_cod_bool": {
+                "type": "string"
+              },
+              "large_logistics_id": {
+                "type": "string"
+              },
+              "last_third_digits_recipient_phone": {
+                "type": "string"
+              },
+              "last_third_digits_sender_phone": {
+                "type": "string"
+              },
+              "manufacturers_name": {
+                "type": "string"
+              },
+              "manufacturers_website": {
+                "type": "string"
+              },
+              "md_driver_code": {
+                "type": "string"
+              },
+              "ok_aisle_no": {
+                "type": "string"
+              },
+              "ok_grid_no": {
+                "type": "string"
+              },
+              "ok_mid_type": {
+                "type": "string"
+              },
+              "ok_tracking_number": {
+                "type": "string"
+              },
+              "order_sn": {
+                "type": "string"
+              },
+              "parent_id": {
+                "type": "string"
+              },
+              "pelican_tracking_no": {
+                "type": "string"
+              },
+              "pick_router": {
+                "type": "string"
+              },
+              "print_date": {
+                "type": "string"
+              },
+              "print_datetime": {
+                "type": "string"
+              },
+              "prompt": {
+                "type": "string"
+              },
+              "purchase_time": {
+                "type": "string"
+              },
+              "putorder_stackzone_code": {
+                "type": "string"
+              },
+              "pzip": {
+                "type": "string"
+              },
+              "pzip_c": {
+                "type": "string"
+              },
+              "qrcode": {
+                "type": "string"
+              },
+              "rcv_store_name": {
+                "type": "string"
+              },
+              "receiver_name": {
+                "type": "string"
+              },
+              "recipient_area": {
+                "type": "string"
+              },
+              "return_cycle": {
+                "type": "string"
+              },
+              "return_mode": {
+                "type": "string"
+              },
+              "return_time": {
+                "type": "string"
+              },
+              "route_step": {
+                "type": "string"
+              },
+              "sd_driver_code": {
+                "type": "string"
+              },
+              "second_pick_barcode": {
+                "type": "string"
+              },
+              "service_description": {
+                "type": "string"
+              },
+              "ship_type": {
+                "type": "string"
+              },
+              "store_type": {
+                "type": "string"
+              },
+              "suda5_code": {
+                "type": "string"
+              },
+              "tw_last_three_digits_buyer_phone": {
+                "type": "string"
+              },
+              "tw_store_name": {
+                "type": "string"
+              },
+              "tw_store_number": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "tracking_number": {
+            "type": "string"
+          },
+          "unpackaged_sku_id": {
+            "type": "string"
+          },
+          "unpackaged_sku_id_qrcode": {
+            "type": "string"
+          },
+          "warehouse_address": {
+            "type": "string"
+          },
+          "warehouse_id": {
+            "type": "string"
+          },
+          "weekend1_delivery_success_label": {
+            "type": "string"
+          },
+          "weekend2_delivery_success_label": {
+            "type": "string"
+          },
+          "zone": {
+            "type": "string"
+          },
+          "zone_code": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_get_shipping_document_data_info"
+}

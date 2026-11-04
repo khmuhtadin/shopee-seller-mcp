@@ -1,0 +1,68 @@
+{
+  "api_name": "v2.buybox.update_buybox_model_enrollment",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.buybox.update_buybox_model_enrollment endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "model_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "model_toggle_on_status": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "model_id",
+      "model_toggle_on_status"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "buybox",
+  "pagination_fields": [],
+  "path": "/api/v2/buybox/update_buybox_model_enrollment",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "last_updated_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "model_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "model_toggle_on_status": {
+        "type": "boolean"
+      },
+      "shop_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_buybox_update_buybox_model_enrollment"
+}

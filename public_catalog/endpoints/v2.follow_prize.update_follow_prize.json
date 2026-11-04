@@ -1,0 +1,91 @@
+{
+  "api_name": "v2.follow_prize.update_follow_prize",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "start_time",
+      "kind": "ordered_pair",
+      "to": "end_time"
+    },
+    {
+      "from": "start_time",
+      "kind": "numeric_delta",
+      "maximum": 8035200,
+      "minimum": 86400,
+      "to": "end_time"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.follow_prize.update_follow_prize endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "campaign_id": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "follow_prize_name": {
+        "maxLength": 20,
+        "type": "string"
+      },
+      "min_spend": {
+        "type": "number"
+      },
+      "start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "usage_quantity": {
+        "maximum": 200000,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "campaign_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "follow_prize",
+  "pagination_fields": [],
+  "path": "/api/v2/follow_prize/update_follow_prize",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "campagin_id": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "campaign_id": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_follow_prize_update_follow_prize"
+}

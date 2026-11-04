@@ -1,0 +1,129 @@
+{
+  "api_name": "v2.discount.get_discount_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "update_time_from",
+      "kind": "numeric_delta",
+      "maximum": 2592000,
+      "minimum": 0,
+      "to": "update_time_to"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.discount.get_discount_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "discount_status": {
+        "enum": [
+          "upcoming",
+          "ongoing",
+          "expired",
+          "all"
+        ],
+        "type": "string"
+      },
+      "page_no": {
+        "maximum": 9007199254740991,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "update_time_from": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "update_time_to": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "discount_status",
+      "page_no",
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "discount",
+  "pagination_fields": [
+    "more"
+  ],
+  "path": "/api/v2/discount/get_discount_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "discount_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "discount_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "discount_name": {
+              "type": "string"
+            },
+            "end_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "source": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "start_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "status": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "more": {
+        "type": "boolean"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_discount_get_discount_list"
+}

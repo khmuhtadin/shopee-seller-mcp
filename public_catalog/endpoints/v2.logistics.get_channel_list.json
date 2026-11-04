@@ -1,0 +1,246 @@
+{
+  "api_name": "v2.logistics.get_channel_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.get_channel_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/get_channel_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "logistics_channel_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "auto_call_driver_setting": {
+              "additionalProperties": true,
+              "properties": {
+                "auto_call_driver_eligible": {
+                  "type": "boolean"
+                },
+                "auto_call_driver_enabled": {
+                  "type": "boolean"
+                },
+                "preparation_time": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "preparation_time_limit": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "max_preparation_time": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "min_preparation_time": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "block_seller_cover_shipping_fee": {
+              "type": "boolean"
+            },
+            "channel_relation_rules": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "related_dependent_block_channels": {
+                    "items": {
+                      "pattern": "^(0|-?[1-9][0-9]*)$",
+                      "type": "string",
+                      "x-wire-int64": true
+                    },
+                    "type": "array"
+                  },
+                  "related_enabled_channels": {
+                    "items": {
+                      "pattern": "^(0|-?[1-9][0-9]*)$",
+                      "type": "string",
+                      "x-wire-int64": true
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "cod_enabled": {
+              "type": "boolean"
+            },
+            "compulsory_channel": {
+              "type": "boolean"
+            },
+            "enabled": {
+              "type": "boolean"
+            },
+            "fee_type": {
+              "type": "string"
+            },
+            "force_enable": {
+              "type": "boolean"
+            },
+            "item_max_dimension": {
+              "additionalProperties": true,
+              "properties": {
+                "dimension_sum": {
+                  "type": "number"
+                },
+                "height": {
+                  "type": "number"
+                },
+                "length": {
+                  "type": "number"
+                },
+                "unit": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "number"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "logistics_capability": {
+              "additionalProperties": true,
+              "properties": {
+                "seller_logistics": {
+                  "type": "boolean"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "logistics_channel_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "logistics_channel_name": {
+              "type": "string"
+            },
+            "logistics_description": {
+              "type": "string"
+            },
+            "mask_channel_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "preprint": {
+              "type": "boolean"
+            },
+            "seller_logistic_has_configuration": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "service_type_identifier": {
+              "type": "string"
+            },
+            "size_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "default_price": {
+                    "type": "number"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "size_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "support_cross_border": {
+              "type": "boolean"
+            },
+            "support_pause": {
+              "type": "boolean"
+            },
+            "volume_limit": {
+              "additionalProperties": true,
+              "properties": {
+                "item_max_volume": {
+                  "type": "number"
+                },
+                "item_min_volume": {
+                  "type": "number"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "weight_limit": {
+              "additionalProperties": true,
+              "properties": {
+                "item_max_weight": {
+                  "type": "number"
+                },
+                "item_min_weight": {
+                  "type": "number"
+                }
+              },
+              "required": [],
+              "type": "object"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_get_channel_list"
+}

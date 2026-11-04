@@ -1,0 +1,162 @@
+{
+  "api_name": "v2.follow_prize.add_follow_prize",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "start_time",
+      "kind": "ordered_pair",
+      "to": "end_time"
+    },
+    {
+      "from": "start_time",
+      "kind": "numeric_delta",
+      "maximum": 8035200,
+      "minimum": 86400,
+      "to": "end_time"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.follow_prize.add_follow_prize endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "reward_type": {
+              "const": 1
+            }
+          },
+          "required": [
+            "reward_type"
+          ]
+        },
+        "then": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "percentage"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "reward_type": {
+              "enum": [
+                2,
+                3
+              ]
+            }
+          },
+          "required": [
+            "reward_type"
+          ]
+        },
+        "then": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "discount_amount"
+                ]
+              }
+            ]
+          },
+          "required": [
+            "max_price"
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "discount_amount": {
+        "type": "number"
+      },
+      "end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "follow_prize_name": {
+        "maxLength": 20,
+        "type": "string"
+      },
+      "max_price": {
+        "minimum": 1,
+        "type": "number"
+      },
+      "min_spend": {
+        "type": "number"
+      },
+      "percentage": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "reward_type": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "usage_quantity": {
+        "maximum": 200000,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "follow_prize_name",
+      "start_time",
+      "end_time",
+      "usage_quantity",
+      "min_spend",
+      "reward_type"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "follow_prize",
+  "pagination_fields": [],
+  "path": "/api/v2/follow_prize/add_follow_prize",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "campagin_id": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_follow_prize_add_follow_prize"
+}

@@ -1,0 +1,98 @@
+{
+  "api_name": "v2.logistics.download_booking_shipping_document",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "binary_request_encoding": "json",
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.download_booking_shipping_document endpoint.",
+  "download_mime_policy": "opaque",
+  "effects": "read",
+  "encoding": "binary",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "booking_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "booking_sn": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "booking_sn"
+          ],
+          "type": "object"
+        },
+        "maxItems": 50,
+        "minItems": 1,
+        "type": "array"
+      },
+      "shipping_document_type": {
+        "enum": [
+          "NORMAL_AIR_WAYBILL",
+          "THERMAL_AIR_WAYBILL"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "booking_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/download_booking_shipping_document",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "artifact": {
+        "additionalProperties": true,
+        "properties": {
+          "mime_type": {
+            "const": "application/octet-stream"
+          },
+          "size": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "uri": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uri",
+          "size",
+          "mime_type"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "artifact"
+    ],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_download_booking_shipping_document"
+}

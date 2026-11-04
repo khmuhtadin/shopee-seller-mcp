@@ -1,0 +1,73 @@
+{
+  "api_name": "v2.first_mile.get_courier_delivery_waybill",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.first_mile.get_courier_delivery_waybill endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "binding_id_list": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 50,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "binding_id_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "first_mile",
+  "pagination_fields": [],
+  "path": "/api/v2/first_mile/get_courier_delivery_waybill",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "waybill_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "binding_id": {
+              "type": "string"
+            },
+            "shipping_label_url": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_first_mile_get_courier_delivery_waybill"
+}

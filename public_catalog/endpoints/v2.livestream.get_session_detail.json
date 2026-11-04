@@ -1,0 +1,120 @@
+{
+  "api_name": "v2.livestream.get_session_detail",
+  "auth_strategy": "user",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.livestream.get_session_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "session_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "session_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "livestream",
+  "pagination_fields": [],
+  "path": "/api/v2/livestream/get_session_detail",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "cover_image_url": {
+        "type": "string"
+      },
+      "create_time": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "description": {
+        "type": "string"
+      },
+      "end_time": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "is_test": {
+        "type": "boolean"
+      },
+      "session_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "share_url": {
+        "type": "string"
+      },
+      "start_time": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "status": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "stream_url_list": {
+        "additionalProperties": true,
+        "properties": {
+          "domain_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "play_url": {
+            "type": "string"
+          },
+          "push_key": {
+            "type": "string"
+          },
+          "push_url": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "title": {
+        "type": "string"
+      },
+      "update_time": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_livestream_get_session_detail"
+}

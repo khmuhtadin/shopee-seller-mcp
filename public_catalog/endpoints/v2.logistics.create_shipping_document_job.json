@@ -1,0 +1,134 @@
+{
+  "api_name": "v2.logistics.create_shipping_document_job",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [
+    "fail_list"
+  ],
+  "constraints": [
+    {
+      "field": "unpackaged_sku_requests",
+      "kind": "nested_integer_sum_lte",
+      "maximum": 600,
+      "value_field": "quantity"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.logistics.create_shipping_document_job endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "oneOf": [
+      {
+        "not": {
+          "required": [
+            "package_list"
+          ]
+        },
+        "required": [
+          "unpackaged_sku_requests"
+        ]
+      },
+      {
+        "not": {
+          "required": [
+            "unpackaged_sku_requests"
+          ]
+        },
+        "required": [
+          "package_list"
+        ]
+      }
+    ],
+    "properties": {
+      "package_list": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 600,
+        "minItems": 1,
+        "type": "array"
+      },
+      "shipping_document_type": {
+        "enum": [
+          "THERMAL_UNPACKAGED_LABEL"
+        ],
+        "type": "string"
+      },
+      "unpackaged_sku_requests": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "quantity": {
+              "pattern": "^[1-9][0-9]*$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "unpackaged_sku_id": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "maxItems": 600,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "shipping_document_type"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/create_shipping_document_job",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "fail_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "fail_error": {
+              "type": "string"
+            },
+            "fail_message": {
+              "type": "string"
+            },
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "job_id": {
+        "type": "string"
+      },
+      "success_id_list": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_create_shipping_document_job"
+}

@@ -1,0 +1,56 @@
+{
+  "api_name": "v2.first_mile.generate_first_mile_tracking_number",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.first_mile.generate_first_mile_tracking_number endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "declare_date": {
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+        "type": "string"
+      },
+      "quantity": {
+        "maximum": 20,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "declare_date"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "first_mile",
+  "pagination_fields": [],
+  "path": "/api/v2/first_mile/generate_first_mile_tracking_number",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "first_mile_tracking_number_list": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_first_mile_generate_first_mile_tracking_number"
+}

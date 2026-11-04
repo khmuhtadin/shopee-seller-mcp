@@ -1,0 +1,58 @@
+{
+  "api_name": "v2.livestream.upload_image",
+  "auth_strategy": "user",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.livestream.upload_image endpoint.",
+  "effects": "write",
+  "encoding": "multipart",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "image": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "image"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "livestream",
+  "pagination_fields": [],
+  "path": "/api/v2/livestream/upload_image",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "image_url": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_livestream_upload_image",
+  "upload_fields": {
+    "image": {
+      "content_kind": "identified",
+      "max_bytes": 10000000,
+      "mime_types": [
+        "image/jpeg",
+        "image/png",
+        "image/gif"
+      ]
+    }
+  }
+}

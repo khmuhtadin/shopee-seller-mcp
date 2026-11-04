@@ -1,0 +1,107 @@
+{
+  "api_name": "v2.first_mile.get_courier_delivery_tracking_number_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "allow_equal": true,
+      "from": "from_date",
+      "kind": "iso_date_order",
+      "to": "to_date"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.first_mile.get_courier_delivery_tracking_number_list endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "cursor": {
+        "type": "string"
+      },
+      "from_date": {
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+        "type": "string"
+      },
+      "page_size": {
+        "pattern": "^(?:[1-9]|[1-4][0-9]|50)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "to_date": {
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+        "type": "string"
+      }
+    },
+    "required": [
+      "from_date",
+      "to_date"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "first_mile",
+  "pagination_fields": [
+    "next_cursor",
+    "more"
+  ],
+  "path": "/api/v2/first_mile/get_courier_delivery_tracking_number_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "more": {
+        "type": "boolean"
+      },
+      "next_cursor": {
+        "type": "string"
+      },
+      "tracking_number_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "binding_id": {
+              "type": "string"
+            },
+            "declare_date": {
+              "type": "string"
+            },
+            "first_mile_tracking_number": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_first_mile_get_courier_delivery_tracking_number_list"
+}

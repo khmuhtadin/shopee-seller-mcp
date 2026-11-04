@@ -1,0 +1,94 @@
+{
+  "api_name": "v2.logistics.get_booking_shipping_document_parameter",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.get_booking_shipping_document_parameter endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "booking_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "booking_sn": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "booking_sn"
+          ],
+          "type": "object"
+        },
+        "maxItems": 50,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "booking_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/get_booking_shipping_document_parameter",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "result_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "booking_sn": {
+              "type": "string"
+            },
+            "fail_error": {
+              "type": "string"
+            },
+            "fail_message": {
+              "type": "string"
+            },
+            "selectable_shipping_document_type": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "suggest_shipping_document_type": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_get_booking_shipping_document_parameter"
+}

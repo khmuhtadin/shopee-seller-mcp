@@ -1,0 +1,117 @@
+{
+  "api_name": "v2.logistics.get_mass_tracking_number",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.get_mass_tracking_number endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "package_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "package_number": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "package_number"
+          ],
+          "type": "object"
+        },
+        "maxItems": 50,
+        "minItems": 1,
+        "type": "array"
+      },
+      "response_optional_fields": {
+        "pattern": "^(?:plp_number|first_mile_tracking_number|last_mile_tracking_number)(?:,(?:plp_number|first_mile_tracking_number|last_mile_tracking_number))*$",
+        "type": "string"
+      }
+    },
+    "required": [
+      "package_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/get_mass_tracking_number",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "fail_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "fail_reason": {
+              "type": "string"
+            },
+            "package_number": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "success_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "first_mile_tracking_number": {
+              "type": "string"
+            },
+            "hint": {
+              "type": "string"
+            },
+            "last_mile_tracking_number": {
+              "type": "string"
+            },
+            "package_number": {
+              "type": "string"
+            },
+            "pickup_code": {
+              "type": "string"
+            },
+            "plp_number": {
+              "type": "string"
+            },
+            "tracking_number": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_get_mass_tracking_number"
+}

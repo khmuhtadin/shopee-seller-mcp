@@ -1,0 +1,125 @@
+{
+  "api_name": "v2.logistics.batch_update_tpf_warehouse_tracking_status",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.batch_update_tpf_warehouse_tracking_status endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "package_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "order_sn": {
+              "type": "string"
+            },
+            "package_number": {
+              "type": "string"
+            },
+            "update_time": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            }
+          },
+          "required": [
+            "order_sn",
+            "update_time"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "tpf_name": {
+        "type": "string"
+      },
+      "tpf_tracking_status": {
+        "enum": [
+          "3pf_warehouse_order_created",
+          "3pf_warehouse_outbound_done"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "tpf_name",
+      "tpf_tracking_status",
+      "package_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/batch_update_tpf_warehouse_tracking_status",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "response": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "fail_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "fail_error": {
+                    "type": "string"
+                  },
+                  "fail_message": {
+                    "type": "string"
+                  },
+                  "order_sn": {
+                    "type": "string"
+                  },
+                  "package_number": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "success_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "order_sn": {
+                    "type": "string"
+                  },
+                  "package_number": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_batch_update_tpf_warehouse_tracking_status"
+}

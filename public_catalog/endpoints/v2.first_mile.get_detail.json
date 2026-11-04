@@ -1,0 +1,106 @@
+{
+  "api_name": "v2.first_mile.get_detail",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.first_mile.get_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "cursor": {
+        "type": "string"
+      },
+      "first_mile_tracking_number": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "first_mile_tracking_number"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "first_mile",
+  "pagination_fields": [
+    "next_cursor",
+    "more"
+  ],
+  "path": "/api/v2/first_mile/get_detail",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "declare_date": {
+        "type": "string"
+      },
+      "first_mile_tracking_number": {
+        "type": "string"
+      },
+      "logistics_channel_id": {
+        "maximum": 9007199254740991,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "more": {
+        "type": "boolean"
+      },
+      "next_cursor": {
+        "type": "string"
+      },
+      "order_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "arrived_transit_warehouse": {
+              "type": "boolean"
+            },
+            "order_sn": {
+              "type": "string"
+            },
+            "package_number": {
+              "type": "string"
+            },
+            "pick_up_done": {
+              "type": "boolean"
+            },
+            "sls_tracking_number": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "shipment_method": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_first_mile_get_detail"
+}

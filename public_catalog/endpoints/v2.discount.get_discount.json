@@ -1,0 +1,201 @@
+{
+  "api_name": "v2.discount.get_discount",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.discount.get_discount endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "discount_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "discount_id",
+      "page_no",
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "discount",
+  "pagination_fields": [
+    "more"
+  ],
+  "path": "/api/v2/discount/get_discount",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "discount_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "discount_name": {
+        "type": "string"
+      },
+      "end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "item_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_inflated_price_of_original_price": {
+              "type": "number"
+            },
+            "item_inflated_price_of_promotion_price": {
+              "type": "number"
+            },
+            "item_local_price": {
+              "type": "number"
+            },
+            "item_local_price_inflated": {
+              "type": "number"
+            },
+            "item_local_promotion_price": {
+              "type": "number"
+            },
+            "item_local_promotion_price_inflated": {
+              "type": "number"
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "item_original_price": {
+              "type": "number"
+            },
+            "item_promotion_price": {
+              "type": "number"
+            },
+            "item_promotion_stock": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "model_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "model_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "model_inflated_price_of_original_price": {
+                    "type": "number"
+                  },
+                  "model_inflated_price_of_promotion_price": {
+                    "type": "number"
+                  },
+                  "model_local_price": {
+                    "type": "number"
+                  },
+                  "model_local_price_inflated": {
+                    "type": "number"
+                  },
+                  "model_local_promotion_price": {
+                    "type": "number"
+                  },
+                  "model_local_promotion_price_inflated": {
+                    "type": "number"
+                  },
+                  "model_name": {
+                    "type": "string"
+                  },
+                  "model_normal_stock": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "model_original_price": {
+                    "type": "number"
+                  },
+                  "model_promotion_price": {
+                    "type": "number"
+                  },
+                  "model_promotion_stock": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "normal_stock": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "purchase_limit": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "more": {
+        "type": "boolean"
+      },
+      "start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "status": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_discount_get_discount"
+}

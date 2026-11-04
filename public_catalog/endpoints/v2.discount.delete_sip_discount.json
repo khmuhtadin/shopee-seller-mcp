@@ -1,0 +1,47 @@
+{
+  "api_name": "v2.discount.delete_sip_discount",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.discount.delete_sip_discount endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "region": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "region"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "discount",
+  "pagination_fields": [],
+  "path": "/api/v2/discount/delete_sip_discount",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "region": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_discount_delete_sip_discount"
+}

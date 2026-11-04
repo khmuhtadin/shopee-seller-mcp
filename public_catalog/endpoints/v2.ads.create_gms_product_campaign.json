@@ -1,0 +1,72 @@
+{
+  "api_name": "v2.ads.create_gms_product_campaign",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "allow_empty_end": true,
+      "allow_equal": true,
+      "from": "start_date",
+      "kind": "ads_date_range",
+      "maximum_months": null,
+      "to": "end_date"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ads.create_gms_product_campaign endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "daily_budget": {
+        "type": "number"
+      },
+      "end_date": {
+        "type": "string"
+      },
+      "reference_id": {
+        "type": "string"
+      },
+      "roas_target": {
+        "minimum": 0,
+        "type": "number"
+      },
+      "start_date": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "start_date",
+      "daily_budget"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/create_gms_product_campaign",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_create_gms_product_campaign"
+}

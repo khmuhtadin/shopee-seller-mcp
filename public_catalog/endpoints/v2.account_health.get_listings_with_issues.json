@@ -1,0 +1,84 @@
+{
+  "api_name": "v2.account_health.get_listings_with_issues",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.account_health.get_listings_with_issues endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "account_health",
+  "pagination_fields": [
+    "total_count"
+  ],
+  "path": "/api/v2/account_health/get_listings_with_issues",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "listing_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "reason": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total_count": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_account_health_get_listings_with_issues"
+}

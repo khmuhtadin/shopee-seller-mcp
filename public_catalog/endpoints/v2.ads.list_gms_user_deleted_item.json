@@ -1,0 +1,81 @@
+{
+  "api_name": "v2.ads.list_gms_user_deleted_item",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ads.list_gms_user_deleted_item endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "limit": {
+        "maximum": 100,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "offset": {
+        "maximum": 2147483647,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ads",
+  "pagination_fields": [
+    "has_next_page",
+    "total"
+  ],
+  "path": "/api/v2/ads/list_gms_user_deleted_item",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "has_next_page": {
+        "type": "boolean"
+      },
+      "item_id_list": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "type": "array"
+      },
+      "total": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_list_gms_user_deleted_item"
+}

@@ -1,0 +1,154 @@
+{
+  "api_name": "v2.ams.get_targeted_campaign_settings",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ams.get_targeted_campaign_settings endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "campaign_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ams",
+  "pagination_fields": [],
+  "path": "/api/v2/ams/get_targeted_campaign_settings",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "affiliate_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "affiliate_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "budget": {
+        "type": "number"
+      },
+      "budget_cost": {
+        "type": "number"
+      },
+      "campaign_name": {
+        "type": "string"
+      },
+      "commission_status": {
+        "enum": [
+          "Upcoming",
+          "Ongoing",
+          "Ended",
+          "Cancelled",
+          "Draft",
+          "Terminating",
+          "Terminated",
+          "Paused"
+        ],
+        "type": "string"
+      },
+      "is_set_budget": {
+        "type": "boolean"
+      },
+      "item_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "commission_protection_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "commission_rate": {
+                    "type": "number"
+                  },
+                  "protection_period_end_time": {
+                    "maximum": 9007199254740991,
+                    "minimum": -9007199254740991,
+                    "type": "integer"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "max_commission_rate_current_day": {
+              "type": "number"
+            },
+            "rate": {
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "pending_terminated_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "period_end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "period_start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "seller_message": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_get_targeted_campaign_settings"
+}

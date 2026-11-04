@@ -1,0 +1,52 @@
+{
+  "api_name": "v2.ams.get_shop_suggested_rate",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ams.get_shop_suggested_rate endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ams",
+  "pagination_fields": [],
+  "path": "/api/v2/ams/get_shop_suggested_rate",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "max_rate": {
+        "type": "number"
+      },
+      "min_rate": {
+        "type": "number"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_get_shop_suggested_rate"
+}

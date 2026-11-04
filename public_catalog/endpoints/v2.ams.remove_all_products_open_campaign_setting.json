@@ -1,0 +1,47 @@
+{
+  "api_name": "v2.ams.remove_all_products_open_campaign_setting",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ams.remove_all_products_open_campaign_setting endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ams",
+  "pagination_fields": [],
+  "path": "/api/v2/ams/remove_all_products_open_campaign_setting",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "task_id": {
+        "type": "string"
+      },
+      "task_type": {
+        "enum": [
+          "batch_remove_open_campaigns"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_remove_all_products_open_campaign_setting"
+}

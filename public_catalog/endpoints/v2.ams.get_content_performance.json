@@ -1,0 +1,191 @@
+{
+  "api_name": "v2.ams.get_content_performance",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "start_date",
+      "kind": "ams_calendar_range",
+      "period_type": "period_type",
+      "to": "end_date"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ams.get_content_performance endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "affiliate_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "channel": {
+        "enum": [
+          "ShopeeVideo",
+          "LiveStreaming"
+        ],
+        "type": "string"
+      },
+      "end_date": {
+        "pattern": "^[0-9]{8}$",
+        "type": "string"
+      },
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "order_type": {
+        "enum": [
+          "PlacedOrder",
+          "ConfirmedOrder"
+        ],
+        "type": "string"
+      },
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 20,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "period_type": {
+        "enum": [
+          "Day",
+          "Week",
+          "Month",
+          "Last7d",
+          "Last30d"
+        ],
+        "type": "string"
+      },
+      "start_date": {
+        "pattern": "^[0-9]{8}$",
+        "type": "string"
+      }
+    },
+    "required": [
+      "period_type",
+      "start_date",
+      "end_date",
+      "page_no",
+      "page_size",
+      "order_type",
+      "channel"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ams",
+  "pagination_fields": [
+    "total_count",
+    "has_more"
+  ],
+  "path": "/api/v2/ams/get_content_performance",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "fetched_date_range": {
+        "type": "string"
+      },
+      "has_more": {
+        "type": "boolean"
+      },
+      "list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "affiliate_name": {
+              "type": "string"
+            },
+            "affiliate_username": {
+              "type": "string"
+            },
+            "channel": {
+              "type": "string"
+            },
+            "comments": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "content_id": {
+              "type": "string"
+            },
+            "content_title": {
+              "type": "string"
+            },
+            "items_sold": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "likes": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "orders": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "post_time": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "products": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "sales": {
+              "type": "string"
+            },
+            "views": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total_count": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_get_content_performance"
+}

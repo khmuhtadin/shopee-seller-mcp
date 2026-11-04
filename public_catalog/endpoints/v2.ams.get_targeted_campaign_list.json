@@ -1,0 +1,189 @@
+{
+  "api_name": "v2.ams.get_targeted_campaign_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "field": "campaign_id_list",
+      "kind": "csv_ids",
+      "max_items": 50,
+      "when": {}
+    },
+    {
+      "from": "period_start_time",
+      "kind": "ordered_pair",
+      "to": "period_end_time"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ams.get_targeted_campaign_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "campaign_id_list": {
+        "type": "string"
+      },
+      "campaign_name": {
+        "type": "string"
+      },
+      "campaign_status": {
+        "enum": [
+          "Upcoming",
+          "Ongoing",
+          "Ended",
+          "Cancelled",
+          "Draft",
+          "Terminating",
+          "Terminated",
+          "Paused"
+        ],
+        "type": "string"
+      },
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "item_name": {
+        "type": "string"
+      },
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "period_end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "period_start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "page_size",
+      "page_no"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ams",
+  "pagination_fields": [
+    "total_count"
+  ],
+  "path": "/api/v2/ams/get_targeted_campaign_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "campaign_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "affiliate_count": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "campaign_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "campaign_name": {
+              "type": "string"
+            },
+            "campaign_source": {
+              "enum": [
+                "ShopeeManaged",
+                "Seller",
+                "Unknown"
+              ],
+              "type": "string"
+            },
+            "campaign_status": {
+              "enum": [
+                "Upcoming",
+                "Ongoing",
+                "Ended",
+                "Cancelled",
+                "Draft",
+                "Terminating",
+                "Terminated",
+                "Paused"
+              ],
+              "type": "string"
+            },
+            "item_count": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "last_edit_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "last_editor": {
+              "type": "string"
+            },
+            "max_rate": {
+              "type": "number"
+            },
+            "min_rate": {
+              "type": "number"
+            },
+            "period_end_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "period_start_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total_count": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_get_targeted_campaign_list"
+}

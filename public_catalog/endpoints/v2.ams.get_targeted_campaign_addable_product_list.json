@@ -1,0 +1,137 @@
+{
+  "api_name": "v2.ams.get_targeted_campaign_addable_product_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "field": "search_content",
+      "kind": "csv_ids",
+      "max_items": 50,
+      "when": {
+        "search_type": "ITEM_ID"
+      }
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ams.get_targeted_campaign_addable_product_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "dependentRequired": {
+      "search_content": [
+        "search_type"
+      ]
+    },
+    "properties": {
+      "cursor": {
+        "type": "string"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "search_content": {
+        "type": "string"
+      },
+      "search_type": {
+        "enum": [
+          "ITEM_NAME",
+          "ITEM_ID"
+        ],
+        "type": "string"
+      },
+      "sort_by": {
+        "enum": [
+          "-sales",
+          "sales",
+          "-stock",
+          "stock",
+          "-price",
+          "price"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ams",
+  "pagination_fields": [
+    "total_count",
+    "cursor"
+  ],
+  "path": "/api/v2/ams/get_targeted_campaign_addable_product_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "cursor": {
+        "type": "string"
+      },
+      "item_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "display_price": {
+              "type": "string"
+            },
+            "is_in_blacklist": {
+              "type": "boolean"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "sales": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "stock": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total_count": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_get_targeted_campaign_addable_product_list"
+}

@@ -1,0 +1,163 @@
+{
+  "api_name": "v2.ams.get_optimization_suggestion_product",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ams.get_optimization_suggestion_product endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "rcmd_reason_filter": {
+        "enum": [
+          "product_opportunities",
+          "optimize_increase_commission_rate",
+          "optimize_extend_promotion_period"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "page_no",
+      "page_size",
+      "rcmd_reason_filter"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ams",
+  "pagination_fields": [
+    "total",
+    "has_more"
+  ],
+  "path": "/api/v2/ams/get_optimization_suggestion_product",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "has_more": {
+        "type": "boolean"
+      },
+      "item_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "affiliate_count": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "campaign_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "campaign_status": {
+              "enum": [
+                "Upcoming",
+                "Ongoing",
+                "Terminating"
+              ],
+              "type": "string"
+            },
+            "commission_rate": {
+              "type": "number"
+            },
+            "display_price": {
+              "type": "string"
+            },
+            "has_subsidy_data": {
+              "type": "boolean"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "item_sold": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "l2_category_order_count": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "period_end_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "period_start_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "prefill_rate": {
+              "type": "number"
+            },
+            "prefill_subsidy_rate": {
+              "type": "number"
+            },
+            "rcmd_reason": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "suggest_max_rate": {
+              "type": "number"
+            },
+            "suggest_min_rate": {
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_get_optimization_suggestion_product"
+}

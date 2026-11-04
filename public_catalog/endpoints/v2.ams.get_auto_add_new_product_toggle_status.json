@@ -1,0 +1,55 @@
+{
+  "api_name": "v2.ams.get_auto_add_new_product_toggle_status",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ams.get_auto_add_new_product_toggle_status endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ams",
+  "pagination_fields": [],
+  "path": "/api/v2/ams/get_auto_add_new_product_toggle_status",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "commission_rate": {
+        "type": "number"
+      },
+      "is_open": {
+        "type": "boolean"
+      }
+    },
+    "required": [
+      "is_open",
+      "commission_rate"
+    ],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_get_auto_add_new_product_toggle_status"
+}

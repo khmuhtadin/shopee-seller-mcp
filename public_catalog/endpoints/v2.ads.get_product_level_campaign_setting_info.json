@@ -1,0 +1,220 @@
+{
+  "api_name": "v2.ads.get_product_level_campaign_setting_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "field": "campaign_id_list",
+      "kind": "csv_ids",
+      "max_items": 100,
+      "when": {}
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ads.get_product_level_campaign_setting_info endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "campaign_id_list": {
+        "pattern": "^(0|[1-9][0-9]*)(,(0|[1-9][0-9]*))*$",
+        "type": "string"
+      },
+      "info_type_list": {
+        "pattern": "^[1-4](,[1-4])*$",
+        "type": "string"
+      }
+    },
+    "required": [
+      "info_type_list",
+      "campaign_id_list"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/get_product_level_campaign_setting_info",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "campaign_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "auto_bidding_info": {
+              "additionalProperties": true,
+              "properties": {
+                "roas_target": {
+                  "type": "number"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "auto_product_ads_info": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "product_name": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "campaign_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "common_info": {
+              "additionalProperties": true,
+              "properties": {
+                "ad_name": {
+                  "type": "string"
+                },
+                "ad_type": {
+                  "type": "string"
+                },
+                "bidding_method": {
+                  "type": "string"
+                },
+                "campaign_budget": {
+                  "type": "number"
+                },
+                "campaign_duration": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "end_time": {
+                      "pattern": "^(0|-?[1-9][0-9]*)$",
+                      "type": "string",
+                      "x-wire-int64": true
+                    },
+                    "start_time": {
+                      "pattern": "^(0|-?[1-9][0-9]*)$",
+                      "type": "string",
+                      "x-wire-int64": true
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "campaign_placement": {
+                  "type": "string"
+                },
+                "campaign_status": {
+                  "type": "string"
+                },
+                "item_id_list": {
+                  "items": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "manual_bidding_info": {
+              "additionalProperties": true,
+              "properties": {
+                "discovery_ads_locations": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "bid_price": {
+                        "type": "number"
+                      },
+                      "location": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "enhanced_cpc": {
+                  "type": "boolean"
+                },
+                "selected_keywords": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "bid_price_per_click": {
+                        "type": "number"
+                      },
+                      "keyword": {
+                        "type": "string"
+                      },
+                      "match_type": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "region": {
+        "type": "string"
+      },
+      "shop_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_get_product_level_campaign_setting_info"
+}

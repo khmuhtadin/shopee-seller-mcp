@@ -1,0 +1,146 @@
+{
+  "api_name": "v2.ads.edit_manual_product_ads",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "allow_empty_end": true,
+      "allow_equal": true,
+      "from": "start_date",
+      "kind": "ads_date_range",
+      "maximum_months": null,
+      "to": "end_date"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ads.edit_manual_product_ads endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "budget": {
+        "type": "number"
+      },
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "discovery_ads_locations": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "bid_price": {
+              "type": "number"
+            },
+            "location": {
+              "enum": [
+                "daily_discover",
+                "you_may_also_like"
+              ],
+              "type": "string"
+            },
+            "status": {
+              "enum": [
+                "active",
+                "inactive"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "location",
+            "status",
+            "bid_price"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "edit_action": {
+        "enum": [
+          "start",
+          "pause",
+          "resume",
+          "stop",
+          "delete",
+          "change_budget",
+          "change_duration",
+          "change_smart_creative",
+          "change_location",
+          "change_enhanced_cpc",
+          "change_roas_target"
+        ],
+        "type": "string"
+      },
+      "end_date": {
+        "type": "string"
+      },
+      "enhanced_cpc": {
+        "type": "boolean"
+      },
+      "reference_id": {
+        "type": "string"
+      },
+      "roas_target": {
+        "type": "number"
+      },
+      "smart_creative_setting": {
+        "enum": [
+          "",
+          "default",
+          "on",
+          "off"
+        ],
+        "type": "string"
+      },
+      "start_date": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "reference_id",
+      "campaign_id",
+      "edit_action"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/edit_manual_product_ads",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "response": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "campaign_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_edit_manual_product_ads"
+}

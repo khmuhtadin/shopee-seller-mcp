@@ -1,0 +1,103 @@
+{
+  "api_name": "v2.ads.get_product_recommended_roi_target",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ads.get_product_recommended_roi_target endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "reference_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "reference_id",
+      "item_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/get_product_recommended_roi_target",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "exact": {
+        "additionalProperties": true,
+        "properties": {
+          "percentile": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "value": {
+            "type": "number"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "lower_bound": {
+        "additionalProperties": true,
+        "properties": {
+          "percentile": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "value": {
+            "type": "number"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "upper_bound": {
+        "additionalProperties": true,
+        "properties": {
+          "percentile": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "value": {
+            "type": "number"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_get_product_recommended_roi_target"
+}

@@ -1,0 +1,114 @@
+{
+  "api_name": "v2.add_on_deal.add_add_on_deal",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "start_time",
+      "kind": "numeric_delta",
+      "maximum": 18014398509481982,
+      "minimum": 1,
+      "to": "end_time"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.add_on_deal.add_add_on_deal endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "promotion_type": {
+              "const": 1
+            }
+          },
+          "required": [
+            "promotion_type"
+          ]
+        },
+        "then": {
+          "required": [
+            "purchase_min_spend",
+            "per_gift_num"
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "add_on_deal_name": {
+        "maxLength": 25,
+        "minLength": 1,
+        "type": "string"
+      },
+      "end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "per_gift_num": {
+        "maximum": 50,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "promotion_purchase_limit": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "promotion_type": {
+        "enum": [
+          0,
+          1
+        ],
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "purchase_min_spend": {
+        "type": "number"
+      },
+      "start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "add_on_deal_name",
+      "start_time",
+      "end_time",
+      "promotion_type"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "add_on_deal",
+  "pagination_fields": [],
+  "path": "/api/v2/add_on_deal/add_add_on_deal",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "add_on_deal_id": {
+        "maximum": 9007199254740991,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_add_on_deal_add_add_on_deal"
+}

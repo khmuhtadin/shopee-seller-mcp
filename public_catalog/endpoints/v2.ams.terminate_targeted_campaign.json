@@ -1,0 +1,45 @@
+{
+  "api_name": "v2.ams.terminate_targeted_campaign",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ams.terminate_targeted_campaign endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "campaign_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ams",
+  "pagination_fields": [],
+  "path": "/api/v2/ams/terminate_targeted_campaign",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_terminate_targeted_campaign"
+}

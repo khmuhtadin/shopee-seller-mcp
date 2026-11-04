@@ -1,0 +1,197 @@
+{
+  "api_name": "v2.ads.get_product_campaign_daily_performance",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "field": "campaign_id_list",
+      "kind": "csv_ids",
+      "max_items": 100,
+      "when": {}
+    },
+    {
+      "allow_empty_end": false,
+      "allow_equal": false,
+      "from": "start_date",
+      "kind": "ads_date_range",
+      "maximum_months": 1,
+      "to": "end_date"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ads.get_product_campaign_daily_performance endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "campaign_id_list": {
+        "pattern": "^(0|[1-9][0-9]*)(,(0|[1-9][0-9]*))*$",
+        "type": "string"
+      },
+      "end_date": {
+        "type": "string"
+      },
+      "start_date": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "start_date",
+      "end_date",
+      "campaign_id_list"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/get_product_campaign_daily_performance",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "response": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "campaign_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "ad_name": {
+                    "type": "string"
+                  },
+                  "ad_type": {
+                    "type": "string"
+                  },
+                  "campaign_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "campaign_placement": {
+                    "type": "string"
+                  },
+                  "metrics_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "broad_cir": {
+                          "type": "number"
+                        },
+                        "broad_gmv": {
+                          "type": "number"
+                        },
+                        "broad_order": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "broad_order_amount": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "broad_roi": {
+                          "type": "number"
+                        },
+                        "clicks": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "cpc": {
+                          "type": "number"
+                        },
+                        "cpdc": {
+                          "type": "number"
+                        },
+                        "cr": {
+                          "type": "number"
+                        },
+                        "ctr": {
+                          "type": "number"
+                        },
+                        "date": {
+                          "type": "string"
+                        },
+                        "direct_cir": {
+                          "type": "number"
+                        },
+                        "direct_cr": {
+                          "type": "number"
+                        },
+                        "direct_gmv": {
+                          "type": "number"
+                        },
+                        "direct_order": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "direct_order_amount": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "direct_roi": {
+                          "type": "number"
+                        },
+                        "expense": {
+                          "type": "number"
+                        },
+                        "impression": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "region": {
+              "type": "string"
+            },
+            "shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_get_product_campaign_daily_performance"
+}

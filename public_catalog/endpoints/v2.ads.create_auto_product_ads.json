@@ -1,0 +1,79 @@
+{
+  "api_name": "v2.ads.create_auto_product_ads",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "allow_empty_end": true,
+      "allow_equal": true,
+      "from": "start_date",
+      "kind": "ads_date_range",
+      "maximum_months": null,
+      "to": "end_date"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ads.create_auto_product_ads endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "budget": {
+        "type": "number"
+      },
+      "end_date": {
+        "type": "string"
+      },
+      "reference_id": {
+        "type": "string"
+      },
+      "start_date": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "reference_id",
+      "budget",
+      "start_date"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/create_auto_product_ads",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "response": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "campaign_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_create_auto_product_ads"
+}

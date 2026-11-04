@@ -1,0 +1,95 @@
+{
+  "api_name": "v2.ams.edit_affiliate_list_of_targeted_campaign",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [
+    "fail_affiliate_list"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ams.edit_affiliate_list_of_targeted_campaign endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "affiliate_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "affiliate_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [
+            "affiliate_id"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "edit_type": {
+        "enum": [
+          "add",
+          "delete"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "campaign_id",
+      "edit_type",
+      "affiliate_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ams",
+  "pagination_fields": [],
+  "path": "/api/v2/ams/edit_affiliate_list_of_targeted_campaign",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "fail_affiliate_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "affiliate_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "fail_error": {
+              "type": "string"
+            },
+            "fail_message": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_edit_affiliate_list_of_targeted_campaign"
+}

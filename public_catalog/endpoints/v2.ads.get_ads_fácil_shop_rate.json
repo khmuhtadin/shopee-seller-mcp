@@ -1,0 +1,54 @@
+{
+  "api_name": "v2.ads.get_ads_fácil_shop_rate",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ads.get_ads_fácil_shop_rate endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/get_ads_facil_shop_rate",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "rate": {
+        "type": "number"
+      },
+      "update_at": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_get_ads_f_cil_shop_rate_bfdb85da07a5"
+}

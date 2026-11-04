@@ -1,0 +1,82 @@
+{
+  "api_name": "v2.buybox.get_buybox_model_performance",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.buybox.get_buybox_model_performance endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "model_id_list": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "model_id_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "buybox",
+  "pagination_fields": [],
+  "path": "/api/v2/buybox/get_buybox_model_performance",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "data_updated_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "performance_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "past_7_days_sold_count": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_buybox_get_buybox_model_performance"
+}

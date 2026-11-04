@@ -1,0 +1,202 @@
+{
+  "api_name": "v2.ads.get_create_product_ad_budget_suggestion",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ads.get_create_product_ad_budget_suggestion endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "product_selection": {
+              "const": "manual"
+            }
+          },
+          "required": [
+            "product_selection"
+          ]
+        },
+        "then": {
+          "required": [
+            "item_id"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "bidding_method": {
+              "const": "manual"
+            },
+            "product_selection": {
+              "const": "manual"
+            }
+          },
+          "required": [
+            "product_selection",
+            "bidding_method"
+          ]
+        },
+        "then": {
+          "required": [
+            "enhanced_cpc"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "bidding_method": {
+              "const": "manual"
+            },
+            "campaign_placement": {
+              "const": "discovery"
+            },
+            "product_selection": {
+              "const": "manual"
+            }
+          },
+          "required": [
+            "product_selection",
+            "bidding_method",
+            "campaign_placement"
+          ]
+        },
+        "then": {
+          "required": [
+            "discovery_ads_location_names"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "bidding_method": {
+              "const": "manual"
+            },
+            "campaign_placement": {
+              "const": "all"
+            },
+            "product_selection": {
+              "const": "manual"
+            }
+          },
+          "required": [
+            "product_selection",
+            "bidding_method",
+            "campaign_placement"
+          ]
+        },
+        "then": {
+          "required": [
+            "discovery_ads_location_names"
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "bidding_method": {
+        "enum": [
+          "auto",
+          "manual"
+        ],
+        "type": "string"
+      },
+      "campaign_placement": {
+        "enum": [
+          "search",
+          "discovery",
+          "all"
+        ],
+        "type": "string"
+      },
+      "discovery_ads_location_names": {
+        "pattern": "^(daily_discover|you_may_also_like)(,(daily_discover|you_may_also_like))*$",
+        "type": "string"
+      },
+      "enhanced_cpc": {
+        "enum": [
+          "true",
+          "false"
+        ],
+        "type": "string"
+      },
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "product_selection": {
+        "enum": [
+          "auto",
+          "manual"
+        ],
+        "type": "string"
+      },
+      "reference_id": {
+        "type": "string"
+      },
+      "roas_target": {
+        "type": "number"
+      }
+    },
+    "required": [
+      "reference_id",
+      "product_selection",
+      "campaign_placement",
+      "bidding_method"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/get_create_product_ad_budget_suggestion",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "budget": {
+        "additionalProperties": true,
+        "properties": {
+          "max_budget": {
+            "type": "number"
+          },
+          "min_budget": {
+            "type": "number"
+          },
+          "recommended_budget": {
+            "type": "number"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_get_create_product_ad_budget_suggestion"
+}

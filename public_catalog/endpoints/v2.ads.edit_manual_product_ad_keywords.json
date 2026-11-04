@@ -1,0 +1,160 @@
+{
+  "api_name": "v2.ads.edit_manual_product_ad_keywords",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [
+    "/response/*/failed_edits"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ads.edit_manual_product_ad_keywords endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "reference_id": {
+        "type": "string"
+      },
+      "selected_keywords": {
+        "items": {
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "edit_action": {
+                    "const": "change_bid_price"
+                  }
+                },
+                "required": [
+                  "edit_action"
+                ]
+              },
+              "then": {
+                "required": [
+                  "bid_price_per_click"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "edit_action": {
+                    "const": "change_match_type"
+                  }
+                },
+                "required": [
+                  "edit_action"
+                ]
+              },
+              "then": {
+                "required": [
+                  "match_type"
+                ]
+              }
+            }
+          ],
+          "properties": {
+            "bid_price_per_click": {
+              "type": "number"
+            },
+            "edit_action": {
+              "enum": [
+                "add",
+                "delete",
+                "restore",
+                "change_bid_price",
+                "change_match_type"
+              ],
+              "type": "string"
+            },
+            "keyword": {
+              "type": "string"
+            },
+            "match_type": {
+              "enum": [
+                "exact",
+                "broad"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "edit_action",
+            "keyword"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "reference_id",
+      "campaign_id",
+      "selected_keywords"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ads",
+  "pagination_fields": [],
+  "path": "/api/v2/ads/edit_manual_product_ad_keywords",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "response": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "campaign_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "failed_edits": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "error": {
+                    "type": "string"
+                  },
+                  "keyword": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_edit_manual_product_ad_keywords"
+}

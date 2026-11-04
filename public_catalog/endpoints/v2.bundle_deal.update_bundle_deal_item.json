@@ -1,0 +1,105 @@
+{
+  "api_name": "v2.bundle_deal.update_bundle_deal_item",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [
+    "failed_list"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.bundle_deal.update_bundle_deal_item endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "bundle_deal_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "item_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "status": {
+              "enum": [
+                0,
+                1
+              ],
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "item_id",
+            "status"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "bundle_deal_id",
+      "item_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "bundle_deal",
+  "pagination_fields": [],
+  "path": "/api/v2/bundle_deal/update_bundle_deal_item",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "failed_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "fail_error": {
+              "type": "string"
+            },
+            "fail_message": {
+              "type": "string"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "success_list": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_bundle_deal_update_bundle_deal_item"
+}

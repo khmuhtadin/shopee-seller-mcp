@@ -1,0 +1,245 @@
+{
+  "api_name": "v2.bundle_deal.update_bundle_deal",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.bundle_deal.update_bundle_deal endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "rule_type": {
+              "const": 1
+            }
+          },
+          "required": [
+            "rule_type"
+          ]
+        },
+        "then": {
+          "required": [
+            "fix_price"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "rule_type": {
+              "const": 2
+            }
+          },
+          "required": [
+            "rule_type"
+          ]
+        },
+        "then": {
+          "required": [
+            "discount_percentage"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "rule_type": {
+              "const": 3
+            }
+          },
+          "required": [
+            "rule_type"
+          ]
+        },
+        "then": {
+          "required": [
+            "discount_value"
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "additional_tiers": {
+        "additionalProperties": false,
+        "properties": {
+          "discount_percentage": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "discount_value": {
+            "type": "number"
+          },
+          "fix_price": {
+            "type": "number"
+          },
+          "min_amount": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "min_amount"
+        ],
+        "type": "object"
+      },
+      "bundle_deal_id": {
+        "maximum": 2147483647,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "discount_percentage": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "discount_value": {
+        "type": "number"
+      },
+      "end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "fix_price": {
+        "type": "number"
+      },
+      "min_amount": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "purchase_limit": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "rule_type": {
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "bundle_deal_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "bundle_deal",
+  "pagination_fields": [],
+  "path": "/api/v2/bundle_deal/update_bundle_deal",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "bundle_deal_id": {
+        "maximum": 2147483647,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "bundle_deal_rule": {
+        "additionalProperties": true,
+        "properties": {
+          "additional_tiers": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "discount_percentage": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "discount_value": {
+                  "type": "number"
+                },
+                "fix_price": {
+                  "type": "number"
+                },
+                "min_amount": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "discount_percentage": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "discount_value": {
+            "type": "number"
+          },
+          "fix_price": {
+            "type": "number"
+          },
+          "min_amount": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "rule_type": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "purchase_limit": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_bundle_deal_update_bundle_deal"
+}

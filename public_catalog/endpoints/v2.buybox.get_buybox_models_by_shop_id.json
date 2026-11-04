@@ -1,0 +1,115 @@
+{
+  "api_name": "v2.buybox.get_buybox_models_by_shop_id",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.buybox.get_buybox_models_by_shop_id endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "limit": {
+        "maximum": 250,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "offset": {
+        "maximum": 2147483647,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "buybox",
+  "pagination_fields": [
+    "page_info"
+  ],
+  "path": "/api/v2/buybox/get_buybox_models_by_shop_id",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "model_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "is_eligible": {
+              "type": "boolean"
+            },
+            "is_model_mapped": {
+              "type": "boolean"
+            },
+            "last_updated_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_toggle_on_status": {
+              "type": "boolean"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "page_info": {
+        "additionalProperties": true,
+        "properties": {
+          "limit": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "offset": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "total_count": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "shop_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_buybox_get_buybox_models_by_shop_id"
+}

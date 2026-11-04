@@ -1,0 +1,70 @@
+{
+  "api_name": "v2.ams.add_all_products_to_open_campaign",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "period_start_time",
+      "kind": "ordered_pair",
+      "to": "period_end_time"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ams.add_all_products_to_open_campaign endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "commission_rate": {
+        "multipleOf": 0.01,
+        "type": "number"
+      },
+      "period_end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "period_start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "commission_rate"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ams",
+  "pagination_fields": [],
+  "path": "/api/v2/ams/add_all_products_to_open_campaign",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "task_id": {
+        "type": "string"
+      },
+      "task_type": {
+        "enum": [
+          "batch_add_open_campaigns"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_add_all_products_to_open_campaign"
+}

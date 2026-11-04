@@ -1,0 +1,205 @@
+{
+  "api_name": "v2.ams.get_recommended_affiliate_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.ams.get_recommended_affiliate_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "page_size": {
+        "maximum": 200,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "ams",
+  "pagination_fields": [
+    "total_count"
+  ],
+  "path": "/api/v2/ams/get_recommended_affiliate_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "affiliate_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "affiliate_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "affiliate_name": {
+              "type": "string"
+            },
+            "gmv_range": {
+              "items": {
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "type": "string",
+                "x-wire-int64": true
+              },
+              "type": "array"
+            },
+            "is_good_fulfillment": {
+              "type": "boolean"
+            },
+            "is_orange_tick_kol": {
+              "type": "boolean"
+            },
+            "order_range": {
+              "items": {
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "type": "string",
+                "x-wire-int64": true
+              },
+              "type": "array"
+            },
+            "popular_social_media": {
+              "additionalProperties": true,
+              "properties": {
+                "follower_count": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-int64": true
+                },
+                "platform": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "portrait_url": {
+              "type": "string"
+            },
+            "promote_category_ids": {
+              "items": {
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "type": "string",
+                "x-wire-int64": true
+              },
+              "type": "array"
+            },
+            "social_medias": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "follower_count": {
+                    "pattern": "^(0|-?[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-int64": true
+                  },
+                  "platform": {
+                    "type": "string"
+                  },
+                  "social_media_user_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "top_popular_contents": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "comment_count": {
+                    "pattern": "^(0|-?[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-int64": true
+                  },
+                  "cover_url": {
+                    "type": "string"
+                  },
+                  "like_count": {
+                    "pattern": "^(0|-?[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-int64": true
+                  },
+                  "media_url": {
+                    "type": "string"
+                  },
+                  "platform": {
+                    "type": "string"
+                  },
+                  "view_count": {
+                    "pattern": "^(0|-?[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-int64": true
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "top_selling_products": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "total_click": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "user_name": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total_count": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ams_get_recommended_affiliate_list"
+}

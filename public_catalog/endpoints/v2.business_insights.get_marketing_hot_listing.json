@@ -1,0 +1,294 @@
+{
+  "api_name": "v2.business_insights.get_marketing_hot_listing",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "business_status": {
+    "code_field": "code",
+    "message_field": "msg",
+    "success_value": 0
+  },
+  "constraints": [
+    {
+      "from": "start_time",
+      "kind": "ordered_pair",
+      "to": "end_time"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.business_insights.get_marketing_hot_listing endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "end_time": {
+        "pattern": "^(?:0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "period": {
+        "enum": [
+          "real_time",
+          "yesterday",
+          "past7days",
+          "past30days",
+          "monthday",
+          "week"
+        ],
+        "type": "string"
+      },
+      "product_id_list": {
+        "pattern": "^[0-9]+(?:,[0-9]+)*$",
+        "type": "string"
+      },
+      "start_time": {
+        "pattern": "^(?:0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [
+      "start_time",
+      "end_time",
+      "period"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "business_insights",
+  "pagination_fields": [],
+  "path": "/api/v2/business_insights/get_marketing_hot_listing",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "code": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "msg": {
+        "type": "string"
+      },
+      "result": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "key_metrics": {
+              "additionalProperties": true,
+              "properties": {
+                "key_metrics": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "buyers": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "buyers_pct_diff": {
+                      "type": "number"
+                    },
+                    "click_through_rate": {
+                      "type": "number"
+                    },
+                    "click_through_rate_pct_diff": {
+                      "type": "number"
+                    },
+                    "conversion_rate": {
+                      "type": "number"
+                    },
+                    "conversion_rate_pct_diff": {
+                      "type": "number"
+                    },
+                    "orders": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "orders_pct_diff": {
+                      "type": "number"
+                    },
+                    "product_clicks": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "product_clicks_pct_diff": {
+                      "type": "number"
+                    },
+                    "product_impression": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "product_impression_pct_diff": {
+                      "type": "number"
+                    },
+                    "sales": {
+                      "type": "number"
+                    },
+                    "sales_pct_diff": {
+                      "type": "number"
+                    },
+                    "units": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "units_pct_diff": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "time_series": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "buyers": {
+                        "maximum": 2147483647,
+                        "minimum": -2147483648,
+                        "type": "integer"
+                      },
+                      "click_through_rate": {
+                        "type": "number"
+                      },
+                      "conversion_rate": {
+                        "type": "number"
+                      },
+                      "orders": {
+                        "maximum": 2147483647,
+                        "minimum": -2147483648,
+                        "type": "integer"
+                      },
+                      "product_clicks": {
+                        "maximum": 2147483647,
+                        "minimum": -2147483648,
+                        "type": "integer"
+                      },
+                      "product_impression": {
+                        "maximum": 2147483647,
+                        "minimum": -2147483648,
+                        "type": "integer"
+                      },
+                      "sales": {
+                        "type": "number"
+                      },
+                      "t": {
+                        "pattern": "^(?:0|-?[1-9][0-9]*)$",
+                        "type": "string",
+                        "x-wire-int64": true
+                      },
+                      "units": {
+                        "maximum": 2147483647,
+                        "minimum": -2147483648,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "order_type": {
+              "type": "string"
+            },
+            "performance": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "buyers": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "click_through_rate": {
+                    "type": "number"
+                  },
+                  "conversion_rate": {
+                    "type": "number"
+                  },
+                  "image": {
+                    "type": "string"
+                  },
+                  "item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "item_name": {
+                    "type": "string"
+                  },
+                  "orders": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "product_clicks": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "product_impression": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "sales": {
+                    "type": "number"
+                  },
+                  "status": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "units": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "variation_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "code"
+    ],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_business_insights_get_marketing_hot_listing"
+}

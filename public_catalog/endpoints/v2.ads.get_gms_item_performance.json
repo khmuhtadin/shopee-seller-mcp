@@ -1,0 +1,178 @@
+{
+  "api_name": "v2.ads.get_gms_item_performance",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "allow_empty_end": false,
+      "allow_equal": true,
+      "from": "start_date",
+      "kind": "ads_date_range",
+      "maximum_months": 3,
+      "to": "end_date"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.ads.get_gms_item_performance endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "end_date": {
+        "type": "string"
+      },
+      "limit": {
+        "maximum": 100,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "offset": {
+        "maximum": 2147483647,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "start_date": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "start_date",
+      "end_date"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "ads",
+  "pagination_fields": [
+    "has_next_page",
+    "total"
+  ],
+  "path": "/api/v2/ads/get_gms_item_performance",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "campaign_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "has_next_page": {
+        "type": "boolean"
+      },
+      "result_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "report": {
+              "additionalProperties": true,
+              "properties": {
+                "broad_cir": {
+                  "type": "number"
+                },
+                "broad_gmv": {
+                  "type": "number"
+                },
+                "broad_order": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-int64": true
+                },
+                "broad_order_amount": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-int64": true
+                },
+                "broad_roi": {
+                  "type": "number"
+                },
+                "clicks": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-int64": true
+                },
+                "cpc": {
+                  "type": "number"
+                },
+                "cpdc": {
+                  "type": "number"
+                },
+                "cr": {
+                  "type": "number"
+                },
+                "direct_cir": {
+                  "type": "number"
+                },
+                "direct_cr": {
+                  "type": "number"
+                },
+                "direct_order": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-int64": true
+                },
+                "direct_order_amount": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-int64": true
+                },
+                "direct_roi": {
+                  "type": "number"
+                },
+                "expense": {
+                  "type": "number"
+                },
+                "impression": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-int64": true
+                }
+              },
+              "required": [],
+              "type": "object"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_ads_get_gms_item_performance"
+}

@@ -1,0 +1,51 @@
+{
+  "api_name": "v2.add_on_deal.delete_add_on_deal",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.add_on_deal.delete_add_on_deal endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "add_on_deal_id": {
+        "maximum": 9007199254740991,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "add_on_deal_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "add_on_deal",
+  "pagination_fields": [],
+  "path": "/api/v2/add_on_deal/delete_add_on_deal",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "add_on_deal_id": {
+        "maximum": 9007199254740991,
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_add_on_deal_delete_add_on_deal"
+}

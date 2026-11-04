@@ -16,7 +16,7 @@ The image (`Dockerfile`) installs the package, creates an unprivileged user `app
 1. Started as root, it creates `/data`, gives it to `app` with mode `0700` and re-executes itself as `app` (volumes are often mounted root-owned). Started with `--user 10001`, it skips this step; `/data` must then already be writable by that user.
 2. Creates `/data/shops` (`0700`) and an empty `/data/shops.json` (`0600`) if missing.
 3. Sets the operator passphrase from `SHOPEE_MCP_ADMIN_PASSPHRASE` if none is stored yet. To replace a stored passphrase, set `SHOPEE_MCP_ADMIN_PASSPHRASE_RESET=true` for one boot.
-4. Runs `shopee-mcp-http serve --host 0.0.0.0 --port $PORT ...`. The public URL falls back to `RENDER_EXTERNAL_URL` or `https://$RAILWAY_PUBLIC_DOMAIN` when `SHOPEE_MCP_PUBLIC_URL` is empty.
+4. Runs `shopee-mcp-http serve --host 0.0.0.0 --port $PORT ...`. The public URL falls back to a platform-provided URL (`RENDER_EXTERNAL_URL` or `https://$RAILWAY_PUBLIC_DOMAIN`) when `SHOPEE_MCP_PUBLIC_URL` is empty.
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
@@ -32,28 +32,9 @@ The image (`Dockerfile`) installs the package, creates an unprivileged user `app
 
 The container's health check calls `GET /healthz`.
 
-## Render
+## Hosted container platforms
 
-The repository includes a Blueprint (`render.yaml`): a Docker web service on the `starter` plan in the Singapore region with a 1 GB disk at `/data`, health check `/healthz`, a generated `SHOPEE_MCP_ADMIN_PASSPHRASE` and prompts for `SHOPEE_MCP_PUBLIC_URL`, `SHOPEE_PARTNER_ID` and `SHOPEE_PARTNER_KEY`.
-
-1. Use the **Deploy to Render** button in the README, or *New > Blueprint* with your fork.
-2. Fill in the prompted variables. `SHOPEE_MCP_PUBLIC_URL` may stay empty to use the `onrender.com` URL; set it when you add a custom domain.
-3. Copy the generated passphrase from the Environment tab, then open `/admin/shops`.
-4. Create bearer tokens from the service Shell: `shopee-mcp-http token create --auth-file /data/auth.db --label laptop`.
-
-Notes: services with a disk run a single instance and are briefly unavailable during deploys. Change the region in `render.yaml` if your users are elsewhere.
-
-## Railway
-
-`railway.json` selects the Dockerfile builder and the `/healthz` health check. Volumes are not part of `railway.json`, so attach one yourself:
-
-1. Create a project from your fork (*Deploy from GitHub repo*).
-2. Open the service and add a **Volume** with mount path `/data`.
-3. Under *Settings > Networking*, generate a domain (or add your own). `SHOPEE_MCP_PUBLIC_URL` defaults to `https://$RAILWAY_PUBLIC_DOMAIN`; set it explicitly for a custom domain.
-4. Add the variables `SHOPEE_MCP_ADMIN_PASSPHRASE`, `SHOPEE_PARTNER_ID`, `SHOPEE_PARTNER_KEY`. Railway provides `PORT`.
-5. Deploy, then open `https://<domain>/admin/shops`.
-
-The entrypoint starts as root to fix the volume's ownership and then drops to the `app` user, so `RAILWAY_RUN_UID` is not needed.
+Any platform that runs the Dockerfile and mounts a **persistent volume at `/data`** works. Set the variables above and expose `PORT`. Platforms whose free tier has no persistent disk (the filesystem is wiped on restart or sleep) are not supported: shop tokens, OAuth clients and sessions would be lost. A database storage backend for such platforms may be added later.
 
 ## Docker
 

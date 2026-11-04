@@ -50,7 +50,7 @@ The per-client part of the passphrase throttle needs the real client address.
 - `--client-ip-header <name>` is honoured only when the direct peer is loopback or inside a `--trusted-proxy` CIDR. On a non-loopback `--host`, `--client-ip-header` requires `--trusted-proxy`.
 - For list headers such as `X-Forwarded-For`, the right-most address that is not a trusted proxy is used, so values a client prepends cannot choose the throttle key.
 - Behind nginx and Cloudflare, restore the client address with `real_ip_header CF-Connecting-IP` trusted only from Cloudflare's ranges, and pass `$remote_addr` as `X-Real-IP` (see [DEPLOY.md](DEPLOY.md#vps-with-systemd-and-nginx)).
-- On platforms where the proxy addresses are unknown (Render, Railway), leave the header unset. All clients then share the proxy's throttle key: an attacker can temporarily lock the forms (15 minutes) but gains no extra guesses, and the global limit still applies. Use a long random passphrase.
+- On platforms where the proxy addresses are unknown (managed container platforms), leave the header unset. All clients then share the proxy's throttle key: an attacker can temporarily lock the forms (15 minutes) but gains no extra guesses, and the global limit still applies. Use a long random passphrase.
 
 ## Files and secrets
 

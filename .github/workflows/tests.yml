@@ -1,0 +1,41 @@
+name: Tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e . pytest pytest-asyncio
+      - run: pytest -q
+      - name: Lint shell scripts
+        run: |
+          sh -n docker/entrypoint.sh
+          sh -n scripts/install-agent.sh
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t shopee-seller-mcp:ci .
+      - name: Smoke test (empty data volume, /healthz)
+        run: |
+          docker run -d --name smcp -p 8080:8080 \
+            -e SHOPEE_MCP_PUBLIC_URL=https://mcp.example.com \
+            -e SHOPEE_MCP_ADMIN_PASSPHRASE=ci-only-passphrase-123 \
+            shopee-seller-mcp:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/healthz; then exit 0; fi
+            sleep 2
+          done
+          docker logs smcp
+          exit 1

@@ -1,0 +1,58 @@
+{
+  "api_name": "v2.video.get_cover_list",
+  "auth_strategy": "user",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.video.get_cover_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "video_upload_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "video_upload_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "video",
+  "pagination_fields": [],
+  "path": "/api/v2/video/get_cover_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "image_url_list": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_video_get_cover_list"
+}

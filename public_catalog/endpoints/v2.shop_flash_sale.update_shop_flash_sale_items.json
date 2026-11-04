@@ -1,0 +1,261 @@
+{
+  "api_name": "v2.shop_flash_sale.update_shop_flash_sale_items",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [
+    "failed_items"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.shop_flash_sale.update_shop_flash_sale_items endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "flash_sale_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "items": {
+        "items": {
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "item_input_promo_price"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "item_stock"
+                    ]
+                  }
+                ]
+              },
+              "then": {
+                "properties": {
+                  "item_status": {
+                    "const": 1
+                  }
+                },
+                "required": [
+                  "item_status"
+                ]
+              }
+            }
+          ],
+          "oneOf": [
+            {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "item_status"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "item_input_promo_price"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "item_stock"
+                    ]
+                  }
+                ]
+              },
+              "required": [
+                "models"
+              ]
+            },
+            {
+              "not": {
+                "required": [
+                  "models"
+                ]
+              },
+              "required": [
+                "item_status"
+              ]
+            }
+          ],
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_input_promo_price": {
+              "type": "number"
+            },
+            "item_status": {
+              "enum": [
+                0,
+                1
+              ],
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "item_stock": {
+              "maximum": 2147483647,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "models": {
+              "items": {
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "anyOf": [
+                        {
+                          "required": [
+                            "input_promo_price"
+                          ]
+                        },
+                        {
+                          "required": [
+                            "stock"
+                          ]
+                        }
+                      ]
+                    },
+                    "then": {
+                      "properties": {
+                        "status": {
+                          "const": 1
+                        }
+                      },
+                      "required": [
+                        "status"
+                      ]
+                    }
+                  }
+                ],
+                "properties": {
+                  "input_promo_price": {
+                    "type": "number"
+                  },
+                  "model_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "status": {
+                    "enum": [
+                      0,
+                      1
+                    ],
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "stock": {
+                    "maximum": 2147483647,
+                    "minimum": 1,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "model_id",
+                  "status"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "purchase_limit": {
+              "maximum": 2147483647,
+              "minimum": 0,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "item_id"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "flash_sale_id",
+      "items"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "shop_flash_sale",
+  "pagination_fields": [],
+  "path": "/api/v2/shop_flash_sale/update_shop_flash_sale_items",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "failed_items": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "err_code": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "err_msg": {
+              "type": "string"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "unqualified_conditions": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "unqualified_code": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "unqualified_msg": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_flash_sale_update_shop_flash_sale_items"
+}

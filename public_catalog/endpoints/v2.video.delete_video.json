@@ -1,0 +1,113 @@
+{
+  "api_name": "v2.video.delete_video",
+  "auth_strategy": "user",
+  "batch_failure_fields": [
+    "failure_list"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.video.delete_video endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "oneOf": [
+      {
+        "not": {
+          "required": [
+            "post_id_list"
+          ]
+        },
+        "required": [
+          "video_upload_id_list"
+        ]
+      },
+      {
+        "not": {
+          "required": [
+            "video_upload_id_list"
+          ]
+        },
+        "required": [
+          "post_id_list"
+        ]
+      }
+    ],
+    "properties": {
+      "post_id_list": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "video_upload_id_list": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "video",
+  "pagination_fields": [],
+  "path": "/api/v2/video/delete_video",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "failure_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "fail_post_id": {
+              "type": "string"
+            },
+            "fail_video_upload_id": {
+              "type": "string"
+            },
+            "failed_reason": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "success_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "success_post_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "success_video_upload_id": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_video_delete_video"
+}

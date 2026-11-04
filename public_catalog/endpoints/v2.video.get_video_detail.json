@@ -1,0 +1,206 @@
+{
+  "api_name": "v2.video.get_video_detail",
+  "auth_strategy": "user",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.video.get_video_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "oneOf": [
+      {
+        "not": {
+          "required": [
+            "post_id"
+          ]
+        },
+        "required": [
+          "video_upload_id"
+        ]
+      },
+      {
+        "not": {
+          "required": [
+            "video_upload_id"
+          ]
+        },
+        "required": [
+          "post_id"
+        ]
+      }
+    ],
+    "properties": {
+      "post_id": {
+        "type": "string"
+      },
+      "video_upload_id": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "video",
+  "pagination_fields": [],
+  "path": "/api/v2/video/get_video_detail",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "aigc_label": {
+        "type": "boolean"
+      },
+      "response": {
+        "additionalProperties": true,
+        "properties": {
+          "allow_info": {
+            "additionalProperties": true,
+            "properties": {
+              "allow_duet": {
+                "type": "boolean"
+              },
+              "allow_stitch": {
+                "type": "boolean"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "caption": {
+            "type": "string"
+          },
+          "comments": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "cover_image_url": {
+            "type": "string"
+          },
+          "duration": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "has_performance": {
+            "type": "boolean"
+          },
+          "item_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "custom_item_name": {
+                  "type": "string"
+                },
+                "item_cover_image_url": {
+                  "type": "string"
+                },
+                "item_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                },
+                "item_name": {
+                  "type": "string"
+                },
+                "max_price": {
+                  "type": "number"
+                },
+                "min_price": {
+                  "type": "number"
+                },
+                "shop_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                },
+                "stock": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-int64": true
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "likes": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "post_id": {
+            "type": "string"
+          },
+          "post_time": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "scheduled_info": {
+            "additionalProperties": true,
+            "properties": {
+              "scheduled_post": {
+                "type": "boolean"
+              },
+              "scheduled_post_time": {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "status": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "update_time": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "video_upload_id": {
+            "type": "string"
+          },
+          "video_url": {
+            "type": "string"
+          },
+          "views": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_video_get_video_detail"
+}

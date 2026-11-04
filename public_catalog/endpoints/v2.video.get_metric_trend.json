@@ -1,0 +1,201 @@
+{
+  "api_name": "v2.video.get_metric_trend",
+  "auth_strategy": "user",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "end_date": "end_date",
+      "kind": "video_period_end",
+      "period_type": "period_type"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.video.get_metric_trend endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "end_date": {
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+        "type": "string"
+      },
+      "period_type": {
+        "enum": [
+          "Day",
+          "Week",
+          "Month",
+          "Last7d",
+          "Last15d",
+          "Last30d"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "period_type",
+      "end_date"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "video",
+  "pagination_fields": [],
+  "path": "/api/v2/video/get_metric_trend",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "video_total_metric_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "avg_view_duration": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "confirmed_abs": {
+              "type": "number"
+            },
+            "confirmed_buyers": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "confirmed_co_rate": {
+              "type": "number"
+            },
+            "confirmed_gpm": {
+              "type": "number"
+            },
+            "confirmed_item_sold": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "confirmed_orders": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "confirmed_revenue_generating_videos": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "confirmed_sales": {
+              "type": "number"
+            },
+            "ctr": {
+              "type": "number"
+            },
+            "data_period": {
+              "type": "string"
+            },
+            "effective_views": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "placed_abs": {
+              "type": "number"
+            },
+            "placed_buyers": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "placed_co_rate": {
+              "type": "number"
+            },
+            "placed_gpm": {
+              "type": "number"
+            },
+            "placed_item_sold": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "placed_orders": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "placed_revenue_generating_videos": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "placed_sales": {
+              "type": "number"
+            },
+            "total_atc": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "total_comments": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "total_likes": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "total_shares": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "total_viewers": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "total_views": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "video_new_followers": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "video_with_products": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_video_get_metric_trend"
+}

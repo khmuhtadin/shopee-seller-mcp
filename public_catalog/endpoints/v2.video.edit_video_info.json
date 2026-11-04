@@ -1,0 +1,186 @@
+{
+  "api_name": "v2.video.edit_video_info",
+  "auth_strategy": "user",
+  "batch_failure_fields": [
+    "failure_list"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.video.edit_video_info endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "aigc_label": {
+        "type": "boolean"
+      },
+      "video_upload_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "allow_info": {
+              "additionalProperties": false,
+              "properties": {
+                "allow_duet": {
+                  "type": "boolean"
+                },
+                "allow_stitch": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "allow_duet",
+                "allow_stitch"
+              ],
+              "type": "object"
+            },
+            "caption": {
+              "type": "string"
+            },
+            "cover_image_url": {
+              "type": "string"
+            },
+            "item_info": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "custom_item_name": {
+                    "type": "string"
+                  },
+                  "item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  }
+                },
+                "required": [
+                  "item_id"
+                ],
+                "type": "object"
+              },
+              "maxItems": 6,
+              "type": "array"
+            },
+            "scheduled_info": {
+              "additionalProperties": false,
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "scheduled_post": {
+                        "const": true
+                      }
+                    },
+                    "required": [
+                      "scheduled_post"
+                    ]
+                  },
+                  "then": {
+                    "required": [
+                      "scheduled_post_time"
+                    ]
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "scheduled_post": {
+                        "const": false
+                      }
+                    },
+                    "required": [
+                      "scheduled_post"
+                    ]
+                  },
+                  "then": {
+                    "not": {
+                      "required": [
+                        "scheduled_post_time"
+                      ]
+                    }
+                  }
+                }
+              ],
+              "properties": {
+                "scheduled_post": {
+                  "type": "boolean"
+                },
+                "scheduled_post_time": {
+                  "maximum": 9007199254740991,
+                  "minimum": -9007199254740991,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "scheduled_post"
+              ],
+              "type": "object"
+            },
+            "video_upload_id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "video_upload_id",
+            "cover_image_url",
+            "allow_info",
+            "scheduled_info"
+          ],
+          "type": "object"
+        },
+        "maxItems": 5,
+        "type": "array"
+      }
+    },
+    "required": [
+      "video_upload_list",
+      "aigc_label"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "video",
+  "pagination_fields": [],
+  "path": "/api/v2/video/edit_video_info",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "failure_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "fail_video_upload_id": {
+              "type": "string"
+            },
+            "failed_reason": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "success_list": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_video_edit_video_info"
+}

@@ -1,0 +1,76 @@
+{
+  "api_name": "v2.video.get_video_detail_metric_trend",
+  "auth_strategy": "user",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.video.get_video_detail_metric_trend endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "metric_name": {
+        "enum": [
+          "Views",
+          "Likes",
+          "Comments",
+          "Shares",
+          "FollowersGrowth",
+          "PlacedOrders",
+          "PlacedSales",
+          "UniqueBuyers",
+          "ConversionRate",
+          "SoldItems",
+          "SalesPerOrder",
+          "SalesPerBuyer"
+        ],
+        "type": "string"
+      },
+      "post_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "post_id",
+      "metric_name"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "video",
+  "pagination_fields": [],
+  "path": "/api/v2/video/get_video_detail_metric_trend",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "metric_trend": {
+        "additionalProperties": {
+          "type": "number"
+        },
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_video_get_video_detail_metric_trend"
+}

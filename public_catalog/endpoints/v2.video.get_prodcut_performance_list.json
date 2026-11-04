@@ -1,0 +1,180 @@
+{
+  "api_name": "v2.video.get_prodcut_performance_list",
+  "auth_strategy": "user",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "end_date": "end_date",
+      "kind": "video_period_end",
+      "period_type": "period_type"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.video.get_prodcut_performance_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "end_date": {
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+        "type": "string"
+      },
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "item_name": {
+        "type": "string"
+      },
+      "order_by": {
+        "enum": [
+          "PlacedOrders",
+          "PlacedSales",
+          "PlacedUniqueBuyers",
+          "ConfirmedOrders",
+          "ConfirmedSales",
+          "ConfirmedUniqueBuyers"
+        ],
+        "type": "string"
+      },
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 20,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "period_type": {
+        "enum": [
+          "Day",
+          "Week",
+          "Month",
+          "Last7d",
+          "Last15d",
+          "Last30d"
+        ],
+        "type": "string"
+      },
+      "sort": {
+        "enum": [
+          "asc",
+          "desc"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "page_no",
+      "page_size",
+      "period_type",
+      "end_date",
+      "order_by",
+      "sort"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "video",
+  "pagination_fields": [
+    "total_count",
+    "has_more"
+  ],
+  "path": "/api/v2/video/get_prodcut_performance_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "has_more": {
+        "type": "boolean"
+      },
+      "list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "confirmed_orders": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "confirmed_sales": {
+              "type": "number"
+            },
+            "confirmed_unique_buyers": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "fetched_date_range": {
+              "type": "string"
+            },
+            "item_cover_image_url": {
+              "type": "string"
+            },
+            "item_description": {
+              "type": "string"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "placed_orders": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "placed_sales": {
+              "type": "number"
+            },
+            "placed_unique_buyers": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total_count": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_video_get_prodcut_performance_list"
+}

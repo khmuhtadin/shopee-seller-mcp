@@ -1,0 +1,118 @@
+{
+  "api_name": "v2.top_picks.update_top_picks",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.top_picks.update_top_picks endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "is_activated": {
+        "type": "boolean"
+      },
+      "item_id_list": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "type": "array"
+      },
+      "name": {
+        "type": "string"
+      },
+      "top_picks_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "top_picks_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "top_picks",
+  "pagination_fields": [],
+  "path": "/api/v2/top_picks/update_top_picks",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "collection_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "is_activated": {
+              "type": "boolean"
+            },
+            "item_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "current_price": {
+                    "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?$",
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  "inflated_price_of_current_price": {
+                    "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?$",
+                    "type": [
+                      "number",
+                      "string"
+                    ]
+                  },
+                  "item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "item_name": {
+                    "type": "string"
+                  },
+                  "sales": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "name": {
+              "type": "string"
+            },
+            "top_picks_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_top_picks_update_top_picks"
+}

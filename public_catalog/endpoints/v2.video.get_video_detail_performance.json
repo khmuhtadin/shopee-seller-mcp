@@ -1,0 +1,153 @@
+{
+  "api_name": "v2.video.get_video_detail_performance",
+  "auth_strategy": "user",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.video.get_video_detail_performance endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "post_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "post_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "video",
+  "pagination_fields": [],
+  "path": "/api/v2/video/get_video_detail_performance",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "video_info": {
+        "additionalProperties": true,
+        "properties": {
+          "caption": {
+            "type": "string"
+          },
+          "cover_image_url": {
+            "type": "string"
+          },
+          "duration": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "post_id": {
+            "type": "string"
+          },
+          "post_time": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "related_item_count": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "video_url": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "video_performance": {
+        "additionalProperties": true,
+        "properties": {
+          "comments": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "conversion_rate": {
+            "type": "number"
+          },
+          "followers_growth": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "likes": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "placed_orders": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "placed_sales": {
+            "type": "number"
+          },
+          "product_click_rate": {
+            "type": "number"
+          },
+          "product_clicks": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "sales_per_buyer": {
+            "type": "number"
+          },
+          "sales_per_order": {
+            "type": "number"
+          },
+          "shares": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "sold_items": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "unique_buyers": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "views": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_video_get_video_detail_performance"
+}

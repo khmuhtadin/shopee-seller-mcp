@@ -1,0 +1,4467 @@
+{
+  "catalog_format": "public-v1",
+  "endpoint_sha256": {
+    "v2.account_health.get_late_orders.json": "b2498184c763a25179135bc14b2b1ca578c291719240853d62dbabd6f9aa8048",
+    "v2.account_health.get_listings_with_issues.json": "cf7768b695aa53206db4d552acf36381fbb544c1101eb30093b7c3f1ae86f68e",
+    "v2.account_health.get_metric_source_detail.json": "c5ea3dde86e22c945a2a3205f3e872f105ecf1462913f1dfd8044d14571dbbd9",
+    "v2.account_health.get_penalty_point_history.json": "a3d41d1b06c7dc9a88125d6f2d433711bbd50f22378ffb4e6406c42b2b0f9da4",
+    "v2.account_health.get_punishment_history.json": "3c435bc44ceb635a9b94baf5d80406ff9cf6d8146f4a30ecc109705353d70dfd",
+    "v2.account_health.get_shop_performance.json": "2c979b424c388ccdd0427146e7e8cfa29bc7edfc5fb897272fc675e676011025",
+    "v2.add_on_deal.add_add_on_deal.json": "243b28f9ff28447839ee61f39a9b6f2a6892c641fdc1b84e1610c9af405a2cfc",
+    "v2.add_on_deal.add_add_on_deal_main_item.json": "31b6b07341addf2fded069919ba30e4fc78eedd0fe1e8659f14244be17152ad4",
+    "v2.add_on_deal.add_add_on_deal_sub_item.json": "2d9a408054aea32b5dbb40cc96495fbd85c819b13dda169b7647d51d4fbb4473",
+    "v2.add_on_deal.delete_add_on_deal.json": "2afce7806947cd5512e50a76e2eeecfde8ba46c3166796ed1f4f325f4a950a22",
+    "v2.add_on_deal.delete_add_on_deal_main_item.json": "e74abfa33b17b3ef83dcaedf3163a77e0f1e386007fd9c94a0694495c41b903a",
+    "v2.add_on_deal.delete_add_on_deal_sub_item.json": "17d51e5dc5707f9f143c63174e4f771391fa4740c343c16753f2971b1027db99",
+    "v2.add_on_deal.end_add_on_deal.json": "f140cb279438ec53fa4fd16ce0182e7e2a530786f048a91eed6ce396e77c7f4a",
+    "v2.add_on_deal.get_add_on_deal.json": "f20fc99fc1515f8314610e47ce50a8ba63562c324d1776b7f3d5b74f25fb783f",
+    "v2.add_on_deal.get_add_on_deal_list.json": "370892fed0652fcefd9f219d65029140771aae03cc57be6172ec79a3002d76bf",
+    "v2.add_on_deal.get_add_on_deal_main_item.json": "c2a163436564aebb97a2d5b530907f36322b3e3442a2735bcfede23abada3971",
+    "v2.add_on_deal.get_add_on_deal_sub_item.json": "d71b83fa85fbf45760a363d43f771d2c20f55a30a2c81bab36efa65249e52592",
+    "v2.add_on_deal.update_add_on_deal.json": "b9853e794fd2585ed144fb01a825679d6342eaab852fc3d1465dd6dd18455f7c",
+    "v2.add_on_deal.update_add_on_deal_main_item.json": "ba89470030aac052735df50b2807313f283b8f7e6ceca8c042b88f11047f09b2",
+    "v2.add_on_deal.update_add_on_deal_sub_item.json": "e8d32298f3b05c52c2446506fb5d7a87c68b0aff3188eb11080e59c0e743a959",
+    "v2.ads.check_create_gms_product_campaign_eligibility.json": "9cccf601a6e8fdf43f973f5bd20608694531ba3aef790d26622c841398ef1f02",
+    "v2.ads.create_auto_product_ads.json": "87d1d07a6ae36730f50409b26e632827b16f3370bf83dc4561eb31e57708384f",
+    "v2.ads.create_gms_product_campaign.json": "e45610539412e85cd5932d69dc969e4d156d197cf09833f7fc553e0a97b301ed",
+    "v2.ads.create_manual_product_ads.json": "184fc7ddfe3e27d9f016eb7f7a7feb7ea5dcbf64d8d81b34d5db51d0a456066a",
+    "v2.ads.edit_auto_product_ads.json": "d185dc85645f3731670bbd84b972184e3d5984325cc95b50e988d3e5446a358e",
+    "v2.ads.edit_gms_item_product_campaign.json": "699cc4941b34db4852e33914097c371d80968ac20dc18a261c1e9f83199ddad5",
+    "v2.ads.edit_gms_product_campaign.json": "099cda815c495c0d3008ae86ed13bc76e3ad2ebdb1aa419735b2a39e5e368cad",
+    "v2.ads.edit_manual_product_ad_keywords.json": "f75e1f171fd0e6d2a2b28db6ad781cb85a28b8d1da0b4bbf403b733b7f138cc2",
+    "v2.ads.edit_manual_product_ads.json": "53c8aa251cda1bba36946cf83a06cea1cca16d20e9fcc01cb5f84b468a86d8bc",
+    "v2.ads.get_ads_fácil_shop_rate.json": "cb7972842791fcad65be8404d12a50f28b03b423424ecc2d2db6bc07baae013f",
+    "v2.ads.get_all_cpc_ads_daily_performance.json": "96e29c4efbcff4d481fdb3480cc1d8995baf1caa908189059b9570f262668203",
+    "v2.ads.get_all_cpc_ads_hourly_performance.json": "f4677489b0fc717160e14bf471be37cbd6a4aa2f7366edae9fcbd50876ab4e38",
+    "v2.ads.get_create_product_ad_budget_suggestion.json": "19f760ff8c92f6a1f387fec4c719c64d8005b11b07d0f9c328ed430354078734",
+    "v2.ads.get_gms_campaign_performance.json": "7e286a490bb9199f7c3bf80458f6801b4598354973a987a3a3672353a4d2f2f1",
+    "v2.ads.get_gms_item_performance.json": "a08c0c85010a91727b9cd5b9ab4536ef7068eb8dc1807532efb6c8c582fe8ee6",
+    "v2.ads.get_product_campaign_daily_performance.json": "f3a1a98b46147d04147ac43849d87938840d986c80de04f88e82ad107e8e542c",
+    "v2.ads.get_product_campaign_hourly_performance.json": "c5050fdd23f32e17b93c7c2e9123e7044b215af10cfe0e9b22b19d257af97627",
+    "v2.ads.get_product_level_campaign_id_list.json": "9853d0fe8e7c011d3c11dfc6b9ec6927814afdf26fc3917a0430a48f4954e1f6",
+    "v2.ads.get_product_level_campaign_setting_info.json": "8de428d4fa3b36735ff587002ab9bf4a7d3de0fd28a5129947e96bf5fa3536ce",
+    "v2.ads.get_product_recommended_roi_target.json": "ffa3209e3d611f9c6e6f76a6177ce5d0cffbb7b88237c80d2d957793fbf8265f",
+    "v2.ads.get_recommended_item_list.json": "4abf3d301f4d7714f75baa1ecd885b79664a71c9608484b5fefeba0deb2dbb3a",
+    "v2.ads.get_recommended_keyword_list.json": "cf9e7ce691023b01992010803081786e6187a9693fd17df1fe9d78ee153c4177",
+    "v2.ads.get_shop_toggle_info.json": "9a16060187049717f97eaef2402c793bc1443dd45fd4a28301806e519baeb2ac",
+    "v2.ads.get_total_balance.json": "8d61292cfbe37794c49f838a4251937319a7f3e59a5212a44f03139b8db7d378",
+    "v2.ads.list_gms_user_deleted_item.json": "d44e535eacccb6dcdd17b923a478682d1c000a20bf4821c9bb0da3862415ed18",
+    "v2.ams.add_all_products_to_open_campaign.json": "11961e8e6a5b57218d63d240a0015559232d295c96a937434a1e02cdf10c9a1d",
+    "v2.ams.batch_add_products_to_open_campaign.json": "060c00e22b1a4bcc79266ef9e4565ab956d43485809c18419b17340b05fd6d4a",
+    "v2.ams.batch_edit_products_open_campaign_setting.json": "474bf70adc256de4eff0c30885a48e59977244ac140161078b7e341f0a3a0edd",
+    "v2.ams.batch_get_products_suggested_rate.json": "7f4da98e050378b76cf2939a2d85d62665250c83e5ed4b8fb6165f87f7070bf7",
+    "v2.ams.batch_remove_products_open_campaign_setting.json": "43f6d1b74990ddd90fae82956729c0927d7dc2b4292ab314c67ad7217b3532b4",
+    "v2.ams.create_new_targeted_campaign.json": "d0665b407e2b39367920f607450de5720a2e927f9e7452920753ae42cbecab60",
+    "v2.ams.edit_affiliate_list_of_targeted_campaign.json": "87a536b76d81acb123e4a497319856347bba17681f1cf80cb9117fcbecc4234f",
+    "v2.ams.edit_all_products_open_campaign_setting.json": "78ee93f628c4bec3d26b4f466e4a7cdbb4b2b491942b7df4500093f5c6ff890f",
+    "v2.ams.edit_product_list_of_targeted_campaign.json": "86a96a6638effd877cbd8f912a29c54a4eafec16b38b749286c264fe1811b981",
+    "v2.ams.get_affiliate_performance.json": "0fac2fc40b6fbb216977909224f2d456e8d7c3f6f3719d74f7024351da2ae9cb",
+    "v2.ams.get_auto_add_new_product_toggle_status.json": "30676f6ef2455ad559a7eceb1349a62070d99cdc349571cd0416fe3949e023ea",
+    "v2.ams.get_campaign_key_metrics_performance.json": "cc6fdb690c943e475fb568cd6e0146842ddf46a73bded63e4ef78d897a372156",
+    "v2.ams.get_content_performance.json": "ad080cbc69973934db75b7f300d132b012a492954c9fd10fea0530791b9c81d2",
+    "v2.ams.get_conversion_report.json": "e0aa14bb1a6e6b60a7481da1b8043074098fbe7a5837f903381124970f22bcf0",
+    "v2.ams.get_managed_affiliate_list.json": "10f70b894a7a1f02ccbc9c18b301677a9f699eab95c010bb3727f996fb3585c5",
+    "v2.ams.get_open_campaign_added_product.json": "f2d6eec1857e8702e595761891d7881c806d8e8aa02fbf351356d89b7cbacb1b",
+    "v2.ams.get_open_campaign_batch_task_result.json": "e92ce2c4ac30a5354f5a3336301021a0090960be1b080677292e234f9b29202c",
+    "v2.ams.get_open_campaign_not_added_product.json": "6735b18561bc013556349cff04f34af127285092e1039dccb8e1ec9b3bc36792",
+    "v2.ams.get_open_campaign_performance.json": "290702d349eda47f9ce9b6e90f9efcd8fe6026f8368bfb0d06e54b2b811783e2",
+    "v2.ams.get_optimization_suggestion_product.json": "2e9cedbd59a1a52d9ef3e7b6ba414946a4ee0360cddb81ddc43deff3279ea847",
+    "v2.ams.get_performance_data_update_time.json": "1380c3f0f39d4db667d2099af0a1520382858104f7baf44f55c4abbee5294c0f",
+    "v2.ams.get_product_performance.json": "af089feff6b307e6dd79d212f147ce85cda95916008ba73734d2f009b54d9eaa",
+    "v2.ams.get_recommended_affiliate_list.json": "7920215763f840421f2ef87a51d387e41b959712f69301141e3d5289b97c78b1",
+    "v2.ams.get_shop_performance.json": "ce9bc08a922132fb98044736e030fc6ae75474ab3cebacf2595db34bde9b379b",
+    "v2.ams.get_shop_suggested_rate.json": "fbd52f25723188c00cbaf9cab1ced579dbb0b50c6f7695fc31d98a4e0c2af8ae",
+    "v2.ams.get_targeted_campaign_addable_product_list.json": "bd5bac60e728356ad940c06d7a9ff63dc511645351c90fa339e1f0785d83325a",
+    "v2.ams.get_targeted_campaign_list.json": "49333f8dd7e2349680a991bc8beb66bd6654778b0c4f7bce15c8764e0e5c245a",
+    "v2.ams.get_targeted_campaign_performance.json": "54cbd043fa3e28185507875cbf071dfdb920911a2352980d5834c8523626323a",
+    "v2.ams.get_targeted_campaign_settings.json": "70db83cf33a45ade825917e37e4b29040c131f17a1dc66d1ec26da3898a88533",
+    "v2.ams.get_validation_list.json": "cbc9549744b495727dffba845374b3895c307804e1c7c14547c2a3d524ee1ee8",
+    "v2.ams.get_validation_report.json": "e37a44abb5890ad60c68c7ffca56e620762991f49e4ec9cfc30b09970eb761a1",
+    "v2.ams.query_affiliate_list.json": "012a06c914d520b886d3d8cffe0e2cd51ddd6945b2d2dcf0a5c8fc937ef1c239",
+    "v2.ams.remove_all_products_open_campaign_setting.json": "3dc8d8ad264644eeb4745fb35d249d36cc2c942480ffef3c3f7a04d313b43149",
+    "v2.ams.terminate_targeted_campaign.json": "e7fe34ae8c3416e2b9add7b586eb9d669159078eb9c573ab90b2e30747e78152",
+    "v2.ams.update_auto_add_new_product_setting.json": "f69675c2803bb007c9060eef7b2dece02b9e645e5497d12850ceb7e67f530284",
+    "v2.ams.update_basic_info_of_targeted_campaign.json": "5694d826a612f322e7183ebe33dcdabd1a8de0559c7944c5004be711cca47e87",
+    "v2.bundle_deal.add_bundle_deal.json": "992b06f5faf9765d88b6e1159cfffc6cc3ac3fb009940d129d376d89e1a0818e",
+    "v2.bundle_deal.add_bundle_deal_item.json": "1269c3e86e6f4a1287bb8d223f77df69b55648f65222e77d05a67589256f41ce",
+    "v2.bundle_deal.delete_bundle_deal.json": "f5891f42f39a655a35bb61d79d8ef53d159592cc21bb83c698a9d07c862ae0fa",
+    "v2.bundle_deal.delete_bundle_deal_item.json": "4b233d9e190bc1f48638fbf849d73e7ef6bdde3a3b7b3afcfdcd94c7285c5be7",
+    "v2.bundle_deal.end_bundle_deal.json": "9580c965b57a4794c8113ed21dd59619839fd9b50bad4d15c2b4e507de499305",
+    "v2.bundle_deal.get_bundle_deal.json": "4b8c1db343bee860ec9b83b8f7c5b3fc3c00f0386ec6e26d481e11ef79a075fd",
+    "v2.bundle_deal.get_bundle_deal_item.json": "27a885a8879d196122c9d63c08a09eb820852c0182a4678007446eee87b8387e",
+    "v2.bundle_deal.get_bundle_deal_list.json": "f46bd1e9e3866f6e5392bd5790e8ee24ca906a6a8e73c4d27f2e0985bc509fac",
+    "v2.bundle_deal.update_bundle_deal.json": "e1103dc4fefbc20a8693caf6a34104272e4e3896220d1c665c856c9bf43389ce",
+    "v2.bundle_deal.update_bundle_deal_item.json": "938cee22a53b22b6e7f1fa66b073a9ad1664650544aec03d4eee2eb7997c25e6",
+    "v2.business_insights.get_marketing_hot_listing.json": "cd199b0262d47c643985626237ca0493bfb1a6a508c13bb1009c6ef65cd17fac",
+    "v2.buybox.get_buybox_model_performance.json": "5f3569b77602c3db70021d32c3ddd55d54ba0494c93f16714b61f059bb196d45",
+    "v2.buybox.get_buybox_models_by_model_id.json": "fba4125c8678cd2f2e6f720265032cc93f4f2797ba88ce5e58d2c60009cf8a31",
+    "v2.buybox.get_buybox_models_by_shop_id.json": "921ec066a37947fe5eb81002669398cdb01fba5bd660442efd98983b9d77aecb",
+    "v2.buybox.get_buybox_shop_performance.json": "ae6eeae2b5130f194533687942d99dc62110fa1428d05128cfd1192ea3e72fcc",
+    "v2.buybox.update_buybox_model_enrollment.json": "d228c5b2ff3678482874889d5d1e177e719a96677373d848a672b1e2d72f9a53",
+    "v2.discount.add_discount.json": "9faffc122d0dad761380591f5f6935349e1b8b8d3ca35edbd3aba4ffc76b41f2",
+    "v2.discount.add_discount_item.json": "ba92db6104ae232257520da054c2585baf7196a3895fcf793190cf07f11fef70",
+    "v2.discount.delete_discount.json": "f066e4e603da12e3109bdf134b68fe0d9f3f4c94dd78bd5d98892bd913f81c79",
+    "v2.discount.delete_discount_item.json": "73c10e5b3f00ddaa2a2057e2baa18393d45fb3c56ba5a028c2a29f74fe05435d",
+    "v2.discount.delete_sip_discount.json": "922b2df17f2912694fb79af3a654d34fa400deeb43963a53ddf82101d8111831",
+    "v2.discount.end_discount.json": "ca8fe15f63ec1d74a26876cb7fb8308182ccb003e43c58293cadedd6dfcd8718",
+    "v2.discount.get_discount.json": "b3520a2072e972ba514b394534ea05b28a3dcd9a2f884b6ccc6bcb20e33aa5fa",
+    "v2.discount.get_discount_list.json": "90f51203285271f53b1d330198e526326ae0b2935b9c3e7298ab1c34e9d3b348",
+    "v2.discount.get_sip_discounts.json": "6613b8e1900b341c35d316ef274bcd95f807564e9f001d140b8e47c7095095c5",
+    "v2.discount.set_sip_discount.json": "2be244e08f5321530f85d3570e5111a199e403ea444d02dbac4e8e5f60086185",
+    "v2.discount.update_discount.json": "6da531fd43578d8f3efe8c7ecadab73eaa600d92c3c0658ad1a7c780777cd345",
+    "v2.discount.update_discount_item.json": "5bfab4ac7cb5f006ac83e69bf74bdc1cd79651078e6b1a770df6f520c9afa13f",
+    "v2.fbs.query_br_shop_block_status.json": "7588ddcbe66482395e76c53fe01a3632ebfcbef062254f76fe8a1fa1c66a0c71",
+    "v2.fbs.query_br_shop_enrollment_status.json": "f3e21a7237b7911d442c98c969c744d26b067954f9dd4aa4f0dc0859b77f1fd5",
+    "v2.fbs.query_br_shop_invoice_error.json": "8e62d2a73df92000850224a8d69b4ff97eaf81d8d2a0e9da705a9819b3eeda17",
+    "v2.fbs.query_br_sku_block_status.json": "03b700ad55a9653145f4da46b8dd562b63b08cdbcdd39687e1efd6b53ee1884c",
+    "v2.first_mile.bind_courier_delivery_first_mile_tracking_number.json": "b4aa64d67fbf8d4b9ef1776570aa02675ea49a949aa2ceaa1efabfcacb011078",
+    "v2.first_mile.bind_first_mile_tracking_number.json": "e94f511e0c6a259512998759ef5f07d0723ede46d1f48c75943665de4ab6979e",
+    "v2.first_mile.generate_and_bind_first_mile_tracking_number.json": "6de52d668f7897c2f2cbfda961f69c8b9266b8599aad09ad828ae172beeb4c7c",
+    "v2.first_mile.generate_first_mile_tracking_number.json": "40e45bb89c5a95eda2e5015901d1acc45b04af14670c8bb6bb4d9b425fdf95db",
+    "v2.first_mile.get_channel_list.json": "f0a3a0457f84c760c6cf616cc6bad7c80c5eb27b94ddf4febaaaba769d6d4704",
+    "v2.first_mile.get_courier_delivery_channel_list.json": "28baf92257cbc72c7dd4b8a9a778854db7690bfa9f1cb3566b99727a22a2950d",
+    "v2.first_mile.get_courier_delivery_detail.json": "3310e53e6119fe2d6bd953c2b5da0ea085df1e7d1df19ca2b7b6b1ca3c7c43e3",
+    "v2.first_mile.get_courier_delivery_tracking_number_list.json": "5291beab6425197c8533e2c36adc2ac4742efa16d4f3e4c2ee273c742f369bfa",
+    "v2.first_mile.get_courier_delivery_waybill.json": "6862c540d6a759fbeaf6140c45432f8681c9b05c2cfecf7ce5d946d67128cf0e",
+    "v2.first_mile.get_detail.json": "6e3c904149aaec20a4698692e08b234a9ad06e979c3f284fd5f4a4562971ffd6",
+    "v2.first_mile.get_tracking_number_list.json": "0192102c7449b8c6e692bfab90d6fcdef9d26631fac766bd1e877c1faeac821c",
+    "v2.first_mile.get_transit_warehouse_list.json": "72946b34401d5655d042c5a2c17e3f00905c5f3c6238bf4850d31c0968f73fb1",
+    "v2.first_mile.get_unbind_order_list.json": "6797fae8dc2bd2a34da707b2b8266a40c16c5764b6066caa7a36218d2c719534",
+    "v2.first_mile.get_waybill.json": "c595b74e929e86f86591bb86fcc4563a645eed5737bb2f3fb42bcb19787ec887",
+    "v2.first_mile.unbind_first_mile_tracking_number.json": "8a8b9d71795e83df7e2fb252e6cad83f1feca953ddb0adcece003d5f71567d9a",
+    "v2.first_mile.unbind_first_mile_tracking_number_all.json": "7401135a27ee2850057a409a1a339a3f42309ce3cb5aa7171415d67401b45478",
+    "v2.follow_prize.add_follow_prize.json": "6ed1b25b7468c0f9fc25d8b424deefc4f44fe2fe2b1f4e4733c431745b7547a5",
+    "v2.follow_prize.delete_follow_prize.json": "ed617283bee7355903da82a95314f777b4422267cfff837716c6770436b3e3a3",
+    "v2.follow_prize.end_follow_prize.json": "07aabf06b6c56e030b69f8ee83c37e0504946ad1cf1fd9ce75696058dbf3a3e5",
+    "v2.follow_prize.get_follow_prize_detail.json": "8bacc4cd88b753d13f35304cbf4368aed4f3559248a2c010758df49f79d669e7",
+    "v2.follow_prize.get_follow_prize_list.json": "89dafb340d550299bbe5916bc30fefc861296d872513d33bfa4d101c8c4dfd0c",
+    "v2.follow_prize.update_follow_prize.json": "4607705b036c2044476d10b9112df9a8a1fd233b8a7866cfe045577be2b089a9",
+    "v2.livestream.add_item_list.json": "2dfa9fca9256755fdd4fb2b4c548500eea828b02a31ebdc50b17c81bddd9db51",
+    "v2.livestream.apply_item_set.json": "89b4ed8fea65b4b4e7b6d35765c7842b36266809b881201170f6232b551fe35a",
+    "v2.livestream.ban_user_comment.json": "1d30dff62405294e2c06fbf9b6c01eead215281b13d7a7bee1d4057d3c793a5f",
+    "v2.livestream.create_session.json": "6a8faa7661647d313d7d811dcddb6bb08f5d13c6e207fc53593e63038841a6ca",
+    "v2.livestream.delete_item_list.json": "8f46fafa3dc8d81ddbd8bbd78928b03b8732eaa44487a4f3865d9088209164bd",
+    "v2.livestream.delete_show_item.json": "56f1139b52baf67856c109008357872d5c25a5f88a033d9d12276c65f476e267",
+    "v2.livestream.end_session.json": "99e78a40fe3b54e22fa2c459f846be34e579214155033041bcaf9c7dbf578b3a",
+    "v2.livestream.get_item_count.json": "18765f72869bec82c928f9d590ea0b31b635cdd067d2c8c5cf4da2a10f89a2bd",
+    "v2.livestream.get_item_list.json": "e4c47993f166eb60422791ae1d325f4eced7aae6954b3918abe353491d83be56",
+    "v2.livestream.get_item_set_item_list.json": "922a806f65937f7a716f7c344370c248c5743e8cc47f742e80aae63b2fa8fa2e",
+    "v2.livestream.get_item_set_list.json": "2817825a66bf0d21184b0b82ab5634a0f056eeae68ce239c0953880eb1494714",
+    "v2.livestream.get_latest_comment_list.json": "8e2032f0aa50bb4916fbfb777fcd30372f0752fbaeee1af7a69681dcf99c14de",
+    "v2.livestream.get_like_item_list.json": "a7c4065cc4aa55e5baeec542705dc85f5ca872c543d151871241cabcd8871670",
+    "v2.livestream.get_recent_item_list.json": "3ef178a84cce23a1be3303a6598420d9b1ba00b5e3efbb92f25f820fd9977698",
+    "v2.livestream.get_session_detail.json": "9a522fe979d9515a8f4ba3353d293f7808aa91f700ee6c2766fd48765171d8f1",
+    "v2.livestream.get_session_item_metric.json": "64235a5c591d6e5a769de4bd207813000cd6e43a325fd2b25d9ef1b24b9eb2f0",
+    "v2.livestream.get_session_metric.json": "82b8bfca910c415a563a20269c89ee027c2423a8119bb249d2c53bb7746e20ac",
+    "v2.livestream.get_show_item.json": "fee6e03c6e4923d71ced99933c7708c60d2ac3d9e7e02e2a595582661047e92f",
+    "v2.livestream.post_comment.json": "7783625bfc28804b068566ff3ba5c823bfd9d5b301ab5cc2ac2a49fa1229c27d",
+    "v2.livestream.start_session.json": "67b8bf747355b5f5a4f0e1de1bf7e9e7c44a215ba05b3328a1526b2b1203833c",
+    "v2.livestream.unban_user_comment.json": "1f06bc306c8e9d9bc0a516c51cbf187708b95c546154fa397b57a5e90a549787",
+    "v2.livestream.update_item_list.json": "f3954ebb4dbe42874921407e0afa7daab31e1692eb44ae4b5ab85c50fb2d739c",
+    "v2.livestream.update_session.json": "680531963c076edb27599f49112b295c2990d65a5aba28d2fd6b4e0f87edd1e7",
+    "v2.livestream.update_show_item.json": "8a75368d60754722e314433d59686a83a2ef168962fbd76ab6227949aa69f7e7",
+    "v2.livestream.upload_image.json": "3459ffb430528616e5ebbdee2d38e9497c55da11f31bd0bfaa2516918121c87b",
+    "v2.logistics.batch_ship_order.json": "1d492b93404a45e3b13f4380916a80f11b40aadf62218da8f1a24fef42336356",
+    "v2.logistics.batch_update_tpf_warehouse_tracking_status.json": "a683958bd7c97f0a2e990b73df637ffcb47327968e8da89d1f1ad408dbcd5ecf",
+    "v2.logistics.check_polygon_update_status.json": "162013bfd03dbfe2b590add1f5c131ea0e620ace96ca25d04498778ab50c846d",
+    "v2.logistics.create_booking_shipping_document.json": "25a4fbedb918e985c69915832910b1d19886cf4777d2843b2c4d73c5b6707dab",
+    "v2.logistics.create_shipping_document.json": "595fd6da8bb84fb646a88c3636513f85afb44465e644b50178996ebb233c30c4",
+    "v2.logistics.create_shipping_document_job.json": "dfa3534fdf06ce2c3d8b9ef34cd965c718b52e8b572ac6bfc71f0bac67d05406",
+    "v2.logistics.delete_address.json": "ca563d6d03cfdff59cbb1894b1033cec24744f61d6834bcd06a4691fc3bd44e5",
+    "v2.logistics.delete_special_operating_hour.json": "c7ca4c264bf8def44e48f3b1274dc5644fbea11735a8e18f554ca7efa68ca6d3",
+    "v2.logistics.download_booking_shipping_document.json": "a5bfa40381a810008ea1257a43d2e2fdfa9ea3eeefa59050cecfa3a73c3cd147",
+    "v2.logistics.download_shipping_document.json": "a06b5c0ffb4116320ddb82079d2485393b08329a5c940acb985eb7b25856f9d5",
+    "v2.logistics.download_shipping_document_job.json": "20c50539fa513f86a5a07e0452a82bdd6e29ff1e4e3c615a63338352aa662b0a",
+    "v2.logistics.download_to_label.json": "713625e6d855c74bea3be1571b37c5ea01c61eaab3a211cd251cfd8bfcf8c4c9",
+    "v2.logistics.get_address_list.json": "f327e60db742ffe6e6c3ace2af46748608cdf48a7a0051a0108acf48ef52cd82",
+    "v2.logistics.get_booking_shipping_document_data_info.json": "69aec01e76804b77969872d38bb107843aaf83d5237b3e13f89522e8a841b1cf",
+    "v2.logistics.get_booking_shipping_document_parameter.json": "9b4eccc690dc76db8a43ce618dbdd6e7916d24168ce6f53595509bb95cc47d59",
+    "v2.logistics.get_booking_shipping_document_result.json": "82ee1ed2e5c70534cafb1f0362732874412c220efa1c78d7a6ea0211dfbcd8e8",
+    "v2.logistics.get_booking_shipping_parameter.json": "72d4b69db73e55687866b1892637f15b2caf50e04d5675e54537e4652b3a5187",
+    "v2.logistics.get_booking_tracking_info.json": "f6d73da17ed6f28d1cc4ce03579bb715192fd7c64de36213bcb4c679b2f02d01",
+    "v2.logistics.get_booking_tracking_number.json": "5c281bce0e01bd51469aa13e5379c0cc7a84baac7158ba6dd024d21dbfb458af",
+    "v2.logistics.get_channel_list.json": "bf63dd5f502101977eb15dbe168d879609b130149bc51664f186dcb25cd1b20c",
+    "v2.logistics.get_mart_packaging_info.json": "33ebf8ab147a90e77d8480a7050dce58c32e56078d649ecbcf3daea29bd9393e",
+    "v2.logistics.get_mass_shipping_parameter.json": "fbd12252437b386a483311356751c0ce03d3285d6954f3e76bfc31ff8724e97c",
+    "v2.logistics.get_mass_tracking_number.json": "e6e855297a48831cca59185d02a89bc49c153b990afa88bf9d0f6f6daa134af7",
+    "v2.logistics.get_operating_hour_restrictions.json": "c41013270bab900fb5c757c4f90953c5ce51a59d04919b7dc88c9cc04dbd3640",
+    "v2.logistics.get_operating_hours.json": "67ff7363ff15f2bbdbc0a24a6ad811c4fab7afbfee4e5f6d5ee32bf8f297c31f",
+    "v2.logistics.get_pause_status.json": "5de042b489cef0be435278de3befe25b5da3e772e2a2321ddaf935b12b1aec17",
+    "v2.logistics.get_shipping_document_data_info.json": "0b868472b963d6c59fedba728b2f824ad2077494d30921170d15bc5bb07873cb",
+    "v2.logistics.get_shipping_document_job_status.json": "94f8ed3fef4edaace9a25371477ad50d22dcfa05add8ff96475e25fa86248e00",
+    "v2.logistics.get_shipping_document_parameter.json": "3ee27f7fa04babdb913c33d81f2c2f3fd94c8793eda035fba60d6ad158582c73",
+    "v2.logistics.get_shipping_document_result.json": "499f86028b9b30cbe69a44bd62e804e14e3817010fc218d228fadab77dfd5b61",
+    "v2.logistics.get_shipping_parameter.json": "5b402d27d44e5f9fba464f9ed587c8678925c8d418c40d1a4b9d58cd4d10ed96",
+    "v2.logistics.get_tracking_info.json": "0994e014e1b9b6aada3b5e68711dee622d430002bbe540755ea8daa5e1f64d71",
+    "v2.logistics.get_tracking_number.json": "bf5d03dc23f7710a586ab409b317f1fa0c548c68f845d7fa57e69136931fb60b",
+    "v2.logistics.mass_ship_order.json": "be510c29d0f5ab73f75e3bdcc4a4058f55714fdf01db2de961a2c1f0018b47b6",
+    "v2.logistics.set_address_config.json": "3b0a36659a811e3c5a9770506589dc682685c7825e4e2475222e78434c718525",
+    "v2.logistics.set_mart_packaging_info.json": "fe547a363aea75e1fbfe134c47fd6ee3d654c7063325ab89d9656e29dc84d91d",
+    "v2.logistics.set_pause_status.json": "66bd6b06ce64d8a88e548e17d56f75a0cfebbf2f40a724f8219670dfa907812f",
+    "v2.logistics.ship_booking.json": "1cf8cd82f29381a67bfcea3ec38070b679707c76ab6450497358458647f505bf",
+    "v2.logistics.ship_order.json": "1e3a5be28f1cbb5717f0592b89cb5691402a8e7b5f46d24f29f513400fac4fc1",
+    "v2.logistics.update_address.json": "5b137ddd6ca5bb269fd98eeb2bfc2a96762da5d05b46fce2419389d408a0fb38",
+    "v2.logistics.update_channel.json": "78b137ce05f9699e1ab4dabcf57eb9629ee7cff1b489077bd701fa2ca26b28b0",
+    "v2.logistics.update_operating_hours.json": "46da95b1a7ee5db870d5cb020501545c6a07df58e58e7cfcb2dd3a8091f264ad",
+    "v2.logistics.update_self_collection_order_logistics.json": "aee98ab711d2a0d808c093abbff8b8b57213867b6b726d4163191287c466ea26",
+    "v2.logistics.update_shipping_order.json": "c18b43e4f177ad479b3b093520f260742f77d3e9ed475804059c19cc69bb366e",
+    "v2.logistics.update_tracking_status.json": "bc630b177dcaefc902771715b7bb202aa49e12de3370723be5ffbe0e47b3b66b",
+    "v2.media.cancel_video_upload.json": "bde74d46a95b3cd3ba9789339335b0928a56ca573e389c9685f11fb6b6686b47",
+    "v2.media.complete_video_upload.json": "8761cabdd8caf3448b1ecbf39d95f094d7a1205d98d92a3fa83647396a880a4c",
+    "v2.media.get_video_upload_result.json": "c1932c47b1d7921227017ac30d74e3f513550d510b8831a161bfc075f86ab7c3",
+    "v2.media.init_video_upload.json": "90cbe5837492ac71a6d07454004dfdbc54987de23de0ec95ea3e4aa2152c0024",
+    "v2.media.upload_image.json": "dc0418878a10790b30f6a41b307a28f9c7aab8769e99570f1597e9bec36f5d40",
+    "v2.media.upload_video_part.json": "e68749d757bc23abd45e7a39e607339bf9a7f00b04666e16eb38a06c4e97590b",
+    "v2.media_space.cancel_video_upload.json": "0785e662607fc649f4cc3b59d39dd854044a146752c5a235c26db06f55436940",
+    "v2.media_space.complete_video_upload.json": "7c29c6fb8603b3c03519bd2523b06ab7a4c6c7a94c51584c878c3d434c6b72ae",
+    "v2.media_space.get_video_upload_result.json": "806fe605172d971a1c2741edbea210e49e2df4ce88b48b6a8b632c3db9b2342c",
+    "v2.media_space.init_video_upload.json": "e9a0c507277523ea4a6515e38ca981f243dad63b5b26efcc43dd0598c281decb",
+    "v2.media_space.upload_image.json": "586f05d51bdc17384a86c4f5d651e6a598bd12ab8e8f606b5e64d5d18e123238",
+    "v2.media_space.upload_video_part.json": "f102b63f7fc4ba4b6a9210c660cf5c83b347338a95696a968087415d01b268a3",
+    "v2.order.cancel_order.json": "9045d9f224ac4e827bd063e3d75e6829f07a23a79a0fcb5d0bb0d6fe2860152d",
+    "v2.order.download_fbs_invoices.json": "2afcfc413efaf12afd02b46bd9c56763fa3eb06f033ed6cd92afbe5e4d871d2e",
+    "v2.order.download_invoice_doc.json": "2936fb51a602d92dd5e283e4d541c6b8823e39d2e556ea51710ca7168f342bec",
+    "v2.order.generate_fbs_invoices.json": "40021619eb89c195aa670bb13628cd83ec0b89fa6bf6a1c5f273ebd4fe3d8453",
+    "v2.order.get_booking_detail.json": "e39d2babc2bdf4f5e8486f423d4c3f86fd2f8b1fe3ee73ffa43019fa26c9945c",
+    "v2.order.get_booking_list.json": "5db5675d1bfbac92c6ab6d058e3300ddef7f862ddd4e6163614edbfe777dde67",
+    "v2.order.get_buyer_invoice_info.json": "de61bcece5ceec3f9ac7930b8e4d25d5628ba01c8bbfe4105d67b037d7ea74c8",
+    "v2.order.get_estimate_cancel_value.json": "22a19b023610ae179dcefda6aa51728bd124481ba9c428f9400577564c02378d",
+    "v2.order.get_fbs_invoices_result.json": "8317b410dab5dc37a43a753848f4f892647efb25074c7ec09fba84cb6ccec8a0",
+    "v2.order.get_order_detail.json": "db8366edd97a9a20f911862cc834a0b958b5d66706615a88a78f40bceb104b0c",
+    "v2.order.get_order_list.json": "a1755e9357adbb0ebe27e9ae2faca2e0e7d0a87a88c3c14c6772c362ca2521d4",
+    "v2.order.get_package_detail.json": "c39aa092bced158fe61f86e5933247de137d8f994b7671360be3ca12d1554900",
+    "v2.order.get_pending_buyer_invoice_order_list.json": "f80dee4c40a7b30506dc807d784f0fbd5cb437db28865a61687bc18d329cf353",
+    "v2.order.get_shipment_list.json": "774602e332eb129e2d7624995aac6749c563b14a9f1e0bd36daad20cb86d0993",
+    "v2.order.get_warehouse_filter_config.json": "2512e6d6eb98cb6f3f6fcb9543885b87e0bba5fa50e73d95b029b4fdec8f440e",
+    "v2.order.handle_buyer_cancellation.json": "9a906bf621926ac660a60251906940a314ea976a0322556b60dad7fb422bcaaa",
+    "v2.order.handle_prescription_check.json": "99bbde2ecf36d67869e6ceec3900d6de167a3b0c8d081227f00d8b28150592c5",
+    "v2.order.search_package_list.json": "41b99c1e37240facd4992d602be300425f446c6606aabf5dc48624d20370276f",
+    "v2.order.set_note.json": "a482a9bec962937f90190f67d1a27c9fc9c2dd8a1c09af6e2562896869aa420b",
+    "v2.order.split_order.json": "e5782082e813996dd2cd9bd2a06c298dc6d6b8045f5a42c100bba27c959d30b7",
+    "v2.order.unsplit_order.json": "5f8bfce7891295f3a624406551e2b33783d52b4df04fd96674b4abbbaa727120",
+    "v2.order.upload_invoice_doc.json": "1be43b309e4cb4ce624ccc8eee560b0e00aa46d4accae6e080d7fe48134630ab",
+    "v2.payment.generate_income_report.json": "4acda5177e9d7ca886cd8bd7cc37d8643dc3baa1a850264ef3386ebe302fe644",
+    "v2.payment.generate_income_statement.json": "adfd90251065d7f438b10ee1628fea682c77916ea2eceb1d954b3b7f2a64e91d",
+    "v2.payment.get_billing_transaction_info.json": "b81cc087e33f6b70122c7fd9035e86fa645a8c6a92df4d59a75b66be56e87924",
+    "v2.payment.get_escrow_detail.json": "debcf0df6c1d29143c1ec593a938c066cb6fcc9e961626d1abc43e2a025367fc",
+    "v2.payment.get_escrow_list.json": "b80da731d889a96814e6dec129c7038f6056f4556468930db1323a673defda0c",
+    "v2.payment.get_income_detail.json": "c57b0d31fea3b8bdf916e3b823d7b9f6460c03eb47f70d630a22252ae9ca2762",
+    "v2.payment.get_income_overview.json": "3d34534ac0cc354f90828d49df68f3fc77907462b796c515dbcda16f88f36c09",
+    "v2.payment.get_income_report.json": "e3248e5a3c8d299739b5534c60dea7ad2ec193bc7906938bbaf6ba7513297f92",
+    "v2.payment.get_income_statement.json": "4c59ff9f59aeca5158b4af8817a0b68634aa68a098b2b3736c5166bcb04efefb",
+    "v2.payment.get_item_installment_status.json": "18249e62499a2b90a2572f23fe8bd8ade8ac236efac033d0072225bd6b622abd",
+    "v2.payment.get_payment_method_list.json": "fd2745d8229fe5aa95c475ebacc6caf1854223d065efe94949f838a5bcc81261",
+    "v2.payment.get_payout_detail.json": "0b35fc2f76e67513926b070d2f6becd5c2460f7c99b044d0001a5e1616399d0b",
+    "v2.payment.get_payout_info.json": "de01e62c7e30ce131c623c42430481ac5cdb8616b312cc319bdd63fa334a9f3b",
+    "v2.payment.get_shop_installment_status.json": "0ba29a8cbf04c297f879e48815c13068ab2b0b038244a1f93f534304178d7bb5",
+    "v2.payment.get_wallet_transaction_list.json": "a4d6ca859c8cb3d6d603853b968927690441bde4de5474c79566db8de7bf6f09",
+    "v2.payment.set_item_installment_status.json": "ad58dff54f103b137246ec5a468afeb414ac1f20c4941cc9e7c5aa51acdd80a4",
+    "v2.payment.set_shop_installment_status.json": "9dea8a103d29bef9127e1437064eee021d3f05c44d7ffd2ffaf963121e529830",
+    "v2.principal.get_clip_video_performance.json": "1ee39d8fe73938cb2306d568eceb0fe75f29c67af8d1f16d8a2ed4964cba32d9",
+    "v2.principal.get_content_affiliate_performance.json": "238e6554aba66b178d74b55ace16f02ed58ede4ff68300f6bfca27479bed5186",
+    "v2.principal.get_principal_affiliate_performance.json": "550776e0f5f0cb2bdb9270b1b1f1d9f78a9d168486ea8992cc6ce51fc258a284",
+    "v2.principal.get_principal_livestream_performance.json": "27853b260c75e55dd77fe9600c0602302b28f9b1d1d91f11a2722599c99a9b73",
+    "v2.principal.get_principal_sales_performance_detail.json": "826add6a8ca173c9d890c882c1c1e746398c7a7363c1ed0bdfe1ae65f5aa2dbc",
+    "v2.principal.get_principal_video_performance.json": "b3104ae6b7be77f5b74ec26aeb10bbbeccb058166ab399e0bf7770972d069d9f",
+    "v2.principal.get_session_livestream_performance.json": "551dc139bcfa15bd3dc6a5a9ce43af246be1f7c751dabf5181756781d1a9ace5",
+    "v2.principal.get_shop_affiliate_performance.json": "464d20b1d31aaa260ef0cafb9eca82b16cbe6c84bfd5704f60bf149da6d4d3f1",
+    "v2.principal.get_shop_livestream_performance.json": "d06e1c98b8812510ddd8e34725b85f93723809158c038866df46684823aa2823",
+    "v2.principal.get_shop_sales_performance_detail.json": "7373883cf419df50aa7e793b4f0603331eddab80c319d74d2f3b6d734989ae56",
+    "v2.principal.get_shop_video_performance.json": "02c155eae939355161a7179afd18d8defe95c7069673ce75c1e447b22ef1d5a1",
+    "v2.product.add_item.json": "aca3e290815385d1bd4ec4a7fd9bedc718394fd00ebb9abf1c145261c03d9339",
+    "v2.product.add_kit_item.json": "5127070d8e988435bb6cb8e508b4caab79a6e8542ce8fd06b8321055b812a357",
+    "v2.product.add_model.json": "bf2c1aa9e7efd307927be172f6b22e7253bd9fae6a5bde4f64a22c1a3229afcb",
+    "v2.product.batch_add_item.json": "08610e40276165407ba0592e5ef878d5eaa021c17d1acfe4ae5d148e88d495fd",
+    "v2.product.batch_publish_item_to_outlet_shop.json": "b6738e85a08655c477fabff7db8ad4ba15eaa109b3987cc3704e426329adab03",
+    "v2.product.batch_update_outlet_price.json": "b501c55e0c73ab06530b675f91ad950837fe1a7a79d70801a883cffe329797f9",
+    "v2.product.batch_update_outlet_stock.json": "ec13e16364b954ee4be8325535425ffa75cc7a67143da1d44f28ad8fe2fd8619",
+    "v2.product.boost_item.json": "610fe2fce78b25ccf77c64de9307930ad9459b34eff9d0a8ff39997d23cf1894",
+    "v2.product.category_recommend.json": "70f4bc3036a0f17a6679f517cd16c4b23ba41737a699f6752999f9f351c15057",
+    "v2.product.delete_item.json": "2095305cc63f4150a30355fd99c0b359177e5723965d49e54c74e50cb892f438",
+    "v2.product.delete_model.json": "967fd4cb3503f922f1d255af67aeebd77421cab0e679666d223a46e3778d6b51",
+    "v2.product.generate_kit_image.json": "3db8a149ffa9727d7e2772acfc1ffdc000731103d5403e1959c8564ddaf0edaa",
+    "v2.product.get_aitem_by_pitem_id.json": "a4e4dc398c746bd2e31968b2936755355c14f6de194250f74c21ee188f21635f",
+    "v2.product.get_all_vehicle_list.json": "194c9af7c8064444349843232edd8436d278e84910d8b85d68018d1cf3ee6231",
+    "v2.product.get_attribute_tree.json": "fd2fb517b9960e89a2281b904eae2f4b71af62801368f5d0e43796c88628f443",
+    "v2.product.get_batch_task_result.json": "eeae31a2d0eb8cd1f246371198030b5ca0d806b45493f522f93227716738526f",
+    "v2.product.get_boosted_list.json": "ee76ba0cab85c7895a930b561c5f8d9457e39d4133cc41baf465719b5ce840a6",
+    "v2.product.get_brand_list.json": "a6ed6641fe9dd33b2eabe9c53ff9ad2d9f280b2ef2c86ab8b98fc82b59eb2684",
+    "v2.product.get_category.json": "1d683b00e8e30da43ea9ec642e2a717dd14fd6a09619158d7636b0f6611778d3",
+    "v2.product.get_comment.json": "9d66298cd28b262581a79d96d797e3329e8e1f410e928e7f360c2d1f080abf63",
+    "v2.product.get_direct_item_list.json": "49fc6366a75f0f1a9c3fe3924acfccc926723f8bca8c4d1bae776e9112d8a580",
+    "v2.product.get_direct_shop_recommended_price.json": "01b40ee311c2f66dbd09bcbe520390f1f48600594767633419dadc535f233cef",
+    "v2.product.get_item_base_info.json": "ce83ac0bd02e37ee0aa2dad0690518e8ede6cad20820a1eb614ceba539ff4e4f",
+    "v2.product.get_item_content_diagnosis_result.json": "e15dbbda18494978d8c17f9b8e688503e2cf7ea6adbb3f7a9f5a179b66129537",
+    "v2.product.get_item_extra_info.json": "8ea6fb16b284a45567bca5d9887be2e597c75df4c65b3367571a70088d81e50d",
+    "v2.product.get_item_limit.json": "126b8c129e198be70eaeda80e807b6feca9e315f80a6ca5fc11f01c8732b02d7",
+    "v2.product.get_item_list.json": "22a68db74462cc6f43b2c20333c282ac0e6b80fc86d8495ad850cfd2b8d23894",
+    "v2.product.get_item_list_by_content_diagnosis.json": "534a55573fa1f6b50e942688cb9ab84c7dd3f874287d9eb2987174f4fdb65989",
+    "v2.product.get_item_promotion.json": "0516083f9d63bf68e51346cd983198bea18798f13b4da43a609b0f9b4d6a0d17",
+    "v2.product.get_item_violation_info.json": "e369f18adfbba12e2f77f5ceff85df21c856772edbe2c2a0820e78a6c37293dc",
+    "v2.product.get_kit_item_info.json": "74a04de745174c0ea74d3b2b70399e1628a6ea021e704976804d1ab6f279c67a",
+    "v2.product.get_kit_item_limit.json": "4e87feab632e666af36c8c4f2ced9028afda29566e3a1a360214679002eeb69f",
+    "v2.product.get_main_item_list.json": "32bfda4811c79f038280aa999d6442c373b4617fa388d1d64e11ba6bd445a166",
+    "v2.product.get_mart_item_by_outlet_item_id.json": "f5008c0552972d4c7cb69d70a3bdcb68e42cfba990173cb87c859251e9951765",
+    "v2.product.get_mart_item_mapping_by_id.json": "7e615941c520d03f66ac39546fa3d7d4a36054e4eda90782047ea12b4008576a",
+    "v2.product.get_model_list.json": "59b5ee17db3ee1c9f264eb40b7b00309831a157df8c2e30dd25044abf36c312c",
+    "v2.product.get_product_certification_rule.json": "239186ae5621531d356258f2b233195e96521af97b83df7073fa6f96b1649942",
+    "v2.product.get_recommend_attribute.json": "d237298b73e75e2fe3d72cb4cb00437402030be5abb0e01cabb60ab285d1454c",
+    "v2.product.get_size_chart_detail.json": "e17f01dfc917142e31f92a597f846e91f7c67d3c80cbfb3a206974efa3c17213",
+    "v2.product.get_size_chart_list.json": "b3301bb98fd0cbdd7d72cd8c3e292e7550936f11ed5106fcde9b4cea10787ab6",
+    "v2.product.get_variations.json": "7946c747a42580e8dffe9079edebe8b6916b60370b063885fc9daed77f9e5557",
+    "v2.product.get_vehicle_list_by_compatibility_detail.json": "f81f1b514c9898bac18dea023b77cdce4f62098e72bc448b3e3af25cf5fc3d8d",
+    "v2.product.get_weight_recommendation.json": "99e5db7cb8aeed40863d353679aa31b0d0a88b7efcd5987eb94ec31aaa0bd4eb",
+    "v2.product.init_tier_variation.json": "783987999fe48551e7712745101894527566f981c87f80799e9df494f287a14d",
+    "v2.product.publish_item_to_outlet_shop.json": "b8052f9ab0e22acf85b54041c1d24dc41dbcc62122c1ed7dac94ccc8d6f1868d",
+    "v2.product.register_brand.json": "64db21ba3c0587d37771b867626ecdf103ff5951d0bfc890e130c5ca3d2ab9b2",
+    "v2.product.reply_comment.json": "ee93e9cadfda6b634a1e8fec7f9aef219474df6be7435b944a06d7c1ea1b94ac",
+    "v2.product.search_attribute_value_list.json": "45b0802c0368be0645751ca14a8cb3b5e10e341380b4087d998109d8d40a3635",
+    "v2.product.search_item.json": "100aefc7681d1380a27f2bd91a3215b527adb7f32a0cc2e966ba182f03d2c835",
+    "v2.product.search_unpackaged_model_list.json": "be58d0f1d14b249970edfd41a6f7477bc3b2931976bedbe58e378e46e02e25ce",
+    "v2.product.unlist_item.json": "1bc9fb88e962ed5a586f17a7c4c51c527bcdb276aed7a57acab5dca96dd97200",
+    "v2.product.update_item.json": "7d5baceb4a2eb7ca3959e10d11e16057041d5dfba25cc7354364325bb40f894b",
+    "v2.product.update_kit_item.json": "dfc25f97109d4ab82ece9e7462acb9fbe0ae5c60d4c2af2f673bda81f694ec80",
+    "v2.product.update_model.json": "d0d61bc7caae1ea847d9d77852f69b49038c4d50d05781f01a64decece185909",
+    "v2.product.update_price.json": "711c9326f6b93e6e6d61b5ad2578a6d9dfb51eb81a6c388a7c83f6d4a1bdad4c",
+    "v2.product.update_sip_item_price.json": "801fc7756efcfa35929eaa199d58565bc4d49e7eb8eff78d3a1363560426bd39",
+    "v2.product.update_stock.json": "6a914b2ecf54efdc9a8fe8c4bfd8074ccaad818cd9728ab40b10f1d81fdcbb51",
+    "v2.product.update_tier_variation.json": "57bd6dbf2a75df4d3688ef73b3a11213e7cd798bef3a564198a7bb690dad8868",
+    "v2.public.get_merchants_by_partner.json": "00d6dcb70866bbfeaf65773a41edca48c715bc41be41d2ffbeae6fc4d5f0b6ae",
+    "v2.public.get_shopee_ip_ranges.json": "875bd3b3bb54b401d6fa8596f9c6a1c1a387e9a7dcf798659f957551180dce38",
+    "v2.public.get_shops_by_partner.json": "d86bd9217418626660bd2afb42139b7184402a6f45b0541928e9e092dc1bbe56",
+    "v2.public.refresh_access_token.json": "bf8e6888aac161e5b704d6c8b8b9a42e6244c0a9d3ef69567cfe7c27fba6cb54",
+    "v2.push.confirm_consumed_lost_push_message.json": "86cd8f17c4ac4224c8c39b925281b66f77e60d3d0540d7b3ee94a28d596bde6d",
+    "v2.push.get_app_push_config.json": "e5e6b4598781097bb5da2aeaf89a6acddcd49e2e2c4b55f425f4a09e0ae33ff1",
+    "v2.push.get_lost_push_message.json": "82f3e30d8ff50047293dde6824024d15b6bab94d50d7ba5ecf42fcd76e75c538",
+    "v2.push.set_app_push_config.json": "f296b0351dcc04615151740fd0242b23a3e56a1d0ea7add1908cab46c8fc6bbb",
+    "v2.returns.accept_offer.json": "ca11d5abc9c3298c8bf6a93c3e943cbf06080bb1af4956623e2ec3aea26b43f1",
+    "v2.returns.cancel_dispute.json": "703e262f3e9d2109d89c4cefb1cc6976eb09a416513d5bb3e1b2480efc617253",
+    "v2.returns.confirm.json": "2c23b47b2806dcbcae1233c503bee9bb7f9cc1117bc28e23f1ad3f28889fcc69",
+    "v2.returns.convert_image.json": "a8baaedabb413c27b0d525dbca32499e4b086f9bbda805bc226db7b5a3a094a3",
+    "v2.returns.dispute.json": "e1a080e53f10aa5445c502fea8c8c809dd1705a54d4ab3e9de9f7b46badc3ca4",
+    "v2.returns.get_available_solutions.json": "335a2702e586609357c56e428956041ddee1d8afed0b243bb93b58b262485c4c",
+    "v2.returns.get_return_detail.json": "c5bf246f27ff17809fcf71a8d6209e6722402417e369eee03f0ce5810f11eb01",
+    "v2.returns.get_return_dispute_reason.json": "09600b7da2d4726c7c20024330410ad8fb0b60ba533e79698e610d9470a989ed",
+    "v2.returns.get_return_list.json": "17f50f01ff8d0646bc17fbbd7a6f43b116535cadfb99431d1d65fff61f52272b",
+    "v2.returns.get_reverse_tracking_info.json": "edab2a0739067095c2308e522779b57d837714edfc4dd586a00020b2acdc99f6",
+    "v2.returns.get_shipping_carrier.json": "19c644852aa4cbedbfad2a3bce3fd7ce78601b3d334cf1bad3483aae67421d53",
+    "v2.returns.offer.json": "8e4af2febdf8fb2fc3e3951222d445c36f7d8068253a0850b013d100e2731d8f",
+    "v2.returns.query_proof.json": "3ccea525f0d87dca067ccbb7d1497f96430e74c6248ddbc5991fab3d40bf18c1",
+    "v2.returns.upload_proof.json": "b9ca9a3fa1e2a86ee5b84e32a2ac962383293538451f9ea472644e213d1babdb",
+    "v2.returns.upload_shipping_proof.json": "40bce89c8e11bdea0319f98f960e34f9925aa899d3095817158f9d56b8ccb6b4",
+    "v2.sbs.get_bound_whs_info.json": "e8128e0fe635bb4e4a93cbb096c2220631083101fac5246207ba635758c91473",
+    "v2.sbs.get_current_inventory.json": "2403a743ec9002280f10b8f997d2c009d0a19fa32cac02232907d980c361de06",
+    "v2.sbs.get_expiry_report.json": "01b64c3a72dd5e459049cb12f2200fbff27dc9c5fbeb4ec1279e458e4911ff29",
+    "v2.sbs.get_fulfillment_mapping_inventory_list.json": "b5503b9570062404e8f820dc65be89bbde9fe7a953ba575841d7c9f3b1ca8f0b",
+    "v2.sbs.get_stock_aging.json": "62f67b91b0ce3aa7518a84fee5092bf214d42411b2f6fbbdaf619e4c8f75c731",
+    "v2.sbs.get_stock_movement.json": "999a5558174fbf2c48826042814a6ab5fa4d824aaa576b8b96e321b9f3a6077a",
+    "v2.shop.get_authorised_reseller_brand.json": "0ca35ff0188d32259c75267cbcfced344df2353a35968b376a93206344b4ba41",
+    "v2.shop.get_br_shop_onboarding_info.json": "b4830f93e55c7d33b14cf509ce25c52f3b74c611408d731e62636baa26b4f3b9",
+    "v2.shop.get_profile.json": "e1ffcdc3b5fa78a090813bb3918b49fc576afa8514b0973cb1e5018feb71df55",
+    "v2.shop.get_shop_holiday_mode.json": "f449f298fc2044f5893b90e0cf22164281231f89de74469cfdc4107025000f70",
+    "v2.shop.get_shop_info.json": "abe44cb4549df1dfabb54a5173f22f0ff14262d9e254bdc8b3a2560feab2fe8a",
+    "v2.shop.get_shop_notification.json": "b37aab01490d986e484e2c5d5bb00003c96b10d474cf12fcadb24cb15d23b327",
+    "v2.shop.get_warehouse_detail.json": "e1cdb71ee4ba65d4a7d94ed470666849c0b0fadfb98d0d404e39e5c9587d4b68",
+    "v2.shop.set_shop_holiday_mode.json": "a9808dc9e109e52ee0f4b330c751b1941406c8918f9a6904f1096fcb7f13423b",
+    "v2.shop.update_profile.json": "c856de78537cec4e8662fd7bd29e3070b27b820fd5a132c831b632438edb71bf",
+    "v2.shop_category.add_item_list.json": "2df72f3093f68fe9e1fadfe002ea7ee6e19bc54788ede59add9df81308b7906a",
+    "v2.shop_category.add_shop_category.json": "32fd2e26a3a306a2d8c37cacacd503ea2997c780adcb2881554cffd408b96d64",
+    "v2.shop_category.delete_item_list.json": "d69c4ce99640b03240eafcba5957576278a4d1141b751100bd31fa75cd8855f9",
+    "v2.shop_category.delete_shop_category.json": "ceb607730661aba0889f1a57ac58e9decd8a2ce528c204c3741485f2d782141b",
+    "v2.shop_category.get_item_list.json": "e792f001d44ebe652d66589ec4612e5a90a4804bd89d592f689535909826b760",
+    "v2.shop_category.get_shop_category_list.json": "b6cacf33f04c2a4e42541a98aae9ed9076a7551e7000f750a0f2bb1037930cf1",
+    "v2.shop_category.update_shop_category.json": "eff5fbd83af480a83370ba73c81176e3e3e4dbbcdcd4379b990c01f6b3cc0e2d",
+    "v2.shop_flash_sale.add_shop_flash_sale_items.json": "eff8cb73d9394ecf4712ca7c4b1e1c6bae21b5434dcf9faf00cc581c27ad0e06",
+    "v2.shop_flash_sale.create_shop_flash_sale.json": "2710900e7773db8df5b0df9f278915c964a250fcd4515312265b53d37dc58788",
+    "v2.shop_flash_sale.delete_shop_flash_sale.json": "1bb1ed02cfca3c18c229d5c55442584e758822401c8aded5d82edfc21b622eae",
+    "v2.shop_flash_sale.delete_shop_flash_sale_items.json": "605f843183c9f3a30bdbdfec7b9c118ab311dab331ddbeffcfa7275b65fe6dc0",
+    "v2.shop_flash_sale.get_item_criteria.json": "c0326c8749f8181468a7eff3ed29f6e1c7894487b2b5ffb4adbce221164406b5",
+    "v2.shop_flash_sale.get_shop_flash_sale.json": "9e2e169578852abdd3370684ff097296ac855b00fdc8ee9d218abca38f959ffb",
+    "v2.shop_flash_sale.get_shop_flash_sale_items.json": "6735f37e4a9d823ce396de7852577652b472e970c4a156529701c589cb718106",
+    "v2.shop_flash_sale.get_shop_flash_sale_list.json": "31f933ab3162801c7b306b61bf7996f6567a0b7516793a7f75a06d1b0fb78794",
+    "v2.shop_flash_sale.get_time_slot_id.json": "c83c9a4737a7aa5c6c1f354980cdfa0bf6a9a597258d02d879ddd49795179244",
+    "v2.shop_flash_sale.update_shop_flash_sale.json": "cc4dbfd3e2da03de89e17abaf6b013021825d5c2a90a880373d1780150217e14",
+    "v2.shop_flash_sale.update_shop_flash_sale_items.json": "f69cc234ce628024dcd71cf17f61728fa2852583dafd4eb7cf7d931ecdde5ee8",
+    "v2.top_picks.add_top_picks.json": "1cd1e2e1dc009cda6534cc507fcf2b6d0d67905568fd2224912a7cab3d44364b",
+    "v2.top_picks.delete_top_picks.json": "1b6a654a9da71fbcb63028d70ae63187e0292402f693d741e9113434feea0f21",
+    "v2.top_picks.get_top_picks_list.json": "9f15ee00c5af4b23026860f0c820c62e21ce0d30123bb1bd5883518f48f6bb36",
+    "v2.top_picks.update_top_picks.json": "afff9f65a6076dc36073f1034c9270c598df97b33a6d105c3e58db7378106597",
+    "v2.video.delete_video.json": "2c79f079b1e8a6325d8afa9df997841bce7599ebfbaff1a149b5c5c6953c1a77",
+    "v2.video.edit_video_info.json": "f23d87aefbedea20e735cafea6abcb2d080e8e70d968b64e5f2a6b464423ae6e",
+    "v2.video.get_cover_list.json": "0fddd22276494d8830a35591af75bbca0ec5c626edd481ad0a105d3c8cf2e2ac",
+    "v2.video.get_metric_trend.json": "ac07e1db4c47c995c22f64af65813fdd9648c6f1e0cc7f26fb3f0015cc1b404c",
+    "v2.video.get_overview_performance.json": "eb5ec47893ebe78f3ea024c605220e9dc5ce243f07db1d081cbc228a3ddf101c",
+    "v2.video.get_prodcut_performance_list.json": "9e0c932012746382cc6607d6b723d7aa7ad68f6ceaf606531c1ce2ed34edb364",
+    "v2.video.get_user_demographics.json": "a7aab79d91e18b1660559d8934cd237bb61a96a7fa01405eb6438359986816da",
+    "v2.video.get_video_detail.json": "63d5bf65512367dc431ef55340df071271592bc2c7eb7b35ba6c619401905adf",
+    "v2.video.get_video_detail_audience_distribution.json": "487abcdbdc6ca42f0eccee49654b8dea24098f7f1f4afe4b3c9b3107d751abbe",
+    "v2.video.get_video_detail_metric_trend.json": "e436f2f9b6fd7d5ffd936794feeaad7bdceb3b7e6b35b54c63ff7733fb12b142",
+    "v2.video.get_video_detail_performance.json": "8ddf35ba474fd2d7ccf69c58741b1b2aa5fd94befa6d840c1be54b5411f00a8d",
+    "v2.video.get_video_detail_product_performance.json": "b273683e507b71e7880e0afa89b0c5f983a26cb7f8388f17f5484a4551ca6a4f",
+    "v2.video.get_video_list.json": "d81aa7fb029cc14f6222eafe6eb63c898584790e9aa16630d64c813dff6d43eb",
+    "v2.video.get_video_performance_list.json": "4f7c6b57d39dc17b1d573a10467d35a2a2afadffc4741dbe0634e3728285c370",
+    "v2.video.post_video.json": "f0244c9842715bcd37cc422b80b089566b4f598d88576533ce4ec8e68cb79ec8",
+    "v2.voucher.add_voucher.json": "9e9f7aeae656c5faa0f1e7d97327edff9bfd8c43e22ffc51a49d4115728e5336",
+    "v2.voucher.delete_voucher.json": "322ea669002c112643a6b8b98a3264c1eb7aa2f6d924bbdac04e87dc70bf88f5",
+    "v2.voucher.end_voucher.json": "70760e905913f5a3fe666c5f426b7d572b92fbdbdf3a5493ac02e0d30759a07a",
+    "v2.voucher.get_voucher.json": "c11c06ffc99a2f689c98c928249eea52f9b0ca05c58909086a1f04d45bbe9abc",
+    "v2.voucher.get_voucher_list.json": "084661d8d37fd302f71d7dfb35d61361c1c59ca4c925e723b48ea88b600e775f",
+    "v2.voucher.update_voucher.json": "0c13a7a49d8a641e8212c92cb7095de77c261bb34c21d84b00e882e2b308d373"
+  },
+  "entries": [
+    {
+      "api_name": "v2.ams.get_open_campaign_added_product",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_open_campaign_not_added_product",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.batch_add_products_to_open_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.add_all_products_to_open_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_auto_add_new_product_toggle_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.update_auto_add_new_product_setting",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.batch_edit_products_open_campaign_setting",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.edit_all_products_open_campaign_setting",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.batch_remove_products_open_campaign_setting",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.remove_all_products_open_campaign_setting",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_open_campaign_batch_task_result",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_optimization_suggestion_product",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.batch_get_products_suggested_rate",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_shop_suggested_rate",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_targeted_campaign_addable_product_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_recommended_affiliate_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_managed_affiliate_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.query_affiliate_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.create_new_targeted_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_targeted_campaign_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_targeted_campaign_settings",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.update_basic_info_of_targeted_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.edit_product_list_of_targeted_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.edit_affiliate_list_of_targeted_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.terminate_targeted_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_performance_data_update_time",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_shop_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_product_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_affiliate_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_content_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_campaign_key_metrics_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_open_campaign_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_targeted_campaign_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_conversion_report",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_validation_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ams.get_validation_report",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_cover_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.edit_video_info",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.post_video",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_video_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_video_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.delete_video",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_overview_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_metric_trend",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_user_demographics",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_video_performance_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_prodcut_performance_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_video_detail_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_video_detail_metric_trend",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_video_detail_audience_distribution",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.video.get_video_detail_product_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_category",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_attribute_tree",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_brand_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_item_limit",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_item_base_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_item_extra_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.add_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.update_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.delete_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.init_tier_variation",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.update_tier_variation",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_model_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.add_model",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.update_model",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.delete_model",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.unlist_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.update_price",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.update_stock",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.boost_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_boosted_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_item_promotion",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.update_sip_item_price",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.search_item",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_comment",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.reply_comment",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.category_recommend",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.register_brand",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_recommend_attribute",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_weight_recommendation",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_size_chart_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_size_chart_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_item_violation_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_variations",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_all_vehicle_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_vehicle_list_by_compatibility_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_item_content_diagnosis_result",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_item_list_by_content_diagnosis",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_kit_item_limit",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.add_kit_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.update_kit_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_kit_item_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_aitem_by_pitem_id",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.search_attribute_value_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_main_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_direct_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_direct_shop_recommended_price",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_product_certification_rule",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.publish_item_to_outlet_shop",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_mart_item_mapping_by_id",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.search_unpackaged_model_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.generate_kit_image",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_mart_item_by_outlet_item_id",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.batch_update_outlet_price",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.batch_update_outlet_stock",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.get_batch_task_result",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.batch_add_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.product.batch_publish_item_to_outlet_shop",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_category",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_attribute_tree",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_brand_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_global_item_limit",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_global_item_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_global_item_info",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.add_global_item",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.update_global_item",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.delete_global_item",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.init_tier_variation",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.update_tier_variation",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.add_global_model",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.update_global_model",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.delete_global_model",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_global_model_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.support_size_chart",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.update_size_chart",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.create_publish_task",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_publishable_shop",
+      "exposure": "retired",
+      "implementation": "unimplemented",
+      "specification": "discovered",
+      "verification": []
+    },
+    {
+      "api_name": "v2.global_product.get_publish_task_result",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_published_list",
+      "exposure": "retired",
+      "implementation": "unimplemented",
+      "specification": "discovered",
+      "verification": []
+    },
+    {
+      "api_name": "v2.global_product.update_price",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.update_stock",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.set_sync_field",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_global_item_id",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.category_recommend",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_recommend_attribute",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_shop_publishable_status",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_variations",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_size_chart_detail",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_size_chart_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.search_global_attribute_value_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.get_local_adjustment_rate",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.global_product.update_local_adjustment_rate",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media_space.init_video_upload",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media_space.upload_video_part",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media_space.complete_video_upload",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media_space.get_video_upload_result",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media_space.cancel_video_upload",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media_space.upload_image",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media.upload_image",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media.init_video_upload",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media.upload_video_part",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media.complete_video_upload",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media.get_video_upload_result",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.media.cancel_video_upload",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.get_shop_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.get_profile",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.update_profile",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.get_warehouse_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.get_shop_notification",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.get_authorised_reseller_brand",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.get_br_shop_onboarding_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.get_shop_holiday_mode",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop.set_shop_holiday_mode",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.merchant.get_merchant_info",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.merchant.get_shop_list_by_merchant",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.merchant.get_merchant_warehouse_location_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.merchant.get_merchant_warehouse_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.merchant.get_warehouse_eligible_shop_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.merchant.get_merchant_prepaid_account_list",
+      "exposure": "retired",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_order_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_order_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_shipment_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.search_package_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_package_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.split_order",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.unsplit_order",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.cancel_order",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.handle_buyer_cancellation",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.set_note",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_pending_buyer_invoice_order_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_buyer_invoice_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.upload_invoice_doc",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.download_invoice_doc",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.handle_prescription_check",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_warehouse_filter_config",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_booking_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_booking_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.generate_fbs_invoices",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_fbs_invoices_result",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.download_fbs_invoices",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.order.get_estimate_cancel_value",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_shipping_parameter",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_mass_shipping_parameter",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.ship_order",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.mass_ship_order",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.update_shipping_order",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_tracking_number",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_mass_tracking_number",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_shipping_document_parameter",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.create_shipping_document",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_shipping_document_result",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.download_shipping_document",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_shipping_document_data_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_tracking_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_address_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.set_address_config",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.update_address",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.delete_address",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_channel_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.update_channel",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_operating_hours",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_operating_hour_restrictions",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.update_operating_hours",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.delete_special_operating_hour",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.batch_update_tpf_warehouse_tracking_status",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.batch_ship_order",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.update_tracking_status",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_booking_shipping_parameter",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.ship_booking",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_booking_tracking_number",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_booking_shipping_document_parameter",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.create_booking_shipping_document",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_booking_shipping_document_result",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.download_booking_shipping_document",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_booking_shipping_document_data_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_booking_tracking_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.download_to_label",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.create_shipping_document_job",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_shipping_document_job_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.download_shipping_document_job",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.update_self_collection_order_logistics",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_mart_packaging_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.set_mart_packaging_info",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.upload_serviceable_polygon",
+      "exposure": "disabled",
+      "implementation": "unimplemented",
+      "specification": "discovered",
+      "verification": []
+    },
+    {
+      "api_name": "v2.logistics.check_polygon_update_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.get_pause_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.logistics.set_pause_status",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_unbind_order_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.generate_first_mile_tracking_number",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.bind_first_mile_tracking_number",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.unbind_first_mile_tracking_number",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_tracking_number_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_waybill",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_channel_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_courier_delivery_channel_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_transit_warehouse_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.generate_and_bind_first_mile_tracking_number",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.bind_courier_delivery_first_mile_tracking_number",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.unbind_first_mile_tracking_number_all",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_courier_delivery_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_courier_delivery_waybill",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.first_mile.get_courier_delivery_tracking_number_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_escrow_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.set_shop_installment_status",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_shop_installment_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_payout_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.set_item_installment_status",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_item_installment_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_payment_method_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_wallet_transaction_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_escrow_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_payout_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_billing_transaction_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_escrow_detail_batch",
+      "exposure": "disabled",
+      "implementation": "unimplemented",
+      "specification": "discovered",
+      "verification": []
+    },
+    {
+      "api_name": "v2.payment.generate_income_statement",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_income_statement",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.generate_income_report",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_income_report",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_income_overview",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.payment.get_income_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.add_discount",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.add_discount_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.delete_discount",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.delete_discount_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.get_discount",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.get_discount_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.update_discount",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.update_discount_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.end_discount",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.get_sip_discounts",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.set_sip_discount",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.discount.delete_sip_discount",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.add_bundle_deal",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.add_bundle_deal_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.get_bundle_deal_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.get_bundle_deal",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.get_bundle_deal_item",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.update_bundle_deal",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.update_bundle_deal_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.end_bundle_deal",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.delete_bundle_deal",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.bundle_deal.delete_bundle_deal_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.add_add_on_deal",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.add_add_on_deal_main_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.add_add_on_deal_sub_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.delete_add_on_deal",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.delete_add_on_deal_main_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.delete_add_on_deal_sub_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.get_add_on_deal_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.get_add_on_deal",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.get_add_on_deal_main_item",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.get_add_on_deal_sub_item",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.update_add_on_deal",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.update_add_on_deal_main_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.update_add_on_deal_sub_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.add_on_deal.end_add_on_deal",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.voucher.add_voucher",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.voucher.delete_voucher",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.voucher.end_voucher",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.voucher.update_voucher",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.voucher.get_voucher",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.voucher.get_voucher_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.get_time_slot_id",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.create_shop_flash_sale",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.get_item_criteria",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.add_shop_flash_sale_items",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.get_shop_flash_sale_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.get_shop_flash_sale",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.get_shop_flash_sale_items",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.update_shop_flash_sale",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.update_shop_flash_sale_items",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.delete_shop_flash_sale",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_flash_sale.delete_shop_flash_sale_items",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.follow_prize.add_follow_prize",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.follow_prize.delete_follow_prize",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.follow_prize.end_follow_prize",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.follow_prize.update_follow_prize",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.follow_prize.get_follow_prize_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.follow_prize.get_follow_prize_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.top_picks.get_top_picks_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.top_picks.add_top_picks",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.top_picks.update_top_picks",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.top_picks.delete_top_picks",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_category.add_shop_category",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_category.get_shop_category_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_category.delete_shop_category",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_category.update_shop_category",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_category.add_item_list",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_category.get_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.shop_category.delete_item_list",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.get_return_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.get_return_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.confirm",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.dispute",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.get_available_solutions",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.offer",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.accept_offer",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.convert_image",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.upload_proof",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.query_proof",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.get_return_dispute_reason",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.cancel_dispute",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.get_shipping_carrier",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.upload_shipping_proof",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.returns.get_reverse_tracking_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.account_health.get_shop_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.account_health.get_metric_source_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.account_health.get_penalty_point_history",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.account_health.get_punishment_history",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.account_health.get_listings_with_issues",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.account_health.get_late_orders",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_total_balance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_shop_toggle_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_recommended_keyword_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_recommended_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_all_cpc_ads_hourly_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_all_cpc_ads_daily_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.create_auto_product_ads",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.edit_auto_product_ads",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_product_campaign_daily_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_product_campaign_hourly_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_product_level_campaign_id_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_product_level_campaign_setting_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.create_manual_product_ads",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.edit_manual_product_ad_keywords",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.edit_manual_product_ads",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_create_product_ad_budget_suggestion",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_product_recommended_roi_target",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_ads_fácil_shop_rate",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.check_create_gms_product_campaign_eligibility",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.create_gms_product_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.edit_gms_product_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.list_gms_user_deleted_item",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.edit_gms_item_product_campaign",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_gms_campaign_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.ads.get_gms_item_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.public.get_shops_by_partner",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.public.get_merchants_by_partner",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.public.get_access_token",
+      "exposure": "disabled",
+      "implementation": "unimplemented",
+      "specification": "discovered",
+      "verification": []
+    },
+    {
+      "api_name": "v2.public.refresh_access_token",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "scope_coverage": {
+        "supported": [
+          "shop",
+          "merchant",
+          "supplier",
+          "user",
+          "principal"
+        ],
+        "unresolved": []
+      },
+      "specification": "verified",
+      "verification": [
+        "contract_passed",
+        "shop_contract_passed",
+        "merchant_contract_passed",
+        "supplier_contract_passed",
+        "user_contract_passed",
+        "principal_contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.public.get_token_by_resend_code",
+      "exposure": "disabled",
+      "implementation": "unimplemented",
+      "specification": "discovered",
+      "verification": []
+    },
+    {
+      "api_name": "v2.public.get_shopee_ip_ranges",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.push.set_app_push_config",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.push.get_app_push_config",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.push.get_lost_push_message",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.push.confirm_consumed_lost_push_message",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.sbs.get_bound_whs_info",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.sbs.get_current_inventory",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.sbs.get_expiry_report",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.sbs.get_stock_aging",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.sbs.get_stock_movement",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.sbs.get_fulfillment_mapping_inventory_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.fbs.query_br_shop_enrollment_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.fbs.query_br_shop_invoice_error",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.fbs.query_br_shop_block_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.fbs.query_br_sku_block_status",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.upload_image",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.create_session",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.update_session",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.start_session",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.end_session",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_session_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.add_item_list",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.delete_item_list",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.update_item_list",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_item_count",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.update_show_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.delete_show_item",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_show_item",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_like_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_recent_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_item_set_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_item_set_item_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.apply_item_set",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_session_metric",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_session_item_metric",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.get_latest_comment_list",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.post_comment",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.ban_user_comment",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.livestream.unban_user_comment",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_shop_sales_performance_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_principal_sales_performance_detail",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_shop_affiliate_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_principal_affiliate_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_content_affiliate_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_shop_livestream_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_principal_livestream_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_session_livestream_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_shop_video_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_principal_video_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.principal.get_clip_video_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.buybox.get_buybox_models_by_shop_id",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.buybox.get_buybox_models_by_model_id",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.buybox.get_buybox_shop_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.buybox.get_buybox_model_performance",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.buybox.update_buybox_model_enrollment",
+      "exposure": "opt_in",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    },
+    {
+      "api_name": "v2.business_insights.get_marketing_hot_listing",
+      "exposure": "enabled",
+      "implementation": "implemented",
+      "specification": "verified",
+      "verification": [
+        "contract_passed"
+      ]
+    }
+  ],
+  "version": "2026-09-21"
+}

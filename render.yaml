@@ -1,0 +1,34 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# A persistent disk requires a paid instance type, hence plan: starter.
+services:
+  - type: web
+    name: shopee-seller-mcp
+    runtime: docker
+    plan: starter
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    numInstances: 1
+    disk:
+      name: shopee-mcp-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      # Public https base URL without a path, e.g. https://shopee-seller-mcp.onrender.com
+      # or your custom domain. Leave empty to use Render's RENDER_EXTERNAL_URL.
+      - key: SHOPEE_MCP_PUBLIC_URL
+        sync: false
+      # Operator passphrase for /admin/shops and OAuth consent. Render generates a
+      # random value; copy it from the dashboard (Environment tab) to sign in.
+      - key: SHOPEE_MCP_ADMIN_PASSPHRASE
+        generateValue: true
+      # Shopee Open Platform app credentials (live app). Add
+      # SHOPEE_SANDBOX_PARTNER_ID / SHOPEE_SANDBOX_PARTNER_KEY in the dashboard
+      # if you also want to onboard sandbox shops.
+      - key: SHOPEE_PARTNER_ID
+        sync: false
+      - key: SHOPEE_PARTNER_KEY
+        sync: false
+      - key: PORT
+        value: "8080"

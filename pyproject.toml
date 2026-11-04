@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "shopee-seller-mcp"
+version = "0.1.0"
+description = "Unofficial, read-only multi-shop MCP server for the Shopee Open Platform (stdio and remote HTTP with OAuth)"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.12"
+dependencies = ["mcp==2.2.0", "httpx>=0.28,<1", "jsonschema>=4.23,<5"]
+
+[project.scripts]
+shopee-mcp = "shopee_mcp.server:main"
+shopee-auth = "shopee_mcp.auth_cli:main"
+shopee-mcp-http = "shopee_mcp.http_server:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "pytest-asyncio>=1"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/shopee_mcp"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"public_catalog" = "shopee_mcp/data"
+
+[tool.hatch.build.targets.sdist]
+include = ["src/shopee_mcp", "public_catalog", "public_tests", "scripts/export_public_catalog.py", "scripts/check_distribution.py", "scripts/install-agent.sh", "docker", "docs", "Dockerfile", ".dockerignore", "render.yaml", "railway.json", ".env.example", "README.md", "LICENSE", "pyproject.toml", "uv.lock", ".gitignore"]
+
+[tool.pytest.ini_options]
+testpaths = ["public_tests"]
+asyncio_mode = "auto"

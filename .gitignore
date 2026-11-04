@@ -1,0 +1,30 @@
+.venv/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+pytest-of-*/
+local-data/
+.uv-cache/
+.DS_Store
+
+# Secrets and runtime state: never commit.
+.env
+.env.*
+*.env
+!.env.example
+*.db
+*.db-wal
+*.db-shm
+data/
+shops.json
+*.bak-*
+
+# Private source documents, review records, fixtures, and build tools.
+/catalog/
+/tests/
+/tools/
+/tmp/
+/PUBLICATION_REVIEW.md

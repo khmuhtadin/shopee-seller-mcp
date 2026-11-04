@@ -10,7 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     SHOPEE_MCP_DATA_DIR=/data
 
 # gosu drops root privileges after the entrypoint fixes ownership of a
-# root-owned volume mount (common on Render/Railway/Docker volumes).
+# root-owned volume mount (common on managed platforms and Docker volumes).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gosu \
     && rm -rf /var/lib/apt/lists/* \

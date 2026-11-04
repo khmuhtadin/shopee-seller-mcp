@@ -7,8 +7,6 @@
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 ![MCP](https://img.shields.io/badge/MCP-streamable%20HTTP%20%7C%20stdio-purple)
 
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/khmuhtadin/shopee-seller-mcp)
-
 An unofficial [Model Context Protocol](https://modelcontextprotocol.io) server for the
 [Shopee Open Platform](https://open.shopee.com/documents). Connect ChatGPT, Claude,
 Claude Code, Codex, Cursor, VS Code, Gemini CLI, n8n or your own agents to one or more
@@ -24,7 +22,7 @@ store-b last month"*. Not affiliated with or endorsed by Shopee.
 - **Remote HTTP mode.** Stateless Streamable HTTP at `/mcp` with OAuth 2.1 (ChatGPT and Claude.ai connectors) and static bearer tokens (CLIs, IDEs, n8n, scripts).
 - **Browser shop onboarding.** Add or remove shops at `/admin/shops` without SSH. Changes apply without a restart.
 - **One-command client setup.** `shopee-mcp-http connect <client>` prints or merges the right config for each MCP client.
-- **Deploy anywhere.** Render Blueprint, Railway, Docker, or a VPS with systemd and nginx.
+- **Self-hosted.** Run it on your own VPS (systemd and nginx) or any Docker host with a persistent volume.
 
 ## How it works
 
@@ -60,22 +58,13 @@ All remote options need a public **https** URL. It is the OAuth issuer and the b
 
 | Option | Best for | Guide |
 | --- | --- | --- |
-| (a) One-click Render | Fastest hosted setup | [below](#a-one-click-render) |
-| (b) Railway | Hosted, usage-based | [docs/DEPLOY.md](docs/DEPLOY.md#railway) |
-| (c) Docker | Any container host | [below](#c-docker) and [docs/DEPLOY.md](docs/DEPLOY.md#docker) |
-| (d) VPS with systemd and nginx | Full control, Cloudflare in front | [docs/DEPLOY.md](docs/DEPLOY.md#vps-with-systemd-and-nginx) |
-| (e) Local stdio | One machine, one user | [docs/DEPLOY.md](docs/DEPLOY.md#local-stdio) |
+| (a) VPS with systemd and nginx | Recommended. Full control, Cloudflare in front | [docs/DEPLOY.md](docs/DEPLOY.md#vps-with-systemd-and-nginx) |
+| (b) Docker | Any container host with a persistent volume | [below](#b-docker) and [docs/DEPLOY.md](docs/DEPLOY.md#docker) |
+| (c) Local stdio | One machine, one user | [docs/DEPLOY.md](docs/DEPLOY.md#local-stdio) |
 
-### (a) One-click Render
+Free hosting tiers without persistent storage are not supported yet: Shopee refresh tokens rotate and must survive restarts.
 
-1. Click **Deploy to Render** above. The Blueprint creates a Docker web service on the `starter` plan (persistent disks need a paid plan) with a 1 GB disk at `/data`.
-2. Enter `SHOPEE_PARTNER_ID` and `SHOPEE_PARTNER_KEY`. Set `SHOPEE_MCP_PUBLIC_URL` to the service URL (for example `https://<service>.onrender.com`) or your custom domain. If you leave it empty, Render's own URL is used.
-3. After the first deploy, copy the generated `SHOPEE_MCP_ADMIN_PASSPHRASE` from the service's Environment tab.
-4. In the Shopee console, set the app's redirect URL domain to the public URL (see [Shopee Open Platform setup](#shopee-open-platform-setup)).
-5. Open `https://<your-host>/admin/shops`, sign in with the passphrase and add a shop.
-6. Connect ChatGPT or Claude with OAuth, or create a bearer token in the Render Shell: `shopee-mcp-http token create --auth-file /data/auth.db --label laptop`.
-
-### (c) Docker
+### (b) Docker
 
 ```bash
 docker build -t shopee-seller-mcp .

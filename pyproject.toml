@@ -26,7 +26,7 @@ packages = ["src/shopee_mcp"]
 "public_catalog" = "shopee_mcp/data"
 
 [tool.hatch.build.targets.sdist]
-include = ["src/shopee_mcp", "public_catalog", "public_tests", "scripts/export_public_catalog.py", "scripts/check_distribution.py", "scripts/install-agent.sh", "docker", "docs", "Dockerfile", ".dockerignore", "render.yaml", "railway.json", ".env.example", "README.md", "LICENSE", "pyproject.toml", "uv.lock", ".gitignore"]
+include = ["src/shopee_mcp", "public_catalog", "public_tests", "scripts/export_public_catalog.py", "scripts/check_distribution.py", "scripts/install-agent.sh", "docker", "docs", "Dockerfile", ".dockerignore", ".env.example", "README.md", "LICENSE", "pyproject.toml", "uv.lock", ".gitignore"]
 
 [tool.pytest.ini_options]
 testpaths = ["public_tests"]

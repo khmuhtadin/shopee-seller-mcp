@@ -1,0 +1,76 @@
+{
+  "api_name": "v2.returns.upload_shipping_proof",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.returns.upload_shipping_proof endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "image_id_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "image_id": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "maxItems": 3,
+        "type": "array"
+      },
+      "remarks": {
+        "type": "string"
+      },
+      "return_sn": {
+        "type": "string"
+      },
+      "reverse_logistics_carrier_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "reverse_logistics_carrier_name": {
+        "type": "string"
+      },
+      "tracking_number": {
+        "maxLength": 30,
+        "minLength": 5,
+        "pattern": "^[A-Za-z0-9]+$",
+        "type": "string"
+      }
+    },
+    "required": [
+      "return_sn",
+      "reverse_logistics_carrier_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "returns",
+  "pagination_fields": [],
+  "path": "/api/v2/returns/upload_shipping_proof",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_returns_upload_shipping_proof"
+}

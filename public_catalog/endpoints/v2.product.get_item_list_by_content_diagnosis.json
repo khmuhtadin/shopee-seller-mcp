@@ -1,0 +1,234 @@
+{
+  "api_name": "v2.product.get_item_list_by_content_diagnosis",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_item_list_by_content_diagnosis endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "issue_type": {
+              "contains": {
+                "enum": [
+                  1,
+                  2,
+                  3,
+                  4,
+                  5
+                ]
+              }
+            }
+          },
+          "required": [
+            "quality_level",
+            "issue_type"
+          ]
+        },
+        "then": {
+          "properties": {
+            "quality_level": {
+              "contains": {
+                "const": 1
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "issue_type": {
+              "contains": {
+                "enum": [
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11
+                ]
+              }
+            }
+          },
+          "required": [
+            "quality_level",
+            "issue_type"
+          ]
+        },
+        "then": {
+          "properties": {
+            "quality_level": {
+              "contains": {
+                "const": 2
+              }
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "quality_level": {
+              "contains": {
+                "const": 3
+              }
+            }
+          },
+          "required": [
+            "quality_level",
+            "issue_type"
+          ]
+        },
+        "then": {
+          "properties": {
+            "issue_type": {
+              "maxItems": 0
+            }
+          }
+        }
+      }
+    ],
+    "properties": {
+      "issue_type": {
+        "items": {
+          "enum": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "type": "integer"
+        },
+        "type": "array"
+      },
+      "offset": {
+        "type": "string"
+      },
+      "page_size": {
+        "maximum": 48,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "quality_level": {
+        "items": {
+          "enum": [
+            1,
+            2,
+            3
+          ],
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "type": "integer"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [
+    "total_count",
+    "next_offset"
+  ],
+  "path": "/api/v2/product/get_item_list_by_content_diagnosis",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "has_next_page": {
+        "type": "boolean"
+      },
+      "item_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "quality_level": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "unfinished_task": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "issue_type": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "suggestion": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "next_offset": {
+        "type": "string"
+      },
+      "total_count": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": [
+          "integer",
+          "string"
+        ],
+        "x-wire-int64": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_item_list_by_content_diagnosis"
+}

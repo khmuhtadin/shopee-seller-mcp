@@ -1,0 +1,179 @@
+{
+  "api_name": "v2.product.get_comment",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_comment endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "comment_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "cursor": {
+        "type": "string"
+      },
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "cursor",
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [
+    "next_cursor",
+    "more"
+  ],
+  "path": "/api/v2/product/get_comment",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "item_comment_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "buyer_username": {
+              "type": "string"
+            },
+            "comment": {
+              "type": "string"
+            },
+            "comment_id": {
+              "type": [
+                "integer",
+                "string"
+              ]
+            },
+            "comment_reply": {
+              "additionalProperties": true,
+              "properties": {
+                "create_time": {
+                  "maximum": 9007199254740991,
+                  "minimum": -9007199254740991,
+                  "type": "integer"
+                },
+                "hidden": {
+                  "type": "boolean"
+                },
+                "reply": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "create_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "editable": {
+              "type": "string"
+            },
+            "hidden": {
+              "type": "boolean"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "media": {
+              "additionalProperties": true,
+              "properties": {
+                "image_url_list": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "video_url_list": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "model_id_list": {
+              "items": {
+                "pattern": "^(0|[1-9][0-9]*)$",
+                "type": "string",
+                "x-wire-integer": true
+              },
+              "type": "array"
+            },
+            "order_sn": {
+              "type": "string"
+            },
+            "rating_star": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "more": {
+        "type": "boolean"
+      },
+      "next_cursor": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_comment"
+}

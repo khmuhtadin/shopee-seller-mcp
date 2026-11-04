@@ -1,0 +1,277 @@
+{
+  "api_name": "v2.sbs.get_current_inventory",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.sbs.get_current_inventory endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "category_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "inbound_pending_approval": {
+        "enum": [
+          "0",
+          "1"
+        ],
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "keyword": {
+        "type": "string"
+      },
+      "not_moving_tag": {
+        "enum": [
+          0,
+          1
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "products_with_inventory": {
+        "enum": [
+          0,
+          1
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "search_type": {
+        "enum": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "stock_levels": {
+        "pattern": "^(?:1|2|3|4)(?:,(?:1|2|3|4))*$",
+        "type": "string"
+      },
+      "whs_ids": {
+        "type": "string"
+      },
+      "whs_region": {
+        "enum": [
+          "BR",
+          "CN",
+          "ID",
+          "MY",
+          "MX",
+          "TH",
+          "TW",
+          "PH",
+          "VN",
+          "SG"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "whs_region"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "sbs",
+  "pagination_fields": [],
+  "path": "/api/v2/sbs/get_current_inventory",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "item_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_image": {
+              "type": "string"
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "sku_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "fulfill_mapping_mode": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "model_id": {
+                    "type": "string"
+                  },
+                  "model_name": {
+                    "type": "string"
+                  },
+                  "mtsku_id": {
+                    "type": "string"
+                  },
+                  "not_moving_tag": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "shop_sku_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "shop_item_id": {
+                          "type": "string"
+                        },
+                        "shop_model_id": {
+                          "type": "string"
+                        },
+                        "shop_sku_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "whs_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "coverage_days": {
+                          "type": "number"
+                        },
+                        "excess_stock": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "in_transit_pending_putaway_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "in_whs_coverage_days": {
+                          "type": "number"
+                        },
+                        "ir_approval_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "last_15_sold": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "last_30_sold": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "last_60_sold": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "last_7_sold": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "last_90_sold": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "reserved_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "sellable_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "selling_speed": {
+                          "type": "number"
+                        },
+                        "stock_level": {
+                          "maximum": 2147483647,
+                          "minimum": -2147483648,
+                          "type": "integer"
+                        },
+                        "unsellable_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "whs_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "warehouse_item_id": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_sbs_get_current_inventory"
+}

@@ -1,0 +1,93 @@
+{
+  "api_name": "v2.shop_flash_sale.get_time_slot_id",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "start_time",
+      "kind": "numeric_delta",
+      "maximum": 18014398509481982,
+      "minimum": 1,
+      "to": "end_time"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.shop_flash_sale.get_time_slot_id endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "end_time": {
+        "maximum": 2145887999,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "start_time": {
+        "maximum": 2145887999,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "start_time",
+      "end_time"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "shop_flash_sale",
+  "pagination_fields": [],
+  "path": "/api/v2/shop_flash_sale/get_time_slot_id",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "response": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "end_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "start_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "timeslot_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_flash_sale_get_time_slot_id"
+}

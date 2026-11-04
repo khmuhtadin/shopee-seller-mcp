@@ -1,0 +1,203 @@
+{
+  "api_name": "v2.sbs.get_expiry_report",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.sbs.get_expiry_report endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "category_id_l1": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "expiry_status": {
+        "pattern": "^(?:0|2|4|5|6)(?:,(?:0|2|4|5|6))*$",
+        "type": "string"
+      },
+      "item_id": {
+        "type": "string"
+      },
+      "item_name": {
+        "type": "string"
+      },
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 40,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "sku_id": {
+        "type": "string"
+      },
+      "variation": {
+        "type": "string"
+      },
+      "whs_ids": {
+        "type": "string"
+      },
+      "whs_region": {
+        "enum": [
+          "BR",
+          "CN",
+          "ID",
+          "MY",
+          "MX",
+          "TH",
+          "TW",
+          "PH",
+          "VN",
+          "SG"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "whs_region"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "sbs",
+  "pagination_fields": [],
+  "path": "/api/v2/sbs/get_expiry_report",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "item_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_image": {
+              "type": "string"
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "sku_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "fulfill_mapping_mode": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "model_id": {
+                    "type": "string"
+                  },
+                  "mtsku_id": {
+                    "type": "string"
+                  },
+                  "shop_sku_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "shop_item_id": {
+                          "type": "string"
+                        },
+                        "shop_model_id": {
+                          "type": "string"
+                        },
+                        "shop_sku_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "variation": {
+                    "type": "string"
+                  },
+                  "whs_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "damaged_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "expired_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "expiring_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "expiry_blocked_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "normal_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "total_qty": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "whs_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "warehouse_item_id": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_sbs_get_expiry_report"
+}

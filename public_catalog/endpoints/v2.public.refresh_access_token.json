@@ -1,0 +1,85 @@
+{
+  "api_name": "v2.public.refresh_access_token",
+  "auth_strategy": "public",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.public.refresh_access_token endpoint.",
+  "effects": "credential",
+  "encoding": "credential_refresh",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "scope": {
+        "default": "shop",
+        "enum": [
+          "shop",
+          "merchant",
+          "supplier",
+          "user",
+          "principal"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "public",
+  "pagination_fields": [],
+  "path": "/api/v2/auth/access_token/get",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "access_token_expires_at": {
+        "type": "integer"
+      },
+      "refresh_token_expires_at": {
+        "type": "integer"
+      },
+      "scope": {
+        "enum": [
+          "shop",
+          "merchant",
+          "supplier",
+          "user",
+          "principal"
+        ],
+        "type": "string"
+      },
+      "status": {
+        "const": "refreshed",
+        "type": "string"
+      }
+    },
+    "required": [
+      "status",
+      "scope",
+      "access_token_expires_at",
+      "refresh_token_expires_at"
+    ],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "scope_coverage": {
+    "supported": [
+      "shop",
+      "merchant",
+      "supplier",
+      "user",
+      "principal"
+    ],
+    "unresolved": []
+  },
+  "sensitive_paths": [],
+  "tool_name": "v2_public_refresh_access_token"
+}

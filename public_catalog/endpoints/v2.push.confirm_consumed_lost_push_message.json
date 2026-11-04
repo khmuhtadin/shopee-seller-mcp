@@ -1,0 +1,45 @@
+{
+  "api_name": "v2.push.confirm_consumed_lost_push_message",
+  "auth_strategy": "public",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.push.confirm_consumed_lost_push_message endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "last_message_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "last_message_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "push",
+  "pagination_fields": [],
+  "path": "/api/v2/push/confirm_consumed_lost_push_message",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_push_confirm_consumed_lost_push_message"
+}

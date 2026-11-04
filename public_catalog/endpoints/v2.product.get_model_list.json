@@ -1,0 +1,356 @@
+{
+  "api_name": "v2.product.get_model_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_model_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "item_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_model_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "model": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "cssp_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "dimension": {
+              "additionalProperties": true,
+              "properties": {
+                "package_height": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "package_length": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "package_width": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "gtin_code": {
+              "type": "string"
+            },
+            "has_promotion": {
+              "type": "boolean"
+            },
+            "is_fulfillment_by_shopee": {
+              "type": "boolean"
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_sku": {
+              "type": "string"
+            },
+            "model_status": {
+              "type": "string"
+            },
+            "pre_order": {
+              "additionalProperties": true,
+              "properties": {
+                "days_to_ship": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "is_pre_order": {
+                  "type": "boolean"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "price_info": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "currency": {
+                    "type": "string"
+                  },
+                  "current_price": {
+                    "type": "number"
+                  },
+                  "inflated_price_of_current_price": {
+                    "type": "number"
+                  },
+                  "inflated_price_of_original_price": {
+                    "type": "number"
+                  },
+                  "local_price": {
+                    "type": "number"
+                  },
+                  "local_promotion_price": {
+                    "type": "number"
+                  },
+                  "original_price": {
+                    "type": "number"
+                  },
+                  "sip_item_price": {
+                    "type": "number"
+                  },
+                  "sip_item_price_currency": {
+                    "type": "string"
+                  },
+                  "sip_item_price_source": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "promotion_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-uint64": true
+            },
+            "ssp_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "stock_info_v2": {
+              "additionalProperties": true,
+              "properties": {
+                "advance_stock": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "in_transit_advance_stock": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "sellable_advance_stock": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "seller_stock": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "if_saleable": {
+                        "type": "boolean"
+                      },
+                      "location_id": {
+                        "type": "string"
+                      },
+                      "stock": {
+                        "maximum": 2147483647,
+                        "minimum": -2147483648,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "shopee_stock": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "location_id": {
+                        "type": "string"
+                      },
+                      "stock": {
+                        "maximum": 2147483647,
+                        "minimum": -2147483648,
+                        "type": [
+                          "integer",
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "summary_info": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "total_available_stock": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    },
+                    "total_reserved_stock": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "tier_index": {
+              "items": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "weight": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "standardise_tier_variation": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "variation_group_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "variation_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "variation_name": {
+              "type": "string"
+            },
+            "variation_option_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "image_id": {
+                    "type": "string"
+                  },
+                  "image_url": {
+                    "type": "string"
+                  },
+                  "variation_option_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "variation_option_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "tier_variation": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "option_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "image": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "image_id": {
+                        "type": "string"
+                      },
+                      "image_url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "option": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_model_list"
+}

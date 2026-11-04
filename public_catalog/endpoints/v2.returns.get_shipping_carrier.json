@@ -1,0 +1,96 @@
+{
+  "api_name": "v2.returns.get_shipping_carrier",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.returns.get_shipping_carrier endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "return_sn": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "return_sn"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "returns",
+  "pagination_fields": [],
+  "path": "/api/v2/returns/get_shipping_carrier",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "has_uploaded_seller_arrange_proof": {
+        "type": "boolean"
+      },
+      "is_shipping_proof_mandatory": {
+        "type": "boolean"
+      },
+      "reverse_logistics_carrier_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "reverse_logistics_carrier_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "reverse_logistics_carrier_name": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "shipping_proof_template": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "is_shipping_image_file_mandatory": {
+              "type": "boolean"
+            },
+            "is_tracking_number_required": {
+              "type": "boolean"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_returns_get_shipping_carrier"
+}

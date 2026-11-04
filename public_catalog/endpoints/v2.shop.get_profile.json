@@ -1,0 +1,58 @@
+{
+  "api_name": "v2.shop.get_profile",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.shop.get_profile endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "shop",
+  "pagination_fields": [],
+  "path": "/api/v2/shop/get_profile",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "description": {
+        "type": "string"
+      },
+      "invoice_issuer": {
+        "type": "string"
+      },
+      "shop_logo": {
+        "type": "string"
+      },
+      "shop_name": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_get_profile"
+}

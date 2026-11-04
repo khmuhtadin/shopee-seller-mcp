@@ -1,0 +1,232 @@
+{
+  "api_name": "v2.sbs.get_stock_aging",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.sbs.get_stock_aging endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "aging_storage_tag": {
+        "enum": [
+          0,
+          1
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "category_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "excess_storage_tag": {
+        "enum": [
+          0,
+          1
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "keyword": {
+        "type": "string"
+      },
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "search_type": {
+        "enum": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "whs_ids": {
+        "type": "string"
+      },
+      "whs_region": {
+        "enum": [
+          "BR",
+          "CN",
+          "ID",
+          "MY",
+          "MX",
+          "TH",
+          "TW",
+          "PH",
+          "VN",
+          "SG"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "whs_region"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "sbs",
+  "pagination_fields": [],
+  "path": "/api/v2/sbs/get_stock_aging",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "item_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_image": {
+              "type": "string"
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "sku_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "barcode": {
+                    "type": "string"
+                  },
+                  "fulfill_mapping_mode": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "model_id": {
+                    "type": "string"
+                  },
+                  "model_name": {
+                    "type": "string"
+                  },
+                  "mtsku_id": {
+                    "type": "string"
+                  },
+                  "shop_sku_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "shop_item_id": {
+                          "type": "string"
+                        },
+                        "shop_model_id": {
+                          "type": "string"
+                        },
+                        "shop_sku_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "whs_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "aging_storage_tag": {
+                          "maximum": 2147483647,
+                          "minimum": -2147483648,
+                          "type": "integer"
+                        },
+                        "excess_stock": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "qty_of_stock_age_five": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "qty_of_stock_age_four": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "qty_of_stock_age_one": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "qty_of_stock_age_six": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "qty_of_stock_age_three": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "qty_of_stock_age_two": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "whs_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "warehouse_item_id": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_sbs_get_stock_aging"
+}

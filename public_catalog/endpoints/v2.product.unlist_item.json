@@ -1,0 +1,108 @@
+{
+  "api_name": "v2.product.unlist_item",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [
+    "failure_list"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.unlist_item endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "unlist": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "item_id",
+            "unlist"
+          ],
+          "type": "object"
+        },
+        "maxItems": 50,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "item_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/unlist_item",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "failure_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "failed_reason": {
+              "type": "string"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "success_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "unlist": {
+              "type": "boolean"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_unlist_item"
+}

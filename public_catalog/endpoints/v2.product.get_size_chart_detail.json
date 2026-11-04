@@ -1,0 +1,132 @@
+{
+  "api_name": "v2.product.get_size_chart_detail",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_size_chart_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "size_chart_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "size_chart_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_size_chart_detail",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "size_chart_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": [
+          "integer",
+          "string"
+        ],
+        "x-wire-integer": true
+      },
+      "size_chart_name": {
+        "type": "string"
+      },
+      "size_chart_table": {
+        "additionalProperties": true,
+        "properties": {
+          "column_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "measurement": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "display_name": {
+                      "type": "string"
+                    },
+                    "input_type": {
+                      "type": "string"
+                    },
+                    "unit": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "measurement_value_list": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "max_value": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "min_value": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      },
+                      "option": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "value": {
+                        "type": [
+                          "number",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_size_chart_detail"
+}

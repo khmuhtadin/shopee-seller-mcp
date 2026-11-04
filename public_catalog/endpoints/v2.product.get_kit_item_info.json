@@ -1,0 +1,420 @@
+{
+  "api_name": "v2.product.get_kit_item_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_kit_item_info endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "item_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_kit_item_info",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "product_info": {
+        "additionalProperties": true,
+        "properties": {
+          "attributes": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "attribute_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                },
+                "attribute_value_list": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "original_value_name": {
+                        "type": "string"
+                      },
+                      "value_id": {
+                        "pattern": "^(0|[1-9][0-9]*)$",
+                        "type": "string",
+                        "x-wire-integer": true
+                      },
+                      "value_unit": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "original_attribute_name": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "brand_info": {
+            "additionalProperties": true,
+            "properties": {
+              "brand_id": {
+                "pattern": "^(0|[1-9][0-9]*)$",
+                "type": [
+                  "integer",
+                  "string"
+                ],
+                "x-wire-integer": true
+              },
+              "original_brand_name": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "category_id": {
+            "items": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "type": [
+              "array",
+              "integer"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "description_info": {
+            "additionalProperties": true,
+            "properties": {
+              "extended_description": {
+                "additionalProperties": true,
+                "properties": {
+                  "field_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "field_type": {
+                          "type": "string"
+                        },
+                        "image_info": {
+                          "additionalProperties": true,
+                          "properties": {
+                            "image_id": {
+                              "type": "string"
+                            },
+                            "image_url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [],
+                          "type": "object"
+                        },
+                        "text": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "description_type": {
+            "type": "string"
+          },
+          "dimension": {
+            "additionalProperties": true,
+            "properties": {
+              "package_height": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "package_length": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "package_width": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "images": {
+            "additionalProperties": true,
+            "properties": {
+              "image_id_list": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "image_ratio": {
+                "type": "string"
+              },
+              "image_url_list": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "item_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "x-wire-integer": true
+          },
+          "item_name": {
+            "type": "string"
+          },
+          "item_sku": {
+            "type": "string"
+          },
+          "item_status": {
+            "type": "string"
+          },
+          "long_images": {
+            "additionalProperties": true,
+            "properties": {
+              "image_id_list": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "image_ratio": {
+                "type": "string"
+              },
+              "image_url_list": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "model_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "component_list": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "component_item_id": {
+                        "pattern": "^(0|[1-9][0-9]*)$",
+                        "type": [
+                          "integer",
+                          "string"
+                        ],
+                        "x-wire-integer": true
+                      },
+                      "component_item_name": {
+                        "type": "string"
+                      },
+                      "component_item_or_model_image": {
+                        "type": "string"
+                      },
+                      "component_item_or_model_sku": {
+                        "type": "string"
+                      },
+                      "component_model_id": {
+                        "pattern": "^(0|[1-9][0-9]*)$",
+                        "type": [
+                          "integer",
+                          "string"
+                        ],
+                        "x-wire-integer": true
+                      },
+                      "component_model_name": {
+                        "type": "string"
+                      },
+                      "main_component": {
+                        "type": "boolean"
+                      },
+                      "quantity": {
+                        "maximum": 2147483647,
+                        "minimum": -2147483648,
+                        "type": "integer"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "model_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "x-wire-integer": true
+                },
+                "model_sku": {
+                  "type": "string"
+                },
+                "original_price": {
+                  "type": "number"
+                },
+                "tier_index": {
+                  "items": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "pre_order_info": {
+            "additionalProperties": true,
+            "properties": {
+              "days_to_ship": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "is_pre_order": {
+                "type": "boolean"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "tier_variation_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "option_list": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "image": {
+                        "items": {
+                          "additionalProperties": true,
+                          "properties": {
+                            "image_id": {
+                              "type": "string"
+                            },
+                            "image_url": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [],
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "option": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "video_list": {
+            "additionalProperties": true,
+            "properties": {
+              "duration": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "thumbnail_url": {
+                "type": "string"
+              },
+              "video_url": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": [
+              "array",
+              "object"
+            ]
+          },
+          "weight": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_kit_item_info"
+}

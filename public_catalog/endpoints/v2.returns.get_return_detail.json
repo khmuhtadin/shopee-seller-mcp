@@ -1,0 +1,527 @@
+{
+  "api_name": "v2.returns.get_return_detail",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.returns.get_return_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "return_sn": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "return_sn"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "returns",
+  "pagination_fields": [],
+  "path": "/api/v2/returns/get_return_detail",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "activity": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "activity_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-uint64": true
+            },
+            "activity_type": {
+              "type": "string"
+            },
+            "discounted_price": {
+              "type": "string"
+            },
+            "items": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "original_price": {
+                    "type": "string"
+                  },
+                  "quantity_purchased": {
+                    "pattern": "^(0|-?[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-int64": true
+                  },
+                  "variation_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "original_price": {
+              "type": "string"
+            },
+            "refund_amount": {
+              "type": [
+                "number",
+                "string"
+              ]
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "amount_before_discount": {
+        "type": "number"
+      },
+      "buyer_videos": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "thumbnail_url": {
+              "type": "string"
+            },
+            "video_url": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "create_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "currency": {
+        "type": "string"
+      },
+      "dispute_reason": {
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "integer"
+        ]
+      },
+      "dispute_text_reason": {
+        "items": {
+          "type": "string"
+        },
+        "type": [
+          "array",
+          "string"
+        ]
+      },
+      "due_date": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "follow_up_action_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "current_status": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "qty": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "related_order_sn_list": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "resell_failed_next_step": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "has_uploaded_shipping_proof": {
+        "type": "boolean"
+      },
+      "image": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "is_arrived_at_warehouse": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "is_partial_quantity_return": {
+        "type": "boolean"
+      },
+      "is_refund_amount_adjusted": {
+        "type": "boolean"
+      },
+      "is_reverse_logistics_channel_integrated": {
+        "type": "boolean"
+      },
+      "is_seller_arrange": {
+        "type": "boolean"
+      },
+      "is_shipping_proof_mandatory": {
+        "type": "boolean"
+      },
+      "item": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "add_on_deal_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "amount": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "images": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "is_add_on_deal": {
+              "type": "boolean"
+            },
+            "is_main_item": {
+              "type": "boolean"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "item_price": {
+              "type": "number"
+            },
+            "item_sku": {
+              "type": "string"
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "name": {
+              "type": "string"
+            },
+            "refund_amount": {
+              "type": "number"
+            },
+            "variation_sku": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "logistics_status": {
+        "type": "string"
+      },
+      "needs_logistics": {
+        "type": "boolean"
+      },
+      "negotiation": {
+        "additionalProperties": true,
+        "properties": {
+          "counter_limit": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "latest_offer_amount": {
+            "type": "number"
+          },
+          "latest_offer_creator": {
+            "type": "string"
+          },
+          "latest_solution": {
+            "type": "string"
+          },
+          "negotiation_status": {
+            "type": "string"
+          },
+          "offer_due_date": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "order_sn": {
+        "type": "string"
+      },
+      "package_query_number": {
+        "type": "string"
+      },
+      "reason": {
+        "type": "string"
+      },
+      "reassessed_request_reason": {
+        "type": "string"
+      },
+      "refund_amount": {
+        "type": "number"
+      },
+      "return_address": {
+        "additionalProperties": true,
+        "properties": {
+          "whs_id": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "return_pickup_address": {
+        "additionalProperties": true,
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "district": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "region": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "town": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "return_refund_request_type": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "return_refund_type": {
+        "type": "string"
+      },
+      "return_seller_due_date": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "return_ship_due_date": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "return_sn": {
+        "type": "string"
+      },
+      "return_solution": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "reverse_logistics_channel_name": {
+        "type": "string"
+      },
+      "reverse_logistics_status": {
+        "type": "string"
+      },
+      "seller_compensation": {
+        "additionalProperties": true,
+        "properties": {
+          "compensation_amount": {
+            "type": "number"
+          },
+          "compensation_amount_list": {
+            "additionalProperties": true,
+            "properties": {
+              "compensation_amount": {
+                "type": "number"
+              },
+              "compensation_type": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "seller_compensation_due_date": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "seller_compensation_status": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "seller_proof": {
+        "additionalProperties": true,
+        "properties": {
+          "seller_evidence_deadline": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "seller_proof_status": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "shipping_fee_responsibility": {
+        "type": "string"
+      },
+      "shipping_fee_responsibility_reason": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "text_reason": {
+        "type": "string"
+      },
+      "tracking_number": {
+        "type": "string"
+      },
+      "update_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "user": {
+        "additionalProperties": true,
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "portrait": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "validation_type": {
+        "type": "string"
+      },
+      "virtual_contact_number": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_returns_get_return_detail"
+}

@@ -1,0 +1,113 @@
+{
+  "api_name": "v2.product.update_price",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [
+    "failure_list"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.update_price endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "price_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "original_price": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "original_price"
+          ],
+          "type": "object"
+        },
+        "maxItems": 50,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "item_id",
+      "price_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/update_price",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "failure_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "failed_reason": {
+              "type": "string"
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "success_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "original_price": {
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_update_price"
+}

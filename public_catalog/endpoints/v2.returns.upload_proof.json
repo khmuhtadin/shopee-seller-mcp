@@ -1,0 +1,66 @@
+{
+  "api_name": "v2.returns.upload_proof",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.returns.upload_proof endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "description": {
+        "type": "string"
+      },
+      "photo": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "thumbnail": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "url",
+            "thumbnail"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "return_sn": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "return_sn"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "returns",
+  "pagination_fields": [],
+  "path": "/api/v2/returns/upload_proof",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_returns_upload_proof"
+}

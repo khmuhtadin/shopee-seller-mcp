@@ -1,0 +1,120 @@
+{
+  "api_name": "v2.product.update_tier_variation",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.update_tier_variation endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "model_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "tier_index": {
+              "items": {
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "type": "string",
+                "x-wire-int64": true
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "model_id",
+            "tier_index"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "standardise_tier_variation": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "variation_group_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "variation_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "variation_name": {
+              "type": "string"
+            },
+            "variation_option_list": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "image_id": {
+                    "type": "string"
+                  },
+                  "variation_option_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "variation_option_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "variation_option_id"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "variation_id",
+            "variation_option_list"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "item_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/update_tier_variation",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_update_tier_variation"
+}

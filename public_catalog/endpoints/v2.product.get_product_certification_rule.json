@@ -1,0 +1,140 @@
+{
+  "api_name": "v2.product.get_product_certification_rule",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_product_certification_rule endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "attribute_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "attribute_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "attribute_value_list": {
+              "items": {
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "value_id": {
+                          "const": "0"
+                        }
+                      },
+                      "required": [
+                        "value_id"
+                      ]
+                    },
+                    "then": {
+                      "required": [
+                        "original_value_name"
+                      ]
+                    }
+                  }
+                ],
+                "properties": {
+                  "original_value_name": {
+                    "type": "string"
+                  },
+                  "value_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "value_unit": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value_id"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "attribute_id"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "category_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_product_certification_rule",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "certification_rule_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "certification_type": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-int64": true
+            },
+            "is_mandatory": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string"
+            },
+            "permit_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_product_certification_rule"
+}

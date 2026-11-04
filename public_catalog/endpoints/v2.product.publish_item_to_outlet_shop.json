@@ -1,0 +1,195 @@
+{
+  "api_name": "v2.product.publish_item_to_outlet_shop",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.publish_item_to_outlet_shop endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "mart_item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "outlet_shop_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "publish_item": {
+        "additionalProperties": false,
+        "properties": {
+          "logistic_info": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "type": "boolean"
+                },
+                "is_free": {
+                  "type": "boolean"
+                },
+                "logistic_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                },
+                "shipping_fee": {
+                  "type": "number"
+                },
+                "size_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                }
+              },
+              "required": [
+                "logistic_id",
+                "enabled"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "model": {
+            "additionalProperties": false,
+            "properties": {
+              "model_status": {
+                "enum": [
+                  "NORMAL",
+                  "UNAVAILABLE"
+                ],
+                "type": "string"
+              },
+              "original_price": {
+                "type": "number"
+              },
+              "pre_order": {
+                "additionalProperties": false,
+                "properties": {
+                  "days_to_ship": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "is_pre_order": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "is_pre_order"
+                ],
+                "type": "object"
+              },
+              "relate_mart_model_id": {
+                "pattern": "^(0|[1-9][0-9]*)$",
+                "type": "string",
+                "x-wire-integer": true
+              },
+              "seller_stock": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "location_id": {
+                      "type": "string"
+                    },
+                    "stock": {
+                      "maximum": 2147483647,
+                      "minimum": -2147483648,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "stock"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "relate_mart_model_id"
+            ],
+            "type": "object"
+          },
+          "outlet_item_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "purchase_limit_info": {
+            "additionalProperties": false,
+            "properties": {
+              "max_purchase_limit": {
+                "additionalProperties": false,
+                "properties": {
+                  "purchase_limit": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "purchase_limit"
+                ],
+                "type": "object"
+              },
+              "min_purchase_limit": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "min_purchase_limit",
+              "max_purchase_limit"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [
+      "mart_item_id",
+      "outlet_shop_id",
+      "publish_item"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/publish_item_to_outlet_shop",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": [
+          "integer",
+          "string"
+        ],
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_publish_item_to_outlet_shop"
+}

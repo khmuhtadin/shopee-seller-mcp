@@ -1,0 +1,81 @@
+{
+  "api_name": "v2.push.get_app_push_config",
+  "auth_strategy": "public",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.push.get_app_push_config endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "push",
+  "pagination_fields": [],
+  "path": "/api/v2/push/get_app_push_config",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "blocked_shop_id": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "type": "array"
+      },
+      "callback_url": {
+        "type": "string"
+      },
+      "live_push_status": {
+        "type": "string"
+      },
+      "push_config_off_list": {
+        "items": {
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991,
+          "type": "integer"
+        },
+        "type": "array"
+      },
+      "push_config_on_list": {
+        "items": {
+          "maximum": 9007199254740991,
+          "minimum": -9007199254740991,
+          "type": "integer"
+        },
+        "type": "array"
+      },
+      "suspended_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_push_get_app_push_config"
+}

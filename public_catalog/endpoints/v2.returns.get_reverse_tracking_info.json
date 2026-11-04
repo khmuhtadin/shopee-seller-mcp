@@ -1,0 +1,165 @@
+{
+  "api_name": "v2.returns.get_reverse_tracking_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.returns.get_reverse_tracking_info endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "return_sn": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "return_sn"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "returns",
+  "pagination_fields": [],
+  "path": "/api/v2/returns/get_reverse_tracking_info",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "collection_pin_code": {
+        "type": "string"
+      },
+      "estimated_delivery_date_max": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": [
+          "integer",
+          "string"
+        ]
+      },
+      "estimated_delivery_date_min": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": [
+          "integer",
+          "string"
+        ]
+      },
+      "post_return_logistics_status": {
+        "type": "string"
+      },
+      "post_return_logistics_tracking_info": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "epod_image_list": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "epop_image_list": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "tracking_description": {
+              "type": "string"
+            },
+            "update_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "post_return_logistics_update_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "return_refund_request_type": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "return_sn": {
+        "type": "string"
+      },
+      "reverse_logistics_status": {
+        "type": "string"
+      },
+      "reverse_logistics_update_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "rts_tracking_number": {
+        "type": "string"
+      },
+      "tracking_info": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "epod_image_list": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "epop_image_list": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "tracking_description": {
+              "type": "string"
+            },
+            "update_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "tracking_number": {
+        "type": "string"
+      },
+      "validation_type": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_returns_get_reverse_tracking_info"
+}

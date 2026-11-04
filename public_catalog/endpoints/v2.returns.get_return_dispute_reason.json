@@ -1,0 +1,114 @@
+{
+  "api_name": "v2.returns.get_return_dispute_reason",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.returns.get_return_dispute_reason endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "return_sn": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "return_sn"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "returns",
+  "pagination_fields": [],
+  "path": "/api/v2/returns/get_return_dispute_reason",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "dispute_reason_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "dispute_reason": {
+              "type": [
+                "integer",
+                "string"
+              ]
+            },
+            "dispute_requirement": {
+              "type": "string"
+            },
+            "evidence_module_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "is_required": {
+                    "type": "boolean"
+                  },
+                  "module_index": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "requirement": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "sample_evidence": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "thumbnail": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_returns_get_return_dispute_reason"
+}

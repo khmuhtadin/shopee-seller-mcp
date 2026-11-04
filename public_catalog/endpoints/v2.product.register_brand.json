@@ -1,0 +1,128 @@
+{
+  "api_name": "v2.product.register_brand",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.register_brand endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "additional_information": {
+        "maxLength": 254,
+        "type": "string"
+      },
+      "app_logo_image_id": {
+        "type": "string"
+      },
+      "brand_description": {
+        "maxLength": 254,
+        "type": "string"
+      },
+      "brand_region": {
+        "type": "string"
+      },
+      "brand_registration_website": {
+        "maxLength": 253,
+        "type": "string"
+      },
+      "brand_website": {
+        "maxLength": 254,
+        "type": "string"
+      },
+      "category_list": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "maxItems": 50,
+        "type": "array"
+      },
+      "licenses": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "file_hash": {
+              "maxLength": 498,
+              "type": "string"
+            },
+            "file_name": {
+              "maxLength": 253,
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "original_brand_name": {
+        "maxLength": 254,
+        "type": "string"
+      },
+      "pc_logo_image_id": {
+        "type": "string"
+      },
+      "product_image": {
+        "additionalProperties": false,
+        "properties": {
+          "image_id_list": {
+            "items": {
+              "maxLength": 498,
+              "type": "string"
+            },
+            "maxItems": 10,
+            "type": "array"
+          }
+        },
+        "required": [
+          "image_id_list"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "original_brand_name",
+      "category_list",
+      "product_image",
+      "brand_region"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/register_brand",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "brand_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": [
+          "integer",
+          "string"
+        ],
+        "x-wire-integer": true
+      },
+      "original_brand_name": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_register_brand"
+}

@@ -1,0 +1,165 @@
+{
+  "api_name": "v2.product.get_direct_shop_recommended_price",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_direct_shop_recommended_price endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "category_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "direct_shop_regions": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "enabled_channel_id_list": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "type": "array"
+      },
+      "main_item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "model_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "input_price": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "tier_index": {
+              "items": {
+                "pattern": "^(0|-?[1-9][0-9]*)$",
+                "type": "string",
+                "x-wire-int64": true
+              },
+              "type": "array"
+            },
+            "weight": {
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "main_item_id",
+      "direct_shop_regions"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_direct_shop_recommended_price",
+  "query_arrays": {
+    "direct_shop_regions": "json",
+    "enabled_channel_id_list": "json",
+    "model_list": "json"
+  },
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "direct_item_price": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "hidden_price": {
+              "type": "number"
+            },
+            "item_model_price_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "model_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "price": {
+                    "type": "number"
+                  },
+                  "tier_index": {
+                    "items": {
+                      "pattern": "^(0|-?[1-9][0-9]*)$",
+                      "type": [
+                        "integer",
+                        "string"
+                      ],
+                      "x-wire-int64": true
+                    },
+                    "type": "array"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "region": {
+              "type": "string"
+            },
+            "shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_direct_shop_recommended_price"
+}

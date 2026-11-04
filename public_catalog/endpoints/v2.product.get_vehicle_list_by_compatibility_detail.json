@@ -1,0 +1,177 @@
+{
+  "api_name": "v2.product.get_vehicle_list_by_compatibility_detail",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_vehicle_list_by_compatibility_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "compatibility_details": {
+              "const": "Model"
+            }
+          },
+          "required": [
+            "compatibility_details"
+          ]
+        },
+        "then": {
+          "required": [
+            "brand_id"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "compatibility_details": {
+              "const": "Year"
+            }
+          },
+          "required": [
+            "compatibility_details"
+          ]
+        },
+        "then": {
+          "required": [
+            "brand_id",
+            "model_id"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "compatibility_details": {
+              "const": "Version"
+            }
+          },
+          "required": [
+            "compatibility_details"
+          ]
+        },
+        "then": {
+          "required": [
+            "brand_id",
+            "model_id",
+            "year_id"
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "brand_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "compatibility_details": {
+        "enum": [
+          "Brand",
+          "Model",
+          "Year",
+          "Version"
+        ],
+        "type": "string"
+      },
+      "language": {
+        "type": "string"
+      },
+      "model_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "year_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "compatibility_details"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_vehicle_list_by_compatibility_detail",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "vehicle_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "brand_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "brand_name": {
+              "type": "string"
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_name": {
+              "type": "string"
+            },
+            "version_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "version_name": {
+              "type": "string"
+            },
+            "year_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "year_name": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_vehicle_list_by_compatibility_detail"
+}

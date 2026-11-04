@@ -1,0 +1,94 @@
+{
+  "api_name": "v2.returns.get_available_solutions",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.returns.get_available_solutions endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "return_sn": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "return_sn"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "returns",
+  "pagination_fields": [],
+  "path": "/api/v2/returns/get_available_solutions",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "offer_refund": {
+        "additionalProperties": true,
+        "properties": {
+          "eligibility": {
+            "type": "boolean"
+          },
+          "max_refund_amount": {
+            "type": "number"
+          },
+          "min_refund_amount": {
+            "type": "number"
+          },
+          "refund_amount_adjustable": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "offer_return_refund": {
+        "additionalProperties": true,
+        "properties": {
+          "eligibility": {
+            "type": "boolean"
+          },
+          "max_refund_amount": {
+            "type": "number"
+          },
+          "min_refund_amount": {
+            "type": "number"
+          },
+          "refund_amount_adjustable": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "return_sn": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_returns_get_available_solutions"
+}

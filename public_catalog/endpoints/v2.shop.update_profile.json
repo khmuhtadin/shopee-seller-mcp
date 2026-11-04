@@ -1,0 +1,57 @@
+{
+  "api_name": "v2.shop.update_profile",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.shop.update_profile endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "description": {
+        "type": "string"
+      },
+      "shop_logo": {
+        "type": "string"
+      },
+      "shop_name": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "shop",
+  "pagination_fields": [],
+  "path": "/api/v2/shop/update_profile",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "description": {
+        "type": "string"
+      },
+      "shop_logo": {
+        "type": "string"
+      },
+      "shop_name": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_update_profile"
+}

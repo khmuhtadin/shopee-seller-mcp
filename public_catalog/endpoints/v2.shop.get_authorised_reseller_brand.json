@@ -1,0 +1,92 @@
+{
+  "api_name": "v2.shop.get_authorised_reseller_brand",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.shop.get_authorised_reseller_brand endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 30,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "page_no",
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "shop",
+  "pagination_fields": [
+    "total_count",
+    "more"
+  ],
+  "path": "/api/v2/shop/get_authorised_reseller_brand",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "authorised_brand_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "brand_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "brand_name": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "is_authorised_reseller": {
+        "type": "boolean"
+      },
+      "more": {
+        "type": "boolean"
+      },
+      "total_count": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_get_authorised_reseller_brand"
+}

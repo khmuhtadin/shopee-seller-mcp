@@ -1,0 +1,88 @@
+{
+  "api_name": "v2.push.get_lost_push_message",
+  "auth_strategy": "public",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.push.get_lost_push_message endpoint.",
+  "effects": "read",
+  "embedded_json_paths": [
+    "/push_message_list/*/data"
+  ],
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "push",
+  "pagination_fields": [
+    "has_next_page",
+    "last_message_id"
+  ],
+  "path": "/api/v2/push/get_lost_push_message",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "has_next_page": {
+        "type": "boolean"
+      },
+      "last_message_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "push_message_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "code": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "data": {
+              "type": "string"
+            },
+            "shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "timestamp": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_push_get_lost_push_message"
+}

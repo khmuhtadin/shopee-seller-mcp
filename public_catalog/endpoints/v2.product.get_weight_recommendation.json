@@ -1,0 +1,243 @@
+{
+  "api_name": "v2.product.get_weight_recommendation",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_weight_recommendation endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "description_type": {
+              "const": "normal"
+            }
+          },
+          "required": [
+            "description_type"
+          ]
+        },
+        "then": {
+          "required": [
+            "description"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "description_type": {
+              "const": "extended"
+            }
+          },
+          "required": [
+            "description_type"
+          ]
+        },
+        "then": {
+          "required": [
+            "description_info"
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "attribute_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "attribute_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "attribute_value_list": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "original_value_name": {
+                    "type": "string"
+                  },
+                  "value_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "value_unit": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value_id"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "attribute_id",
+            "attribute_value_list"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "brand_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "category_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "cover_image_id": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "description_info": {
+        "additionalProperties": false,
+        "properties": {
+          "extended_description": {
+            "additionalProperties": false,
+            "properties": {
+              "field_list": {
+                "items": {
+                  "additionalProperties": false,
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "field_type": {
+                            "const": "text"
+                          }
+                        },
+                        "required": [
+                          "field_type"
+                        ]
+                      },
+                      "then": {
+                        "required": [
+                          "text"
+                        ]
+                      }
+                    },
+                    {
+                      "if": {
+                        "properties": {
+                          "field_type": {
+                            "const": "image"
+                          }
+                        },
+                        "required": [
+                          "field_type"
+                        ]
+                      },
+                      "then": {
+                        "required": [
+                          "image_info"
+                        ]
+                      }
+                    }
+                  ],
+                  "properties": {
+                    "field_type": {
+                      "enum": [
+                        "text",
+                        "image"
+                      ],
+                      "type": "string"
+                    },
+                    "image_info": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "image_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "description_type": {
+        "enum": [
+          "normal",
+          "extended"
+        ],
+        "type": "string"
+      },
+      "item_name": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "item_name",
+      "cover_image_id",
+      "category_id",
+      "attribute_list",
+      "brand_id",
+      "description_type"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_weight_recommendation",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "normal_weight_range": {
+        "items": {
+          "type": "number"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_weight_recommendation"
+}

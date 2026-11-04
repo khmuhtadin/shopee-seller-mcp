@@ -1,0 +1,124 @@
+{
+  "api_name": "v2.shop.get_br_shop_onboarding_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.shop.get_br_shop_onboarding_info endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "shop",
+  "pagination_fields": [],
+  "path": "/api/v2/shop/get_br_shop_onboarding_info",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "billing_address": {
+        "additionalProperties": true,
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "neighborhood": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "birthday": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "birthday_str": {
+        "type": "string"
+      },
+      "cnae_main": {
+        "type": "string"
+      },
+      "cnae_secondary": {
+        "type": "string"
+      },
+      "cnpj_id": {
+        "type": "string"
+      },
+      "cpf_id": {
+        "type": "string"
+      },
+      "legal_entity_name": {
+        "type": "string"
+      },
+      "mei_check": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "nationality": {
+        "type": "string"
+      },
+      "onboarding_passed": {
+        "type": "boolean"
+      },
+      "onboarding_status": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "state_registration": {
+        "type": "string"
+      },
+      "submission_time": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "tax_id": {
+        "type": "string"
+      },
+      "tax_id_type": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_get_br_shop_onboarding_info"
+}

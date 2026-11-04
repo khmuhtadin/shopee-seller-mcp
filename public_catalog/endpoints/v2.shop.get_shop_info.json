@@ -1,0 +1,164 @@
+{
+  "api_name": "v2.shop.get_shop_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.shop.get_shop_info endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "shop",
+  "pagination_fields": [],
+  "path": "/api/v2/shop/get_shop_info",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "auth_time": {
+        "type": "integer"
+      },
+      "expire_time": {
+        "type": "integer"
+      },
+      "is_cb": {
+        "type": "boolean"
+      },
+      "is_direct_shop": {
+        "type": "boolean"
+      },
+      "is_main_shop": {
+        "type": "boolean"
+      },
+      "is_mart_shop": {
+        "type": "boolean"
+      },
+      "is_one_awb": {
+        "type": "boolean"
+      },
+      "is_outlet_shop": {
+        "type": "boolean"
+      },
+      "is_sip": {
+        "type": "boolean"
+      },
+      "is_upgraded_cbsc": {
+        "type": "boolean"
+      },
+      "linked_direct_shop_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "direct_shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "direct_shop_region": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "linked_main_shop_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "mart_outlet_structure_type": {
+        "type": "string"
+      },
+      "mart_shop_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "merchant_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": [
+          "string",
+          "null"
+        ],
+        "x-wire-integer": true
+      },
+      "outlet_shop_info_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "outlet_shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "region": {
+        "type": "string"
+      },
+      "shop_fulfillment_flag": {
+        "type": "string"
+      },
+      "shop_name": {
+        "type": "string"
+      },
+      "sip_affi_shops": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "affi_shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "region": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "status": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "shop_name",
+      "region",
+      "status"
+    ],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_get_shop_info"
+}

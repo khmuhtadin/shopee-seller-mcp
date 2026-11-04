@@ -1,0 +1,216 @@
+{
+  "api_name": "v2.shop_flash_sale.get_shop_flash_sale_items",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.shop_flash_sale.get_shop_flash_sale_items endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "flash_sale_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "limit": {
+        "pattern": "^(?:[1-9]|[1-9][0-9]|100)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "offset": {
+        "pattern": "^(?:[0-9]|[1-9][0-9]{1,2}|1000)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [
+      "flash_sale_id",
+      "offset",
+      "limit"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "shop_flash_sale",
+  "pagination_fields": [
+    "total_count"
+  ],
+  "path": "/api/v2/shop_flash_sale/get_shop_flash_sale_items",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "item_info": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "campaign_stock": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "image": {
+              "type": "string"
+            },
+            "input_promotion_price": {
+              "type": "number"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_name": {
+              "type": "string"
+            },
+            "item_status": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "original_price": {
+              "type": "number"
+            },
+            "promotion_price_with_tax": {
+              "type": "number"
+            },
+            "purchase_limit": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "reject_reason": {
+              "type": "string"
+            },
+            "status": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "stock": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "unqualified_conditions": {
+              "additionalProperties": true,
+              "properties": {
+                "unqualified_code": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "unqualified_msg": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "models": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "campaign_stock": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "input_promotion_price": {
+              "type": "number"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_name": {
+              "type": "string"
+            },
+            "original_price": {
+              "type": "number"
+            },
+            "promotion_price_with_tax": {
+              "type": "number"
+            },
+            "purchase_limit": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "reject_reason": {
+              "type": "string"
+            },
+            "status": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "stock": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "unqualified_conditions": {
+              "additionalProperties": true,
+              "properties": {
+                "unqualified_code": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "unqualified_msg": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total_count": {
+        "pattern": "^(?:0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_flash_sale_get_shop_flash_sale_items"
+}

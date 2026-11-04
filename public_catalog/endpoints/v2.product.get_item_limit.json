@@ -1,0 +1,304 @@
+{
+  "api_name": "v2.product.get_item_limit",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_item_limit endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "category_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_item_limit",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "dimension_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "dimension_mandatory": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "dts_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "days_to_ship_limit": {
+            "additionalProperties": true,
+            "properties": {
+              "max_limit": {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer"
+              },
+              "min_limit": {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "non_pre_order_days_to_ship": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "extended_description_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "description_image_aspect_ratio_max": {
+            "type": "number"
+          },
+          "description_image_aspect_ratio_min": {
+            "type": "number"
+          },
+          "description_image_height_min": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "description_image_num_max": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "description_image_num_min": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "description_image_width_min": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "description_text_length_max": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          },
+          "description_text_length_min": {
+            "maximum": 9007199254740991,
+            "minimum": -9007199254740991,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "item_count_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "item_description_length_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "min_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "item_image_count_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "min_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "item_name_length_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "min_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "price_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "type": "number"
+          },
+          "min_limit": {
+            "type": "number"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "size_chart_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "size_chart_mandatory": {
+            "type": "boolean"
+          },
+          "support_image_size_chart": {
+            "type": "boolean"
+          },
+          "support_template_size_chart": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "stock_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "min_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "tier_variation_name_length_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "min_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "tier_variation_option_length_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "min_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "weight_limit": {
+        "additionalProperties": true,
+        "properties": {
+          "weight_mandatory": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "wholesale_price_threshold_percentage": {
+        "additionalProperties": true,
+        "properties": {
+          "max_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          },
+          "min_limit": {
+            "pattern": "^(0|-?[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-int64": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_item_limit"
+}

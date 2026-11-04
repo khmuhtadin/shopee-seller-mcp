@@ -1,0 +1,75 @@
+{
+  "api_name": "v2.shop.set_shop_holiday_mode",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "holiday_mode_start_time",
+      "kind": "ordered_pair",
+      "to": "holiday_mode_end_time"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.shop.set_shop_holiday_mode endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "holiday_mode_description": {
+        "type": "string"
+      },
+      "holiday_mode_end_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "holiday_mode_on": {
+        "type": "boolean"
+      },
+      "holiday_mode_start_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "holiday_mode_type": {
+        "enum": [
+          0,
+          1
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "holiday_mode_on"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "shop",
+  "pagination_fields": [],
+  "path": "/api/v2/shop/set_shop_holiday_mode",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "debug_msg": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_set_shop_holiday_mode"
+}

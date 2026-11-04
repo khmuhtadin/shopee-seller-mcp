@@ -1,0 +1,142 @@
+{
+  "api_name": "v2.product.get_item_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "update_time_from",
+      "kind": "ordered_pair",
+      "to": "update_time_to"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.product.get_item_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_status": {
+        "items": {
+          "enum": [
+            "NORMAL",
+            "BANNED",
+            "UNLIST",
+            "REVIEWING",
+            "SELLER_DELETE",
+            "SHOPEE_DELETE"
+          ],
+          "type": "string"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "offset": {
+        "maximum": 9007199254740991,
+        "minimum": 0,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "update_time_from": {
+        "minimum": 0,
+        "type": "integer"
+      },
+      "update_time_to": {
+        "minimum": 0,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "offset",
+      "page_size",
+      "item_status"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [
+    "has_next_page",
+    "next",
+    "next_offset",
+    "total_count"
+  ],
+  "path": "/api/v2/product/get_item_list",
+  "query_arrays": {
+    "item_status": "repeat"
+  },
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "has_next_page": {
+        "type": "boolean"
+      },
+      "item": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_status": {
+              "type": "string"
+            },
+            "tag": {
+              "additionalProperties": true,
+              "properties": {
+                "kit": {
+                  "type": "boolean"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "update_time": {
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "next": {
+        "type": "string"
+      },
+      "next_offset": {
+        "type": "integer"
+      },
+      "total_count": {
+        "type": "integer"
+      }
+    },
+    "required": [
+      "has_next_page"
+    ],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_item_list"
+}

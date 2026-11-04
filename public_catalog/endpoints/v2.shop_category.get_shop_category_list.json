@@ -1,0 +1,99 @@
+{
+  "api_name": "v2.shop_category.get_shop_category_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.shop_category.get_shop_category_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "page_no": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "page_size",
+      "page_no"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "shop_category",
+  "pagination_fields": [
+    "total_count",
+    "more"
+  ],
+  "path": "/api/v2/shop_category/get_shop_category_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "more": {
+        "type": "boolean"
+      },
+      "shop_categorys": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "shop_category_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "sort_weight": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "status": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "total_count": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_shop_category_get_shop_category_list"
+}

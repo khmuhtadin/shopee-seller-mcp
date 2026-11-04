@@ -1,0 +1,133 @@
+{
+  "api_name": "v2.product.update_model",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.update_model endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "model": {
+        "items": {
+          "additionalProperties": false,
+          "dependentRequired": {
+            "dimension": [
+              "weight"
+            ]
+          },
+          "properties": {
+            "dimension": {
+              "additionalProperties": false,
+              "properties": {
+                "package_height": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "package_length": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "package_width": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "package_height",
+                "package_length",
+                "package_width"
+              ],
+              "type": "object"
+            },
+            "gtin_code": {
+              "pattern": "^(?:[0-9]{8,14}|00)$",
+              "type": "string"
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_sku": {
+              "maxLength": 100,
+              "type": "string"
+            },
+            "model_status": {
+              "enum": [
+                "NORMAL",
+                "UNAVAILABLE"
+              ],
+              "type": "string"
+            },
+            "pre_order": {
+              "additionalProperties": false,
+              "properties": {
+                "days_to_ship": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "is_pre_order": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "is_pre_order",
+                "days_to_ship"
+              ],
+              "type": "object"
+            },
+            "weight": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "model_id",
+            "model_sku"
+          ],
+          "type": "object"
+        },
+        "maxItems": 50,
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "item_id",
+      "model"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/update_model",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_update_model"
+}

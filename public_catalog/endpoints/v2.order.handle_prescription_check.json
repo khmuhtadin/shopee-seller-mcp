@@ -1,0 +1,99 @@
+{
+  "api_name": "v2.order.handle_prescription_check",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.order.handle_prescription_check endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "free_text": {
+        "type": "string"
+      },
+      "is_approved": {
+        "type": "boolean"
+      },
+      "items": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "group_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [
+            "item_id",
+            "model_id",
+            "group_id"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "order_sn": {
+        "type": "string"
+      },
+      "pharmacist_name": {
+        "type": "string"
+      },
+      "reject_reason_code": {
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "order_sn",
+      "is_approved"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "order",
+  "pagination_fields": [],
+  "path": "/api/v2/order/handle_prescription_check",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "is_success": {
+        "type": "boolean"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_handle_prescription_check"
+}

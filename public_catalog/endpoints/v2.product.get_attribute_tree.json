@@ -1,0 +1,220 @@
+{
+  "api_name": "v2.product.get_attribute_tree",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.get_attribute_tree endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "category_ids": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "maxItems": 20,
+        "type": "array"
+      },
+      "language": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "category_ids"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/get_attribute_tree",
+  "query_arrays": {
+    "category_ids": "csv"
+  },
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "attribute_tree": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "attribute_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "attribute_info": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "attribute_unit_list": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "date_format_type": {
+                        "maximum": 9007199254740991,
+                        "minimum": -9007199254740991,
+                        "type": "integer"
+                      },
+                      "format_type": {
+                        "maximum": 9007199254740991,
+                        "minimum": -9007199254740991,
+                        "type": "integer"
+                      },
+                      "input_type": {
+                        "maximum": 9007199254740991,
+                        "minimum": -9007199254740991,
+                        "type": "integer"
+                      },
+                      "input_validation_type": {
+                        "maximum": 9007199254740991,
+                        "minimum": -9007199254740991,
+                        "type": "integer"
+                      },
+                      "introduction": {
+                        "type": "string"
+                      },
+                      "is_oem": {
+                        "type": "boolean"
+                      },
+                      "max_value_count": {
+                        "maximum": 9007199254740991,
+                        "minimum": -9007199254740991,
+                        "type": "integer"
+                      },
+                      "support_search_value": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "attribute_value_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "child_attribute_list": {
+                          "items": {
+                            "additionalProperties": true,
+                            "properties": {},
+                            "required": [],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "multi_lang": {
+                          "items": {
+                            "additionalProperties": true,
+                            "properties": {
+                              "language": {
+                                "type": "string"
+                              },
+                              "value": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "value_id": {
+                          "pattern": "^(0|[1-9][0-9]*)$",
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "x-wire-integer": true
+                        },
+                        "value_unit": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "mandatory": {
+                    "type": "boolean"
+                  },
+                  "multi_lang": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "language": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "category_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "warning": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_get_attribute_tree"
+}

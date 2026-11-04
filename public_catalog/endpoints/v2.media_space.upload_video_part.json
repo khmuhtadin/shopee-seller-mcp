@@ -1,0 +1,71 @@
+{
+  "api_name": "v2.media_space.upload_video_part",
+  "auth_strategy": "public",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.media_space.upload_video_part endpoint.",
+  "effects": "write",
+  "encoding": "multipart",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "content_md5": {
+        "pattern": "^[0-9A-Fa-f]{32}$",
+        "type": "string"
+      },
+      "part_content": {
+        "type": "string"
+      },
+      "part_seq": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-uint64": true
+      },
+      "video_upload_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "video_upload_id",
+      "part_seq",
+      "content_md5",
+      "part_content"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "media_space",
+  "pagination_fields": [],
+  "path": "/api/v2/media_space/upload_video_part",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_media_space_upload_video_part",
+  "upload_fields": {
+    "part_content": {
+      "checksum": {
+        "algorithm": "md5",
+        "field": "content_md5"
+      },
+      "content_kind": "opaque",
+      "max_bytes": 4000000,
+      "mime_types": [
+        "application/octet-stream"
+      ]
+    }
+  }
+}

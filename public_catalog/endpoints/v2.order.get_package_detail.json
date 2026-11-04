@@ -1,0 +1,456 @@
+{
+  "api_name": "v2.order.get_package_detail",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.order.get_package_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "package_number_list": {
+        "pattern": "^[^,]+(?:,[^,]+){0,49}$",
+        "type": "string"
+      }
+    },
+    "required": [
+      "package_number_list"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "order",
+  "pagination_fields": [],
+  "path": "/api/v2/order/get_package_detail",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "package_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "allow_self_design_awb": {
+              "type": "boolean"
+            },
+            "buyer_preference_for_partial_cancellation": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "buyer_proof_of_collection": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "can_full_cancel_order": {
+              "type": "boolean"
+            },
+            "can_partial_cancel_order": {
+              "type": "boolean"
+            },
+            "can_split_order": {
+              "type": "boolean"
+            },
+            "can_unsplit_order": {
+              "type": "boolean"
+            },
+            "days_to_ship": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-int64": true
+            },
+            "driver_info": {
+              "additionalProperties": true,
+              "properties": {
+                "courier_photo": {
+                  "type": "string"
+                },
+                "driver_name": {
+                  "type": "string"
+                },
+                "driver_phone": {
+                  "type": "string"
+                },
+                "driver_status": {
+                  "type": "string"
+                },
+                "eta_end_time": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "x-wire-int64": true
+                },
+                "eta_start_time": {
+                  "pattern": "^(0|-?[1-9][0-9]*)$",
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "x-wire-int64": true
+                },
+                "license_plate": {
+                  "type": "string"
+                },
+                "vehicle_type": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "fulfillment_status": {
+              "type": "string"
+            },
+            "group_shipment_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "invoice_pending": {
+              "additionalProperties": true,
+              "properties": {
+                "pending_reason": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "is_buyer_shop_collection": {
+              "type": "boolean"
+            },
+            "is_pre_order": {
+              "type": "boolean"
+            },
+            "is_shipment_arranged": {
+              "type": "boolean"
+            },
+            "is_split_up": {
+              "type": "boolean"
+            },
+            "item_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "bundle_sku_id": {
+                    "type": "string"
+                  },
+                  "components": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "barcode_upc": {
+                          "type": "string"
+                        },
+                        "mapping_type": {
+                          "type": "string"
+                        },
+                        "parent_sku_id": {
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "warehouse_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "consultation_id": {
+                    "type": "string"
+                  },
+                  "error_in_fetching_is_prescription_item": {
+                    "type": "boolean"
+                  },
+                  "is_fulfillment_mapping": {
+                    "type": "boolean"
+                  },
+                  "is_prescription_item": {
+                    "type": "boolean"
+                  },
+                  "item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "item_sku": {
+                    "type": "string"
+                  },
+                  "model_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "model_quantity": {
+                    "pattern": "^(0|-?[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-int64": true
+                  },
+                  "model_sku": {
+                    "type": "string"
+                  },
+                  "order_item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "prescription_check_status": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "prescription_reject_reason": {
+                    "type": "string"
+                  },
+                  "product_location_id": {
+                    "type": "string"
+                  },
+                  "promotion_group_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "logistics_channel_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "order_sn": {
+              "type": "string"
+            },
+            "package_number": {
+              "type": "string"
+            },
+            "package_query_number": {
+              "type": "string"
+            },
+            "parcel_chargeable_weight_gram": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-int64": true
+            },
+            "pending_description": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "pending_terms": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "pharmacist_name": {
+              "type": "string"
+            },
+            "pickup_done_time": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-int64": true
+            },
+            "preparation_end_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "prescription_approval_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "prescription_images": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "prescription_rejection_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "recipient_address": {
+              "additionalProperties": true,
+              "properties": {
+                "city": {
+                  "type": "string"
+                },
+                "district": {
+                  "type": "string"
+                },
+                "full_address": {
+                  "type": "string"
+                },
+                "geolocation": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "latitude": {
+                      "type": "number"
+                    },
+                    "longitude": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "town": {
+                  "type": "string"
+                },
+                "zipcode": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "ship_by_date": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-int64": true
+            },
+            "shipping_carrier": {
+              "type": "string"
+            },
+            "sorting_group": {
+              "type": "string"
+            },
+            "status_info_tag": {
+              "additionalProperties": true,
+              "properties": {
+                "tag_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": [
+                    "integer",
+                    "string"
+                  ],
+                  "x-wire-integer": true
+                },
+                "timestamp": {
+                  "maximum": 9007199254740991,
+                  "minimum": -9007199254740991,
+                  "type": "integer"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "tracking_number": {
+              "type": "string"
+            },
+            "tracking_number_expiration_date": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-int64": true
+            },
+            "update_time": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-int64": true
+            },
+            "virtual_contact_number": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_get_package_detail"
+}

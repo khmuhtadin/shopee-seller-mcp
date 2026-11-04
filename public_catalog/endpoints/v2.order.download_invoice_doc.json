@@ -1,0 +1,77 @@
+{
+  "api_name": "v2.order.download_invoice_doc",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "binary_request_encoding": "query",
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.order.download_invoice_doc endpoint.",
+  "download_mime_policy": "opaque",
+  "effects": "read",
+  "encoding": "binary",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "order_sn": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "order_sn"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "order",
+  "pagination_fields": [],
+  "path": "/api/v2/order/download_invoice_doc",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "artifact": {
+        "additionalProperties": true,
+        "properties": {
+          "mime_type": {
+            "const": "application/octet-stream"
+          },
+          "size": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "uri": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "uri",
+          "size",
+          "mime_type"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "artifact"
+    ],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_download_invoice_doc"
+}

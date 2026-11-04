@@ -1,0 +1,66 @@
+{
+  "api_name": "v2.logistics.set_address_config",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.set_address_config endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "address_type_config": {
+        "additionalProperties": false,
+        "properties": {
+          "address_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "address_type": {
+            "items": {
+              "enum": [
+                "DEFAULT_ADDRESS",
+                "PICKUP_ADDRESS",
+                "RETURN_ADDRESS",
+                "INBOUND_PICKUP_ADDRESS"
+              ],
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "show_pickup_address": {
+        "type": "boolean"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/set_address_config",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_set_address_config"
+}

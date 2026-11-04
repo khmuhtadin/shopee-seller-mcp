@@ -1,0 +1,124 @@
+{
+  "api_name": "v2.logistics.update_tracking_status",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.update_tracking_status endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "logistics_status": {
+              "not": {
+                "const": "logistics_pickup_done"
+              }
+            }
+          },
+          "required": [
+            "logistics_status"
+          ]
+        },
+        "then": {
+          "not": {
+            "anyOf": [
+              {
+                "required": [
+                  "tracking_number"
+                ]
+              },
+              {
+                "required": [
+                  "tracking_url"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "logistics_status": {
+              "not": {
+                "const": "logistics_delivery_failed"
+              }
+            }
+          },
+          "required": [
+            "logistics_status"
+          ]
+        },
+        "then": {
+          "not": {
+            "required": [
+              "failed_reason"
+            ]
+          }
+        }
+      }
+    ],
+    "properties": {
+      "failed_reason": {
+        "enum": [
+          "buyer_unreachable",
+          "buyer_unresponsive",
+          "no_delivery_location_consensus"
+        ],
+        "type": "string"
+      },
+      "logistics_status": {
+        "enum": [
+          "logistics_pickup_done",
+          "logistics_delivery_done",
+          "logistics_delivery_failed"
+        ],
+        "type": "string"
+      },
+      "order_sn": {
+        "type": "string"
+      },
+      "tracking_number": {
+        "type": "string"
+      },
+      "tracking_url": {
+        "maxLength": 2048,
+        "type": "string"
+      }
+    },
+    "required": [
+      "order_sn",
+      "logistics_status"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/update_tracking_status",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "update_result": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_update_tracking_status"
+}

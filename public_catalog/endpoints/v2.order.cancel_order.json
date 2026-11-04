@@ -1,0 +1,152 @@
+{
+  "api_name": "v2.order.cancel_order",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.order.cancel_order endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "cancel_reason": {
+              "const": "OUT_OF_STOCK"
+            }
+          },
+          "required": [
+            "cancel_reason"
+          ]
+        },
+        "then": {
+          "anyOf": [
+            {
+              "required": [
+                "item_list"
+              ]
+            },
+            {
+              "required": [
+                "partial_cancel_item_list"
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "cancel_reason": {
+        "enum": [
+          "OUT_OF_STOCK",
+          "CUSTOMER_REQUEST",
+          "UNDELIVERABLE_AREA",
+          "COD_NOT_SUPPORTED"
+        ],
+        "type": "string"
+      },
+      "item_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [
+            "item_id",
+            "model_id"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      },
+      "order_sn": {
+        "type": "string"
+      },
+      "partial_cancel_item_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_quantity": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "order_item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "promotion_group_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [
+            "item_id",
+            "model_id",
+            "model_quantity"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "order_sn",
+      "cancel_reason"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "order",
+  "pagination_fields": [],
+  "path": "/api/v2/order/cancel_order",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "update_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_cancel_order"
+}

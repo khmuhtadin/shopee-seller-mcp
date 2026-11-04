@@ -1,0 +1,247 @@
+{
+  "api_name": "v2.order.get_buyer_invoice_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [
+    "/invoice_info_list/*/error"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.order.get_buyer_invoice_info endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "queries": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "order_sn": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "order_sn"
+          ],
+          "type": "object"
+        },
+        "minItems": 1,
+        "type": "array"
+      }
+    },
+    "required": [
+      "queries"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "order",
+  "pagination_fields": [],
+  "path": "/api/v2/order/get_buyer_invoice_info",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "invoice_info_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "error": {
+              "type": "string"
+            },
+            "invoice_detail": {
+              "additionalProperties": true,
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "address_breakdown": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "additional_info": {
+                      "type": "string"
+                    },
+                    "city": {
+                      "type": "string"
+                    },
+                    "detailed_address": {
+                      "type": "string"
+                    },
+                    "full_address": {
+                      "type": "string"
+                    },
+                    "postcode": {
+                      "type": "string"
+                    },
+                    "region": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "town": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "company_address": {
+                  "type": "string"
+                },
+                "company_address_breakdown": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "company_additional_info": {
+                      "type": "string"
+                    },
+                    "company_city": {
+                      "type": "string"
+                    },
+                    "company_detailed_address": {
+                      "type": "string"
+                    },
+                    "company_district": {
+                      "type": "string"
+                    },
+                    "company_full_address": {
+                      "type": "string"
+                    },
+                    "company_postcode": {
+                      "type": "string"
+                    },
+                    "company_region": {
+                      "type": "string"
+                    },
+                    "company_state": {
+                      "type": "string"
+                    },
+                    "company_town": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "company_branch_id": {
+                  "type": "string"
+                },
+                "company_branch_name": {
+                  "type": "string"
+                },
+                "company_email": {
+                  "type": "string"
+                },
+                "company_head_office": {
+                  "type": "string"
+                },
+                "company_name": {
+                  "type": "string"
+                },
+                "company_tax_id": {
+                  "type": "string"
+                },
+                "company_type": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "household_address_breakdown": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "household_additional_info": {
+                      "type": "string"
+                    },
+                    "household_barangay": {
+                      "type": "string"
+                    },
+                    "household_city": {
+                      "type": "string"
+                    },
+                    "household_detailed_address": {
+                      "type": "string"
+                    },
+                    "household_district": {
+                      "type": "string"
+                    },
+                    "household_full_address": {
+                      "type": "string"
+                    },
+                    "household_postcode": {
+                      "type": "string"
+                    },
+                    "household_province": {
+                      "type": "string"
+                    },
+                    "household_region": {
+                      "type": "string"
+                    },
+                    "household_state": {
+                      "type": "string"
+                    },
+                    "household_town": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "id_card_address": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "national_id": {
+                  "type": "string"
+                },
+                "phone_number": {
+                  "type": "string"
+                },
+                "tax_id": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "invoice_type": {
+              "type": "string"
+            },
+            "is_requested": {
+              "type": "boolean"
+            },
+            "order_sn": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_get_buyer_invoice_info"
+}

@@ -1,0 +1,273 @@
+{
+  "api_name": "v2.principal.get_shop_affiliate_performance",
+  "auth_strategy": "principal",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "start_date",
+      "granularity": "granularity",
+      "kind": "principal_calendar_range",
+      "timezone": "timezone",
+      "to": "end_date"
+    },
+    {
+      "field": "shop_list",
+      "keys": [
+        "shop_id"
+      ],
+      "kind": "unique_list_keys"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.principal.get_shop_affiliate_performance endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "end_date": {
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+        "type": "string"
+      },
+      "granularity": {
+        "enum": [
+          "customize",
+          "day",
+          "week",
+          "month",
+          "quarter",
+          "year"
+        ],
+        "type": "string"
+      },
+      "shop_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "currency": {
+              "default": "USD",
+              "enum": [
+                "LOCAL",
+                "USD"
+              ],
+              "type": "string"
+            },
+            "shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [
+            "shop_id"
+          ],
+          "type": "object"
+        },
+        "maxItems": 50,
+        "type": "array"
+      },
+      "start_date": {
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+        "type": "string"
+      },
+      "timezone": {
+        "enum": [
+          "GMT+7",
+          "GMT+8",
+          "GMT-3"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "start_date",
+      "end_date",
+      "timezone",
+      "granularity"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "principal",
+  "pagination_fields": [],
+  "path": "/api/v2/principal/get_shop_affiliate_performance",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "details": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "buyers_confirmed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "buyers_placed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "currency": {
+              "type": "string"
+            },
+            "estimated_commission_confirmed": {
+              "type": "number"
+            },
+            "estimated_commission_placed": {
+              "type": "number"
+            },
+            "new_buyers_confirmed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "new_buyers_placed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "orders_confirmed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "orders_placed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "region": {
+              "type": "string"
+            },
+            "roi_confirmed": {
+              "type": "number"
+            },
+            "roi_placed": {
+              "type": "number"
+            },
+            "sales_confirmed": {
+              "type": "number"
+            },
+            "sales_placed": {
+              "type": "number"
+            },
+            "shop_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "shop_name": {
+              "type": "string"
+            },
+            "units_sold_confirmed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "units_sold_placed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "summary": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "buyers_confirmed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "buyers_placed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "currency": {
+              "type": "string"
+            },
+            "estimated_commission_confirmed": {
+              "type": "number"
+            },
+            "estimated_commission_placed": {
+              "type": "number"
+            },
+            "new_buyers_confirmed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "new_buyers_placed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "orders_confirmed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "orders_placed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "roi_confirmed": {
+              "type": "number"
+            },
+            "roi_placed": {
+              "type": "number"
+            },
+            "sales_confirmed": {
+              "type": "number"
+            },
+            "sales_placed": {
+              "type": "number"
+            },
+            "units_sold_confirmed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "units_sold_placed": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_principal_get_shop_affiliate_performance"
+}

@@ -1,0 +1,76 @@
+{
+  "api_name": "v2.payment.get_income_report",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.payment.get_income_report endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "error_message_field": "msg",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "income_report_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "income_report_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "payment",
+  "pagination_fields": [],
+  "path": "/api/v2/payment/get_income_report",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "file_link": {
+        "type": "string"
+      },
+      "file_name": {
+        "type": "string"
+      },
+      "generated_time": {
+        "pattern": "^(?:0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "status": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_payment_get_income_report"
+}

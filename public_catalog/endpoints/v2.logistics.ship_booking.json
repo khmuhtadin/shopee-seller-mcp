@@ -1,0 +1,81 @@
+{
+  "api_name": "v2.logistics.ship_booking",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.ship_booking endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "booking_sn": {
+        "type": "string"
+      },
+      "dropoff": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "not": {
+              "required": [
+                "tracking_no",
+                "sender_real_name"
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "sender_real_name": {
+            "type": "string"
+          },
+          "tracking_no": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "pickup": {
+        "additionalProperties": false,
+        "properties": {
+          "address_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "pickup_time_id": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [
+      "booking_sn"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/ship_booking",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_ship_booking"
+}

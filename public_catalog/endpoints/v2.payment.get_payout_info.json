@@ -1,0 +1,126 @@
+{
+  "api_name": "v2.payment.get_payout_info",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "payout_time_from",
+      "kind": "numeric_delta",
+      "maximum": 1296000,
+      "minimum": 1,
+      "to": "payout_time_to"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.payment.get_payout_info endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "cursor": {
+        "type": "string"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "payout_time_from": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "payout_time_to": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "payout_time_from",
+      "payout_time_to",
+      "page_size",
+      "cursor"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "payment",
+  "pagination_fields": [
+    "more",
+    "next_cursor"
+  ],
+  "path": "/api/v2/payment/get_payout_info",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "more": {
+        "type": "boolean"
+      },
+      "next_cursor": {
+        "type": "string"
+      },
+      "payout_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "encrypted_payout_id": {
+              "type": "string"
+            },
+            "exchange_rate": {
+              "type": "string"
+            },
+            "from_amount": {
+              "type": "number"
+            },
+            "from_currency": {
+              "type": "string"
+            },
+            "pay_service": {
+              "type": "string"
+            },
+            "payee_id": {
+              "type": "string"
+            },
+            "payout_amount": {
+              "type": "number"
+            },
+            "payout_currency": {
+              "type": "string"
+            },
+            "payout_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_payment_get_payout_info"
+}

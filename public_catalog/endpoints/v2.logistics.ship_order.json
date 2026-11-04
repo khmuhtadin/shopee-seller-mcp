@@ -1,0 +1,107 @@
+{
+  "api_name": "v2.logistics.ship_order",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.ship_order endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "dropoff": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "not": {
+              "required": [
+                "tracking_number",
+                "sender_real_name"
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "branch_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "sender_real_name": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "tracking_number": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "non_integrated": {
+        "additionalProperties": false,
+        "properties": {
+          "tracking_number": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "order_sn": {
+        "type": "string"
+      },
+      "package_number": {
+        "type": "string"
+      },
+      "pickup": {
+        "additionalProperties": false,
+        "properties": {
+          "address_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "pickup_time_id": {
+            "type": "string"
+          },
+          "tracking_number": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "address_id"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "order_sn"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/ship_order",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_ship_order"
+}

@@ -1,0 +1,714 @@
+{
+  "api_name": "v2.order.get_order_detail",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.order.get_order_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "order_sn_list": {
+        "pattern": "^[^,]+(?:,[^,]+){0,49}$",
+        "type": "string"
+      },
+      "request_order_status_pending": {
+        "type": "boolean"
+      },
+      "response_optional_fields": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "order_sn_list"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "order",
+  "pagination_fields": [],
+  "path": "/api/v2/order/get_order_detail",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "order_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "actual_shipping_fee": {
+              "type": "number"
+            },
+            "actual_shipping_fee_confirmed": {
+              "type": "boolean"
+            },
+            "advance_package": {
+              "type": "boolean"
+            },
+            "affiliate_sample_type": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "booking_sn": {
+              "type": "string"
+            },
+            "buyer_cancel_reason": {
+              "type": "string"
+            },
+            "buyer_cpf_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "buyer_preference_for_partial_cancellation": {
+              "pattern": "^(0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "buyer_proof_of_collection": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "buyer_user_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "buyer_username": {
+              "type": "string"
+            },
+            "can_full_cancel_order": {
+              "type": "boolean"
+            },
+            "can_partial_cancel_order": {
+              "type": "boolean"
+            },
+            "cancel_by": {
+              "type": "string"
+            },
+            "cancel_reason": {
+              "type": "string"
+            },
+            "checkout_shipping_carrier": {
+              "type": "string"
+            },
+            "cod": {
+              "type": "boolean"
+            },
+            "create_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "days_to_ship": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "dropshipper": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "dropshipper_phone": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "edt_from": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "edt_to": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "estimated_shipping_fee": {
+              "type": "number"
+            },
+            "fulfillment_flag": {
+              "type": "string"
+            },
+            "goods_to_declare": {
+              "type": "boolean"
+            },
+            "hot_listing_order": {
+              "type": "boolean"
+            },
+            "invoice_data": {
+              "additionalProperties": true,
+              "properties": {
+                "access_key": {
+                  "type": "string"
+                },
+                "issue_date": {
+                  "maximum": 9007199254740991,
+                  "minimum": -9007199254740991,
+                  "type": "integer"
+                },
+                "number": {
+                  "type": "string"
+                },
+                "pending_reason": {
+                  "type": "string"
+                },
+                "products_total_value": {
+                  "type": "number"
+                },
+                "series_number": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "tax_code": {
+                  "type": "string"
+                },
+                "total_value": {
+                  "type": "number"
+                }
+              },
+              "required": [],
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "is_buyer_shop_collection": {
+              "type": "boolean"
+            },
+            "is_international": {
+              "type": "boolean"
+            },
+            "item_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "active_qty": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "add_on_deal": {
+                    "type": "boolean"
+                  },
+                  "add_on_deal_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "bundle_sku_id": {
+                    "type": "string"
+                  },
+                  "cancel_requested_qty": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "cancelled_qty": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "components": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "barcode_upc": {
+                          "type": "string"
+                        },
+                        "mapping_type": {
+                          "type": "string"
+                        },
+                        "parent_sku_id": {
+                          "type": "string"
+                        },
+                        "quantity": {
+                          "pattern": "^(0|-?[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-int64": true
+                        },
+                        "warehouse_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "consultation_id": {
+                    "type": "string"
+                  },
+                  "error_in_fetching_is_prescription_item": {
+                    "type": "boolean"
+                  },
+                  "hot_listing_item": {
+                    "type": "boolean"
+                  },
+                  "image_info": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "image_url": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "is_b2c_owned_item": {
+                    "type": "boolean"
+                  },
+                  "is_fulfillment_mapping": {
+                    "type": "boolean"
+                  },
+                  "is_prescription_item": {
+                    "type": "boolean"
+                  },
+                  "item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "item_name": {
+                    "type": "string"
+                  },
+                  "item_sku": {
+                    "type": "string"
+                  },
+                  "line_item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "main_item": {
+                    "type": "boolean"
+                  },
+                  "model_discounted_price": {
+                    "type": "number"
+                  },
+                  "model_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "model_name": {
+                    "type": "string"
+                  },
+                  "model_original_price": {
+                    "type": "number"
+                  },
+                  "model_quantity_purchased": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "model_sku": {
+                    "type": "string"
+                  },
+                  "order_item_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "product_location_id": {
+                    "type": [
+                      "array",
+                      "string"
+                    ]
+                  },
+                  "promotion_group_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "promotion_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "promotion_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "promotion_id": {
+                          "pattern": "^(0|[1-9][0-9]*)$",
+                          "type": "string",
+                          "x-wire-integer": true
+                        },
+                        "promotion_type": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "promotion_type": {
+                    "type": "string"
+                  },
+                  "return_requested_qty": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "returned_qty": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  },
+                  "weight": {
+                    "type": "number"
+                  },
+                  "wholesale": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message_to_seller": {
+              "type": "string"
+            },
+            "note": {
+              "type": "string"
+            },
+            "note_update_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "order_chargeable_weight_gram": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "order_sn": {
+              "type": "string"
+            },
+            "order_status": {
+              "type": "string"
+            },
+            "package_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "allow_self_design_awb": {
+                    "type": "boolean"
+                  },
+                  "group_shipment_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "item_list": {
+                    "items": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "item_id": {
+                          "pattern": "^(0|[1-9][0-9]*)$",
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "x-wire-integer": true
+                        },
+                        "model_id": {
+                          "pattern": "^(0|[1-9][0-9]*)$",
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "x-wire-integer": true
+                        },
+                        "model_quantity": {
+                          "maximum": 2147483647,
+                          "minimum": -2147483648,
+                          "type": "integer"
+                        },
+                        "order_item_id": {
+                          "pattern": "^(0|[1-9][0-9]*)$",
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "x-wire-integer": true
+                        },
+                        "product_location_id": {
+                          "type": "string"
+                        },
+                        "promotion_group_id": {
+                          "pattern": "^(0|[1-9][0-9]*)$",
+                          "type": [
+                            "integer",
+                            "string"
+                          ],
+                          "x-wire-integer": true
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "type": "array"
+                  },
+                  "logistics_channel_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": [
+                      "integer",
+                      "string"
+                    ],
+                    "x-wire-integer": true
+                  },
+                  "logistics_status": {
+                    "type": "string"
+                  },
+                  "package_number": {
+                    "type": "string"
+                  },
+                  "package_query_number": {
+                    "type": "string"
+                  },
+                  "parcel_chargeable_weight": {
+                    "maximum": 9007199254740991,
+                    "minimum": -9007199254740991,
+                    "type": "integer"
+                  },
+                  "shipping_carrier": {
+                    "type": "string"
+                  },
+                  "sorting_group": {
+                    "type": "string"
+                  },
+                  "virtual_contact_number": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "pay_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "payment_info": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "card_brand": {
+                    "type": "string"
+                  },
+                  "payment_amount": {
+                    "type": "number"
+                  },
+                  "payment_method": {
+                    "type": "string"
+                  },
+                  "payment_processor_register": {
+                    "type": "string"
+                  },
+                  "transaction_id": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "payment_method": {
+              "type": "string"
+            },
+            "pending_description": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "pending_terms": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "pharmacist_name": {
+              "type": "string"
+            },
+            "pickup_done_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "prescription_approval_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "prescription_check_status": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "prescription_images": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "prescription_reject_reason": {
+              "type": "string"
+            },
+            "prescription_rejection_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "recipient_address": {
+              "additionalProperties": true,
+              "properties": {
+                "city": {
+                  "type": "string"
+                },
+                "district": {
+                  "type": "string"
+                },
+                "full_address": {
+                  "type": "string"
+                },
+                "geolocation": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "latitude": {
+                      "type": "number"
+                    },
+                    "longitude": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "town": {
+                  "type": "string"
+                },
+                "zipcode": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "region": {
+              "type": "string"
+            },
+            "return_request_due_date": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "reverse_shipping_fee": {
+              "type": "number"
+            },
+            "ship_by_date": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "shipping_carrier": {
+              "type": "string"
+            },
+            "split_up": {
+              "type": "boolean"
+            },
+            "total_amount": {
+              "type": "number"
+            },
+            "update_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_get_order_detail"
+}

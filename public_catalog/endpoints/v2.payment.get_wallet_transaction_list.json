@@ -1,0 +1,184 @@
+{
+  "api_name": "v2.payment.get_wallet_transaction_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "create_time_from",
+      "kind": "numeric_delta",
+      "maximum": 1296000,
+      "minimum": 0,
+      "to": "create_time_to"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.payment.get_wallet_transaction_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "create_time_from": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "create_time_to": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "money_flow": {
+        "type": "string"
+      },
+      "page_no": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "transaction_tab_type": {
+        "type": "string"
+      },
+      "transaction_type": {
+        "type": "string"
+      },
+      "wallet_type": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "page_no",
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "payment",
+  "pagination_fields": [
+    "more"
+  ],
+  "path": "/api/v2/payment/get_wallet_transaction_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "more": {
+        "type": "boolean"
+      },
+      "transaction_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "amount": {
+              "type": "number"
+            },
+            "buyer_name": {
+              "type": "string"
+            },
+            "create_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "current_balance": {
+              "type": "number"
+            },
+            "description": {
+              "type": "string"
+            },
+            "money_flow": {
+              "type": "string"
+            },
+            "order_sn": {
+              "type": "string"
+            },
+            "outlet_shop_name": {
+              "type": "string"
+            },
+            "pay_order_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "order_sn": {
+                    "type": "string"
+                  },
+                  "shop_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "refund_sn": {
+              "type": "string"
+            },
+            "root_withdrawal_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "shop_name": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "transaction_fee": {
+              "type": "number"
+            },
+            "transaction_tab_type": {
+              "type": "string"
+            },
+            "transaction_type": {
+              "type": "string"
+            },
+            "txn_title": {
+              "type": "string"
+            },
+            "withdrawal_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "withdrawal_type": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_payment_get_wallet_transaction_list"
+}

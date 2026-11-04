@@ -1,0 +1,78 @@
+{
+  "api_name": "v2.order.upload_invoice_doc",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.order.upload_invoice_doc endpoint.",
+  "effects": "write",
+  "encoding": "multipart",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "file": {
+        "type": "string"
+      },
+      "file_type": {
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer"
+      },
+      "order_sn": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "order_sn",
+      "file_type",
+      "file"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "order",
+  "pagination_fields": [],
+  "path": "/api/v2/order/upload_invoice_doc",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_upload_invoice_doc",
+  "upload_fields": {
+    "file": {
+      "content_kind": "identified",
+      "max_bytes": 1000000,
+      "mime_selector": {
+        "field": "file_type",
+        "values": {
+          "1": "application/pdf",
+          "2": "image/jpeg",
+          "3": "image/png",
+          "4": "application/xml"
+        }
+      },
+      "mime_types": [
+        "application/pdf",
+        "image/jpeg",
+        "image/png",
+        "application/xml"
+      ]
+    }
+  }
+}

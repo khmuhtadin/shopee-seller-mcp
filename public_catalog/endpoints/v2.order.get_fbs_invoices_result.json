@@ -1,0 +1,89 @@
+{
+  "api_name": "v2.order.get_fbs_invoices_result",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.order.get_fbs_invoices_result endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "error_message_field": "error_msg",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "request_id_list": {
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "items": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "request_id"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [
+      "request_id_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "order",
+  "pagination_fields": [],
+  "path": "/api/v2/order/get_fbs_invoices_result",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "result_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "file_name": {
+              "type": "string"
+            },
+            "request_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "status": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_get_fbs_invoices_result"
+}

@@ -1,0 +1,153 @@
+{
+  "api_name": "v2.payment.get_income_detail",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "date_from",
+      "kind": "conditional_iso_date_delta",
+      "maximum_days": 14,
+      "minimum_days": 1,
+      "to": "date_to",
+      "when": {
+        "income_status": 1
+      }
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.payment.get_income_detail endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "cursor": {
+        "type": "string"
+      },
+      "date_from": {
+        "type": "string"
+      },
+      "date_to": {
+        "type": "string"
+      },
+      "income_status": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "page_size": {
+        "pattern": "^(?:0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [
+      "date_from",
+      "date_to",
+      "income_status",
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "payment",
+  "pagination_fields": [
+    "next_page"
+  ],
+  "path": "/api/v2/payment/get_income_detail",
+  "query_arrays": {},
+  "response_key": "income_detail_list",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "actual_payout_time": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "creation_date": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "currency": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "estimated_escrow_amount": {
+              "type": "number"
+            },
+            "estimated_payout_time": {
+              "pattern": "^(?:0|-?[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-int64": true
+            },
+            "order_sn": {
+              "type": "string"
+            },
+            "payment_method": {
+              "type": "string"
+            },
+            "released_amount": {
+              "type": "number"
+            },
+            "status": {
+              "type": "string"
+            },
+            "to_release_amount": {
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "next_page": {
+        "additionalProperties": true,
+        "properties": {
+          "cursor": {
+            "type": "string"
+          },
+          "page_size": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_payment_get_income_detail"
+}

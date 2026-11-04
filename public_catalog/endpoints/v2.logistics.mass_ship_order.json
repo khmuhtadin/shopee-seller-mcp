@@ -1,0 +1,166 @@
+{
+  "api_name": "v2.logistics.mass_ship_order",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [
+    "fail_list"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.mass_ship_order endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "dropoff": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "not": {
+              "required": [
+                "tracking_number",
+                "sender_real_name"
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "branch_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "sender_real_name": {
+            "type": "string"
+          },
+          "tracking_number": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "logistics_channel_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "non_integrated": {
+        "additionalProperties": false,
+        "properties": {
+          "tracking_number": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "package_number": {
+                  "type": "string"
+                },
+                "tracking_number": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "package_number",
+                "tracking_number"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "package_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "package_number": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "package_number"
+          ],
+          "type": "object"
+        },
+        "maxItems": 50,
+        "minItems": 1,
+        "type": "array"
+      },
+      "pickup": {
+        "additionalProperties": false,
+        "properties": {
+          "address_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "pickup_time_id": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "product_location_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "package_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/mass_ship_order",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "fail_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "fail_reason": {
+              "type": "string"
+            },
+            "package_number": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "success_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "package_number": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_mass_ship_order"
+}

@@ -1,0 +1,246 @@
+{
+  "api_name": "v2.product.add_model",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.add_model endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "model_list": {
+        "items": {
+          "additionalProperties": false,
+          "dependentRequired": {
+            "dimension": [
+              "weight"
+            ],
+            "ssp_id": [
+              "cssp_id"
+            ]
+          },
+          "properties": {
+            "cssp_id": {
+              "pattern": "^[1-9][0-9]*$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "dimension": {
+              "additionalProperties": false,
+              "properties": {
+                "package_height": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "package_length": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "package_width": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "package_height",
+                "package_length",
+                "package_width"
+              ],
+              "type": "object"
+            },
+            "gtin_code": {
+              "pattern": "^(?:[0-9]{8,14}|00)$",
+              "type": "string"
+            },
+            "model_sku": {
+              "maxLength": 100,
+              "type": "string"
+            },
+            "original_price": {
+              "type": "number"
+            },
+            "pre_order": {
+              "additionalProperties": false,
+              "properties": {
+                "days_to_ship": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "is_pre_order": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "is_pre_order"
+              ],
+              "type": "object"
+            },
+            "seller_stock": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "location_id": {
+                    "type": "string"
+                  },
+                  "stock": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "stock"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "ssp_id": {
+              "pattern": "^[1-9][0-9]*$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "tier_index": {
+              "items": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "weight": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "tier_index",
+            "original_price",
+            "seller_stock"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "item_id",
+      "model_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/add_model",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "model": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "dimension": {
+              "additionalProperties": true,
+              "properties": {
+                "package_height": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "package_length": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "package_width": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "model_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "model_sku": {
+              "type": "string"
+            },
+            "price_info": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "original_price": {
+                    "type": "number"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "seller_stock": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "location_id": {
+                    "type": "string"
+                  },
+                  "stock": {
+                    "maximum": 2147483647,
+                    "minimum": -2147483648,
+                    "type": "integer"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "tier_index": {
+              "items": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "weight": {
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_add_model"
+}

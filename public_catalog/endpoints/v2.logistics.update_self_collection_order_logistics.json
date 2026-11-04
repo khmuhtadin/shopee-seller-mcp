@@ -1,0 +1,80 @@
+{
+  "api_name": "v2.logistics.update_self_collection_order_logistics",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.update_self_collection_order_logistics endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "self_collection_logistics_action": {
+              "const": "order_collected"
+            }
+          },
+          "required": [
+            "self_collection_logistics_action"
+          ]
+        },
+        "then": {
+          "required": [
+            "epoc_image_list"
+          ]
+        }
+      }
+    ],
+    "properties": {
+      "epoc_image_list": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 3,
+        "type": "array"
+      },
+      "package_number": {
+        "type": "string"
+      },
+      "pin": {
+        "type": "string"
+      },
+      "self_collection_logistics_action": {
+        "enum": [
+          "ready_for_collection",
+          "order_collected"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "package_number",
+      "self_collection_logistics_action"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/update_self_collection_order_logistics",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_update_self_collection_order_logistics"
+}

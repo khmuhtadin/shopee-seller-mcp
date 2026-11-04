@@ -1,0 +1,123 @@
+{
+  "api_name": "v2.order.get_booking_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [],
+  "constraints": [
+    {
+      "from": "time_from",
+      "kind": "numeric_delta",
+      "maximum": 1296000,
+      "minimum": 1,
+      "to": "time_to"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.order.get_booking_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "booking_status": {
+        "enum": [
+          "READY_TO_SHIP",
+          "PROCESSED",
+          "SHIPPED",
+          "CANCELLED",
+          "MATCHED"
+        ],
+        "type": "string"
+      },
+      "cursor": {
+        "type": "string"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "time_from": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "time_range_field": {
+        "enum": [
+          "create_time",
+          "update_time"
+        ],
+        "type": "string"
+      },
+      "time_to": {
+        "pattern": "^(0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      }
+    },
+    "required": [
+      "time_range_field",
+      "time_from",
+      "time_to",
+      "page_size"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "order",
+  "pagination_fields": [
+    "more"
+  ],
+  "path": "/api/v2/order/get_booking_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "booking_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "booking_sn": {
+              "type": "string"
+            },
+            "booking_status": {
+              "type": "string"
+            },
+            "next_cursor": {
+              "type": "string"
+            },
+            "order_sn": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "more": {
+        "type": "boolean"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_order_get_booking_list"
+}

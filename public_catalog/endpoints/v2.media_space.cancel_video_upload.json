@@ -1,0 +1,43 @@
+{
+  "api_name": "v2.media_space.cancel_video_upload",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.media_space.cancel_video_upload endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "video_upload_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "video_upload_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "media_space",
+  "pagination_fields": [],
+  "path": "/api/v2/media_space/cancel_video_upload",
+  "query_arrays": {},
+  "response_key": null,
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {},
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_media_space_cancel_video_upload"
+}

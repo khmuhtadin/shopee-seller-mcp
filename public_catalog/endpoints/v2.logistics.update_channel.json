@@ -1,0 +1,192 @@
+{
+  "api_name": "v2.logistics.update_channel",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.update_channel endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "auto_call_driver_setting": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "auto_call_driver_enabled": {
+                  "const": true
+                }
+              },
+              "required": [
+                "auto_call_driver_enabled"
+              ]
+            },
+            "then": {
+              "required": [
+                "preparation_time"
+              ]
+            }
+          }
+        ],
+        "properties": {
+          "auto_call_driver_enabled": {
+            "type": "boolean"
+          },
+          "preparation_time": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "cod_enabled": {
+        "type": "boolean"
+      },
+      "enabled": {
+        "type": "boolean"
+      },
+      "logistics_channel_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [
+      "logistics_channel_id"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/update_channel",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "auto_call_driver_setting": {
+        "additionalProperties": true,
+        "properties": {
+          "auto_call_driver_enabled": {
+            "type": "boolean"
+          },
+          "preparation_time": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "cod_enabled": {
+        "type": "boolean"
+      },
+      "enabled": {
+        "type": "boolean"
+      },
+      "is_multi_warehouse": {
+        "type": "boolean"
+      },
+      "logistics_channel_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "shop_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "update_channels": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "channel_display_name": {
+              "type": "string"
+            },
+            "channel_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "unsupport_warehouse": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "warehouse_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "warehouse_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "updated_channels": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "channel_display_name": {
+              "type": "string"
+            },
+            "channel_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "unsupport_warehouse": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "warehouse_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "warehouse_name": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_update_channel"
+}

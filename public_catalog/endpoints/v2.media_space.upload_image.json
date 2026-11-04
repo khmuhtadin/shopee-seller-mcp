@@ -1,0 +1,113 @@
+{
+  "api_name": "v2.media_space.upload_image",
+  "auth_strategy": "public",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.media_space.upload_image endpoint.",
+  "effects": "write",
+  "encoding": "multipart",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "image": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 8,
+        "minItems": 1,
+        "type": "array"
+      },
+      "ratio": {
+        "default": "1:1",
+        "enum": [
+          "1:1",
+          "3:4"
+        ],
+        "type": "string"
+      },
+      "scene": {
+        "default": "normal",
+        "enum": [
+          "normal",
+          "desc"
+        ],
+        "type": "string"
+      }
+    },
+    "required": [
+      "image"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "media_space",
+  "pagination_fields": [],
+  "path": "/api/v2/media_space/upload_image",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "image_info": {
+        "additionalProperties": true,
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "image_info_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "error": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "id": {
+              "type": "integer"
+            },
+            "image_info": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "message": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_media_space_upload_image",
+  "upload_fields": {
+    "image": {
+      "content_kind": "identified",
+      "max_bytes": 10000000,
+      "max_files": 8,
+      "mime_types": [
+        "image/jpeg",
+        "image/png"
+      ],
+      "multiple": true
+    }
+  }
+}

@@ -1,0 +1,1094 @@
+{
+  "api_name": "v2.product.add_item",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.product.add_item endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "description_type": {
+              "const": "normal"
+            }
+          },
+          "required": [
+            "description_type"
+          ]
+        },
+        "then": {
+          "required": [
+            "description"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "description_type": {
+              "const": "extended"
+            }
+          },
+          "required": [
+            "description_type"
+          ]
+        },
+        "then": {
+          "required": [
+            "description_info"
+          ]
+        }
+      }
+    ],
+    "dependentRequired": {
+      "dimension": [
+        "weight"
+      ],
+      "ssp_id": [
+        "cssp_id"
+      ]
+    },
+    "properties": {
+      "attribute_list": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "attribute_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "attribute_value_list": {
+              "items": {
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "value_id": {
+                          "const": "0"
+                        }
+                      },
+                      "required": [
+                        "value_id"
+                      ]
+                    },
+                    "then": {
+                      "required": [
+                        "original_value_name"
+                      ]
+                    }
+                  }
+                ],
+                "properties": {
+                  "original_value_name": {
+                    "type": "string"
+                  },
+                  "value_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "value_unit": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value_id"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "attribute_id"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "authorised_brand_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "brand": {
+        "additionalProperties": false,
+        "properties": {
+          "brand_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "original_brand_name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "brand_id",
+          "original_brand_name"
+        ],
+        "type": "object"
+      },
+      "category_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "certification_info": {
+        "additionalProperties": false,
+        "properties": {
+          "certification_list": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "certification_no": {
+                  "type": "string"
+                },
+                "certification_proofs": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "file_name": {
+                        "type": "string"
+                      },
+                      "image_id": {
+                        "pattern": "^(0|[1-9][0-9]*)$",
+                        "type": "string",
+                        "x-wire-integer": true
+                      },
+                      "ratio": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "file_name",
+                      "image_id",
+                      "ratio"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "expiry_date": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "permit_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                }
+              },
+              "required": [
+                "certification_no",
+                "permit_id",
+                "certification_proofs"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "compatibility_info": {
+        "additionalProperties": false,
+        "properties": {
+          "vehicle_info_list": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "brand_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                },
+                "model_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                },
+                "version_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                },
+                "year_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                }
+              },
+              "required": [
+                "brand_id",
+                "model_id"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "vehicle_info_list"
+        ],
+        "type": "object"
+      },
+      "complaint_policy": {
+        "additionalProperties": false,
+        "properties": {
+          "additional_information": {
+            "maxLength": 999,
+            "type": "string"
+          },
+          "complaint_address_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          },
+          "exclude_entrepreneur_warranty": {
+            "type": "boolean"
+          },
+          "warranty_time": {
+            "enum": [
+              "ONE_YEAR",
+              "TWO_YEARS",
+              "OVER_TWO_YEARS"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "condition": {
+        "type": "string"
+      },
+      "cssp_id": {
+        "pattern": "^[1-9][0-9]*$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "description": {
+        "type": "string"
+      },
+      "description_info": {
+        "additionalProperties": false,
+        "properties": {
+          "extended_description": {
+            "additionalProperties": false,
+            "properties": {
+              "field_list": {
+                "items": {
+                  "additionalProperties": false,
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "field_type": {
+                            "const": "text"
+                          }
+                        },
+                        "required": [
+                          "field_type"
+                        ]
+                      },
+                      "then": {
+                        "required": [
+                          "text"
+                        ]
+                      }
+                    },
+                    {
+                      "if": {
+                        "properties": {
+                          "field_type": {
+                            "const": "image"
+                          }
+                        },
+                        "required": [
+                          "field_type"
+                        ]
+                      },
+                      "then": {
+                        "required": [
+                          "image_info"
+                        ]
+                      }
+                    }
+                  ],
+                  "properties": {
+                    "field_type": {
+                      "enum": [
+                        "text",
+                        "image"
+                      ],
+                      "type": "string"
+                    },
+                    "image_info": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "image_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "description_type": {
+        "enum": [
+          "normal",
+          "extended"
+        ],
+        "type": "string"
+      },
+      "dimension": {
+        "additionalProperties": false,
+        "properties": {
+          "package_height": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "package_length": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "package_width": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "package_height",
+          "package_length",
+          "package_width"
+        ],
+        "type": "object"
+      },
+      "ds_cat_rcmd_id": {
+        "type": "string"
+      },
+      "gtin_code": {
+        "pattern": "^(?:[0-9]{8,14}|00)$",
+        "type": "string"
+      },
+      "image": {
+        "additionalProperties": false,
+        "properties": {
+          "image_id_list": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "image_ratio": {
+            "enum": [
+              "1:1",
+              "3:4"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "image_id_list"
+        ],
+        "type": "object"
+      },
+      "item_dangerous": {
+        "enum": [
+          0,
+          1
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "item_name": {
+        "type": "string"
+      },
+      "item_sku": {
+        "type": "string"
+      },
+      "item_status": {
+        "enum": [
+          "UNLIST",
+          "NORMAL"
+        ],
+        "type": "string"
+      },
+      "logistic_info": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "is_free": {
+              "type": "boolean"
+            },
+            "logistic_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "shipping_fee": {
+              "type": "number"
+            },
+            "size_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            }
+          },
+          "required": [
+            "enabled",
+            "logistic_id"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "medicine_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "original_price": {
+        "type": "number"
+      },
+      "pre_order": {
+        "additionalProperties": false,
+        "properties": {
+          "days_to_ship": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "is_pre_order": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "is_pre_order"
+        ],
+        "type": "object"
+      },
+      "promotion_images": {
+        "additionalProperties": false,
+        "properties": {
+          "image_id_list": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "purchase_limit_info": {
+        "additionalProperties": false,
+        "properties": {
+          "max_purchase_limit": {
+            "additionalProperties": false,
+            "properties": {
+              "purchase_limit": {
+                "maximum": 2147483647,
+                "minimum": -2147483648,
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "min_purchase_limit": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "scheduled_publish_time": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "seller_stock": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "location_id": {
+              "type": "string"
+            },
+            "stock": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "stock"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "size_chart_info": {
+        "additionalProperties": false,
+        "properties": {
+          "size_chart": {
+            "type": "string"
+          },
+          "size_chart_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-integer": true
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "ssp_id": {
+        "pattern": "^[1-9][0-9]*$",
+        "type": "string",
+        "x-wire-integer": true
+      },
+      "tax_info": {
+        "additionalProperties": false,
+        "properties": {
+          "additional_info": {
+            "type": "string"
+          },
+          "cest": {
+            "pattern": "^(?:[0-9]{7}|00)$",
+            "type": "string"
+          },
+          "cofins": {
+            "type": "string"
+          },
+          "csosn": {
+            "type": "string"
+          },
+          "diff_state_cfop": {
+            "type": "string"
+          },
+          "ex_tipi": {
+            "type": "string"
+          },
+          "export_cfop": {
+            "type": "string"
+          },
+          "fci_num": {
+            "type": "string"
+          },
+          "federal_state_taxes": {
+            "type": "string"
+          },
+          "group_item_info": {
+            "additionalProperties": false,
+            "properties": {
+              "group_grai_gtin_sscc": {
+                "type": "string"
+              },
+              "group_gtin_sscc": {
+                "type": "string"
+              },
+              "group_qtd": {
+                "type": "string"
+              },
+              "group_unit": {
+                "type": "string"
+              },
+              "group_unit_value": {
+                "type": "string"
+              },
+              "original_group_price": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "icms_cst": {
+            "type": "string"
+          },
+          "measure_unit": {
+            "type": "string"
+          },
+          "ncm": {
+            "pattern": "^(?:[0-9]{8}|00)$",
+            "type": "string"
+          },
+          "operation_type": {
+            "enum": [
+              "1",
+              "2"
+            ],
+            "type": "string"
+          },
+          "origin": {
+            "enum": [
+              "0",
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8"
+            ],
+            "type": "string"
+          },
+          "pis": {
+            "type": "string"
+          },
+          "pis_cofins_cst": {
+            "type": "string"
+          },
+          "recopi_num": {
+            "type": "string"
+          },
+          "same_state_cfop": {
+            "type": "string"
+          },
+          "tax_type": {
+            "enum": [
+              0,
+              1,
+              2
+            ],
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "video_upload_id": {
+        "items": {
+          "type": "string"
+        },
+        "maxItems": 1,
+        "type": "array"
+      },
+      "weight": {
+        "type": "number"
+      },
+      "wholesale": {
+        "items": {
+          "additionalProperties": false,
+          "properties": {
+            "max_count": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "min_count": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "unit_price": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "min_count",
+            "max_count",
+            "unit_price"
+          ],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [
+      "original_price",
+      "description",
+      "weight",
+      "item_name",
+      "logistic_info",
+      "category_id",
+      "image"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "product",
+  "pagination_fields": [],
+  "path": "/api/v2/product/add_item",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "attribute": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "attribute_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "attribute_value_list": {
+              "items": {
+                "additionalProperties": true,
+                "properties": {
+                  "original_value_name": {
+                    "type": "string"
+                  },
+                  "value_id": {
+                    "pattern": "^(0|[1-9][0-9]*)$",
+                    "type": "string",
+                    "x-wire-integer": true
+                  },
+                  "value_unit": {
+                    "type": "string"
+                  }
+                },
+                "required": [],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "brand": {
+        "additionalProperties": true,
+        "properties": {
+          "brand_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "x-wire-integer": true
+          },
+          "original_brand_name": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "category_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": [
+          "integer",
+          "string"
+        ],
+        "x-wire-integer": true
+      },
+      "complaint_policy": {
+        "additionalProperties": true,
+        "properties": {
+          "additional_information": {
+            "type": "string"
+          },
+          "complaint_address_id": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "x-wire-integer": true
+          },
+          "exclude_entrepreneur_warranty": {
+            "type": "boolean"
+          },
+          "warranty_time": {
+            "type": "string"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "condition": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "description_info": {
+        "additionalProperties": true,
+        "properties": {
+          "extended_description": {
+            "additionalProperties": true,
+            "properties": {
+              "field_list": {
+                "items": {
+                  "additionalProperties": true,
+                  "properties": {
+                    "field_type": {
+                      "type": "string"
+                    },
+                    "image_info": {
+                      "additionalProperties": true,
+                      "properties": {
+                        "image_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [],
+                      "type": "object"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "description_type": {
+        "type": "string"
+      },
+      "dimension": {
+        "additionalProperties": true,
+        "properties": {
+          "package_height": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "package_length": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "package_width": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "images": {
+        "additionalProperties": true,
+        "properties": {
+          "image_id_list": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "image_url_list": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "item_dangerous": {
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      },
+      "item_id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": [
+          "integer",
+          "string"
+        ],
+        "x-wire-integer": true
+      },
+      "item_name": {
+        "type": "string"
+      },
+      "item_status": {
+        "type": "string"
+      },
+      "logistic_info": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "is_free": {
+              "type": "boolean"
+            },
+            "logistic_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            },
+            "shipping_fee": {
+              "type": "number"
+            },
+            "size_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": [
+                "integer",
+                "string"
+              ],
+              "x-wire-integer": true
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "pre_order": {
+        "additionalProperties": true,
+        "properties": {
+          "days_to_ship": {
+            "maximum": 2147483647,
+            "minimum": -2147483648,
+            "type": "integer"
+          },
+          "is_pre_order": {
+            "type": "boolean"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "price_info": {
+        "additionalProperties": true,
+        "properties": {
+          "current_price": {
+            "type": "number"
+          },
+          "original_price": {
+            "type": "number"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "seller_stock": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "location_id": {
+              "type": "string"
+            },
+            "stock": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "video_info": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "duration": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "thumbnail_url": {
+              "type": "string"
+            },
+            "video_url": {
+              "type": "string"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "weight": {
+        "type": "number"
+      },
+      "wholesale": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "max_count": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "min_count": {
+              "maximum": 2147483647,
+              "minimum": -2147483648,
+              "type": "integer"
+            },
+            "unit_price": {
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_product_add_item"
+}

@@ -1,0 +1,102 @@
+{
+  "api_name": "v2.payment.get_escrow_list",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "release_time_from",
+      "kind": "ordered_pair",
+      "to": "release_time_to"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.payment.get_escrow_list endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "page_no": {
+        "maximum": 2147483647,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "page_size": {
+        "maximum": 100,
+        "minimum": 1,
+        "type": "integer"
+      },
+      "release_time_from": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      },
+      "release_time_to": {
+        "maximum": 9007199254740991,
+        "minimum": -9007199254740991,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "release_time_from",
+      "release_time_to"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "payment",
+  "pagination_fields": [
+    "more"
+  ],
+  "path": "/api/v2/payment/get_escrow_list",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "escrow_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "escrow_release_time": {
+              "maximum": 9007199254740991,
+              "minimum": -9007199254740991,
+              "type": "integer"
+            },
+            "order_sn": {
+              "type": "string"
+            },
+            "payout_amount": {
+              "type": "number"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "more": {
+        "type": "boolean"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_payment_get_escrow_list"
+}

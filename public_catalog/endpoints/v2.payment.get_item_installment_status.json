@@ -1,0 +1,108 @@
+{
+  "api_name": "v2.payment.get_item_installment_status",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "batch_failure_paths": [
+    "/item_installment_list/*/fail_error"
+  ],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.payment.get_item_installment_status endpoint.",
+  "effects": "read",
+  "encoding": "json",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "item_id_list": {
+        "items": {
+          "pattern": "^(0|[1-9][0-9]*)$",
+          "type": "string",
+          "x-wire-integer": true
+        },
+        "maxItems": 100,
+        "type": "array"
+      }
+    },
+    "required": [
+      "item_id_list"
+    ],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "payment",
+  "pagination_fields": [],
+  "path": "/api/v2/payment/get_item_installment_status",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "item_installment_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "fail_error": {
+              "type": "string"
+            },
+            "fail_message": {
+              "type": "string"
+            },
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "tenure_list": {
+              "items": {
+                "maximum": 9007199254740991,
+                "minimum": -9007199254740991,
+                "type": "integer"
+              },
+              "type": "array"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      },
+      "item_plan_ahora_list": {
+        "items": {
+          "additionalProperties": true,
+          "properties": {
+            "item_id": {
+              "pattern": "^(0|[1-9][0-9]*)$",
+              "type": "string",
+              "x-wire-integer": true
+            },
+            "participate_plan_ahora": {
+              "type": "boolean"
+            }
+          },
+          "required": [],
+          "type": "object"
+        },
+        "type": "array"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_payment_get_item_installment_status"
+}

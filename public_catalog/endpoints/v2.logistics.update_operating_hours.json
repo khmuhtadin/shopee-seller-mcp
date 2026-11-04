@@ -1,0 +1,613 @@
+{
+  "api_name": "v2.logistics.update_operating_hours",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "kind": "logistics_operating_hours",
+      "regular_fields": [
+        "regular_operating_hour",
+        "instant_operating_hour",
+        "shop_collection_operating_hour"
+      ],
+      "special_field": "special_operating_hour"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.logistics.update_operating_hours endpoint.",
+  "effects": "write",
+  "encoding": "json",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "instant_operating_hour": {
+        "additionalProperties": false,
+        "properties": {
+          "friday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "monday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "public_holiday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "saturday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "sunday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "thrusday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "tuesday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "wednesday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "regular_operating_hour": {
+        "additionalProperties": false,
+        "properties": {
+          "friday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "monday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "public_holiday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "saturday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "sunday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "thursday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "tuesday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "wednesday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "shop_collection_operating_hour": {
+        "additionalProperties": false,
+        "properties": {
+          "friday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "monday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "public_holiday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "saturday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "sunday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "thursday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "tuesday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          },
+          "wednesday": {
+            "additionalProperties": false,
+            "properties": {
+              "end_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              },
+              "start_time": {
+                "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                "type": "string"
+              }
+            },
+            "required": [
+              "start_time",
+              "end_time"
+            ],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "special_operating_hour": {
+        "additionalProperties": false,
+        "properties": {
+          "end_date": {
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "operating_hours": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "date": {
+                  "type": "string"
+                },
+                "enable": {
+                  "type": "boolean"
+                },
+                "end_time": {
+                  "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                  "type": "string"
+                },
+                "start_time": {
+                  "pattern": "^(?:[01][0-9]|2[0-3]):(?:00|30)$|^23:59$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "date",
+                "start_time",
+                "end_time",
+                "enable"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "start_date": {
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "start_date",
+          "end_date",
+          "operating_hours"
+        ],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "method": "POST",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/update_operating_hours",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "result_list": {
+        "additionalProperties": true,
+        "properties": {
+          "instant_operating_hour": {
+            "additionalProperties": true,
+            "properties": {
+              "fail_message": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "regular_operating_hour": {
+            "additionalProperties": true,
+            "properties": {
+              "fail_message": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "shop_collection_operating_hour": {
+            "additionalProperties": true,
+            "properties": {
+              "fail_message": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          },
+          "special_operating_hour": {
+            "additionalProperties": true,
+            "properties": {
+              "fail_message": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [],
+            "type": "object"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_update_operating_hours"
+}

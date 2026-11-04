@@ -1,0 +1,72 @@
+{
+  "api_name": "v2.payment.generate_income_statement",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [
+    {
+      "from": "release_time_from",
+      "kind": "ordered_pair",
+      "to": "release_time_to"
+    }
+  ],
+  "description": "Call the Shopee Open Platform v2.payment.generate_income_statement endpoint.",
+  "effects": "write",
+  "encoding": "query",
+  "idempotent": false,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "release_time_from": {
+        "pattern": "^(?:0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "release_time_to": {
+        "pattern": "^(?:0|-?[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-int64": true
+      },
+      "statement_type": {
+        "enum": [
+          1,
+          2
+        ],
+        "maximum": 2147483647,
+        "minimum": -2147483648,
+        "type": "integer"
+      }
+    },
+    "required": [
+      "release_time_from",
+      "release_time_to"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "payment",
+  "pagination_fields": [],
+  "path": "/api/v2/payment/generate_income_statement",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "id": {
+        "pattern": "^(0|[1-9][0-9]*)$",
+        "type": "string",
+        "x-wire-integer": true
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [],
+    "max_attempts": 1,
+    "statuses": []
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_payment_generate_income_statement"
+}

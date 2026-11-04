@@ -1,0 +1,221 @@
+{
+  "api_name": "v2.logistics.get_shipping_parameter",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.logistics.get_shipping_parameter endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "order_sn": {
+        "type": "string"
+      },
+      "package_number": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "order_sn"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "logistics",
+  "pagination_fields": [],
+  "path": "/api/v2/logistics/get_shipping_parameter",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "dropoff": {
+        "additionalProperties": true,
+        "properties": {
+          "branch_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "branch_id": {
+                  "maximum": 9007199254740991,
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "district": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "town": {
+                  "type": "string"
+                },
+                "zipcode": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "slug_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "slug": {
+                  "type": "string"
+                },
+                "slug_name": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": [
+          "object",
+          "null"
+        ]
+      },
+      "info_needed": {
+        "additionalProperties": true,
+        "properties": {
+          "dropoff": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "non_integrated": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "pickup": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": "object"
+      },
+      "pickup": {
+        "additionalProperties": true,
+        "properties": {
+          "address_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "address": {
+                  "type": "string"
+                },
+                "address_flag": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "address_id": {
+                  "pattern": "^(0|[1-9][0-9]*)$",
+                  "type": "string",
+                  "x-wire-integer": true
+                },
+                "city": {
+                  "type": "string"
+                },
+                "district": {
+                  "type": "string"
+                },
+                "region": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "time_slot_list": {
+                  "items": {
+                    "additionalProperties": true,
+                    "properties": {
+                      "date": {
+                        "maximum": 9007199254740991,
+                        "minimum": -9007199254740991,
+                        "type": "integer"
+                      },
+                      "flags": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "pickup_time_id": {
+                        "type": "string"
+                      },
+                      "time_text": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "type": [
+                    "array",
+                    "null"
+                  ]
+                },
+                "town": {
+                  "type": "string"
+                },
+                "zipcode": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_logistics_get_shipping_parameter"
+}

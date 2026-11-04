@@ -1,0 +1,102 @@
+{
+  "api_name": "v2.media_space.get_video_upload_result",
+  "auth_strategy": "shop",
+  "batch_failure_fields": [],
+  "constraints": [],
+  "description": "Call the Shopee Open Platform v2.media_space.get_video_upload_result endpoint.",
+  "effects": "read",
+  "encoding": "query",
+  "idempotent": true,
+  "implementation": "implemented",
+  "input_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "video_upload_id": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "video_upload_id"
+    ],
+    "type": "object"
+  },
+  "method": "GET",
+  "module": "media_space",
+  "pagination_fields": [],
+  "path": "/api/v2/media_space/get_video_upload_result",
+  "query_arrays": {},
+  "response_key": "response",
+  "response_schema": {
+    "additionalProperties": true,
+    "properties": {
+      "message": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "video_info": {
+        "additionalProperties": true,
+        "properties": {
+          "duration": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string",
+            "x-wire-uint64": true
+          },
+          "thumbnail_url_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "image_url": {
+                  "type": "string"
+                },
+                "image_url_region": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "video_url_list": {
+            "items": {
+              "additionalProperties": true,
+              "properties": {
+                "video_url": {
+                  "type": "string"
+                },
+                "video_url_region": {
+                  "type": "string"
+                }
+              },
+              "required": [],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [],
+        "type": "object"
+      }
+    },
+    "required": [],
+    "type": "object"
+  },
+  "retry_policy": {
+    "errors": [
+      "error_rate_limit",
+      "error_server"
+    ],
+    "max_attempts": 3,
+    "statuses": [
+      429,
+      502,
+      503,
+      504
+    ]
+  },
+  "review_status": "verified",
+  "sensitive_paths": [],
+  "tool_name": "v2_media_space_get_video_upload_result"
+}

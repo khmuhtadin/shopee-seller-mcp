@@ -92,6 +92,7 @@ Partner credentials are read only from the server environment: `SHOPEE_PARTNER_I
 Open `https://<your-host>/admin/shops` and sign in with the operator passphrase.
 
 - **Add shop**: choose an alias (for example `store-a`), the environment (sandbox or production) and the authorization period, then click *Continue to Shopee*. Sign in as the seller and approve the app. You return to `/callback` and the shop is available to MCP clients immediately.
+- **Main account (several shops at once)**: on the Shopee login page, sign in with the *main account* that manages your shops and tick the shops to authorize. Shopee returns a `main_account_id` instead of a `shop_id`. You then see the authorized shop IDs (with shop names when Shopee returns them), pick which ones to add and give each an alias. The alias you typed in *Add shop* is used as the default prefix. Each selected shop gets its own credential file and is refreshed independently.
 - **Remove shop**: removes the alias and deletes its stored tokens.
 - The list shows alias, environment and authorization expiry. To renew, remove the shop and add it again before the authorization expires.
 

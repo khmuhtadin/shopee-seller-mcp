@@ -16,7 +16,11 @@ proxy networks (``--trusted-proxy``).
   CSRF and throttling as ``/authorize``): list shops, "Add shop" through the
   Shopee seller authorization flow, "Remove shop". Changes are applied without
   a restart.
-* ``GET /callback`` - completes an "Add shop" flow when it carries a pending,
+* ``GET/POST /invite/<token>`` - single-use invite link created by the operator:
+  a remote seller approves this app on Shopee without the admin passphrase;
+  authorized shops are added with automatic aliases.
+* ``GET /callback`` - completes an invite flow (state bound to the invitee's
+  browser cookie) or an "Add shop" flow when it carries a pending,
   session-bound state (``shop_id`` callbacks add the shop; ``main_account_id``
   callbacks open a shop picker); otherwise a static page for the
   ``shopee-auth`` CLI flow.
@@ -72,6 +76,8 @@ MAX_MCP_BODY_BYTES = 4 * 1024 * 1024
 CSRF_TTL = 600
 ADMIN_PATH = "/admin/shops"
 ADMIN_SESSION_TTL = 3600
+INVITE_PATH_PREFIX = "/invite/"
+INVITE_COOKIE_TTL = 3600
 RETIRED_REGISTRY_GRACE = 300  # seconds an old shop registry stays open for in-flight requests
 _INSTRUCTIONS = ("Read-only Shopee seller tools for operator-configured shops. Call list_connected_shops first and "
                  "pass an explicit shop alias. One Shopee API call fetches one data page; use returned cursors.")# At most two scrypt verifications at once (CPU/memory bound); extra attempts get 429 immediately.
@@ -223,10 +229,13 @@ class ShopeeHTTPApp:
         self.secure_cookies = self.issuer.startswith("https://")
         self.csrf_cookie = "__Host-smcp_csrf" if self.secure_cookies else "smcp_csrf"
         self.admin_cookie = "__Host-smcp_admin" if self.secure_cookies else "smcp_admin"
+        self.invite_cookie = "__Host-smcp_invite" if self.secure_cookies else "smcp_invite"
         self.client_ip_header = client_ip_header.lower() if client_ip_header else None
         self.passphrase_throttle = Throttle(per_key=5, global_limit=20, window=900, clock=clock)
         self.register_throttle = Throttle(per_key=register_limit_per_hour, global_limit=register_limit_per_hour,
                                           window=3600, clock=clock)
+        # Every /invite request counts (valid or not): 20 per client and 300 overall per 15 minutes.
+        self.invite_throttle = Throttle(per_key=20, global_limit=300, window=900, clock=clock)
         self._used_nonces: dict[str, float] = {}  # single-use consent form tokens, until expiry
         # Stateless + JSON: every POST is self-contained (no Mcp-Session-Id, no
         # long-lived SSE), so proxies with idle timeouts and server restarts
@@ -251,6 +260,7 @@ class ShopeeHTTPApp:
             Route("/revoke", self.revoke, methods=["POST"]),
             Route("/callback", self.callback, methods=["GET"]),
             Route(ADMIN_PATH, self.admin_shops, methods=["GET", "POST"]),
+            Route(INVITE_PATH_PREFIX + "{token}", self.invite, methods=["GET", "POST"]),
             Route("/healthz", self.healthz, methods=["GET"]),
         ]
         self.web = RequestBodyLimitMiddleware(Starlette(routes=routes, lifespan=lambda _app: self.run()), MAX_FORM_BYTES)
@@ -311,7 +321,12 @@ class ShopeeHTTPApp:
             else:
                 await self.web(scope, receive, send_with_headers)
         finally:
-            path = scope["path"] if scope["path"] in _LOGGED_PATHS else "(other)"
+            if scope["path"] in _LOGGED_PATHS:
+                path = scope["path"]
+            elif scope["path"].startswith(INVITE_PATH_PREFIX):
+                path = INVITE_PATH_PREFIX + "(redacted)"   # the path carries the invite token
+            else:
+                path = "(other)"
             logger.info("%s %s %s %.0fms", scope.get("method", "-"), path, status_holder["status"],
                         (time.monotonic() - started) * 1000)
 
@@ -670,6 +685,8 @@ Redirects to: <code>{html.escape(request["redirect_uri"])}</code></p></div>{conf
                     "<p>Copy the complete URL from the address bar and paste it into the <code>shopee-auth</code> command "
                     "that is waiting for it. Do not share this URL with anyone else.</p>")
             return _html_page("Shopee authorization received", body)
+        if pending.invite:
+            return await self._invite_callback(request, pending, states[0])
         back = f'<p><a href="{ADMIN_PATH}">Back to shops</a></p>'
         session = self._admin_session(request)
         if session is None or not hmac.compare_digest(session, pending.session):
@@ -703,6 +720,163 @@ Redirects to: <code>{html.escape(request["redirect_uri"])}</code></p></div>{conf
         logger.info("shop added through admin onboarding")
         return _html_page("Shop connected", f"<p>Shop <strong>{html.escape(pending.alias)}</strong> "
                           f"({html.escape(pending.env)}) is connected and available to MCP clients now.</p>" + back)
+
+
+    # ------------------------------------------------------------ invites
+
+    def _invite_gone(self, status: int = 404) -> Response:
+        return _html_page("Link not available", "<p>This link is invalid, has expired or was already used. "
+                          "Ask the person who sent it for a new one.</p>", status=status)
+
+    def _invite_binding(self, invite_id: str, cookie: str) -> str:
+        return f"{invite_id}:{hash_secret(cookie)}"
+
+    def _set_invite_cookie(self, response: Response, value: str) -> None:
+        # Lax: the Shopee redirect back to /callback is a cross-site top-level GET.
+        response.set_cookie(self.invite_cookie, value, max_age=INVITE_COOKIE_TTL, path="/",
+                            secure=self.secure_cookies, httponly=True, samesite="lax")
+
+    def _invite_landing(self, request: Request, record: dict, cookie: str, *, error: str | None = None,
+                        status: int = 200) -> Response:
+        notice = f'<p class="err" role="alert">{html.escape(error)}</p>' if error else ""
+        env_note = " (sandbox test environment)" if record["env"] == "sandbox" else ""
+        token = self._form_token("invite", self._invite_binding(record["id"], cookie))
+        body = f"""{notice}<p>You were invited to connect your Shopee shop(s){env_note} to a reporting server.
+You will be sent to Shopee to sign in and approve <strong>read-only</strong> access for this server's app.
+Nothing is changed in your shop.</p>
+<ul><li>Use a <strong>main account</strong> to approve several shops at once: on the Shopee login page choose
+<em>Switch to Sub Account</em> and sign in with the main account, then select the shops.</li>
+<li>Or sign in with a <strong>shop account</strong> to approve that one shop.</li>
+<li>A sub account cannot approve access.</li></ul>
+<form method="post" action="{html.escape(request.url.path)}" autocomplete="off">
+<input type="hidden" name="csrf_token" value="{html.escape(token)}">
+<p><button type="submit">Continue to Shopee</button></p></form>
+<p>After approving you are sent back here. Complete it within 15 minutes, in this browser.</p>"""
+        response = _html_page("Connect your Shopee shop", body, status=status)
+        self._set_invite_cookie(response, cookie)
+        return response
+
+    async def invite(self, request: Request) -> Response:
+        from .shop_admin import ShopAdminError
+        if self.shop_manager is None:
+            return self._invite_gone()
+        key = self.client_ip(request.scope)
+        wait = self.invite_throttle.retry_after(key)
+        if wait:
+            return _html_page("Too many requests", "<p>Please try again later.</p>", status=429,
+                              headers={"Retry-After": str(wait)})
+        self.invite_throttle.failure(key)
+        try:
+            record = await anyio.to_thread.run_sync(self.shop_manager.invites.find_active,
+                                                    request.path_params.get("token"))
+        except ShopAdminError:
+            logger.error("invites file unavailable")
+            return _html_page("Temporarily unavailable", "<p>Please try again in a moment.</p>", status=503)
+        if record is None or record["env"] not in self.shop_manager.available_environments():
+            return self._invite_gone()
+        cookie = request.cookies.get(self.invite_cookie)
+        valid_cookie = bool(cookie) and len(cookie) <= 100
+        if request.method == "GET":
+            return self._invite_landing(request, record, cookie if valid_cookie else secrets.token_urlsafe(32))
+        try:
+            form = _single_values(parse_qsl((await request.body()).decode("utf-8"), keep_blank_values=True))
+        except (OAuthError, UnicodeDecodeError):
+            return _html_page("Bad request", "<p>Malformed form.</p>", status=400)
+        expired = "This page expired or was already submitted. Please press the button again."
+        if not valid_cookie or not self._form_consume(form.get("csrf_token"), "invite",
+                                                      self._invite_binding(record["id"], cookie)):
+            return self._invite_landing(request, record, cookie if valid_cookie else secrets.token_urlsafe(32),
+                                        error=expired, status=403)
+        try:
+            url = self.shop_manager.start_invite(record["id"], record["env"], hash_secret(cookie))
+        except ShopAdminError as error:
+            return self._invite_landing(request, record, cookie, error=str(error), status=error.status)
+        logger.info("invite authorization started")
+        response = RedirectResponse(url, status_code=303, headers=_NO_STORE)
+        self._set_invite_cookie(response, cookie)
+        return response
+
+    async def _invite_callback(self, request: Request, pending, state: str) -> Response:
+        from .shop_admin import ShopAdminError
+        retry = "<p>Open the invite link again to retry.</p>"
+        cookie = request.cookies.get(self.invite_cookie)
+        if not cookie or len(cookie) > 100 or not hmac.compare_digest(hash_secret(cookie), pending.session):
+            logger.warning("invite callback rejected: different browser")
+            return _html_page("Authorization failed", "<p class=\"err\">This approval was not started from this "
+                              "browser (or the page expired). Nothing was saved.</p>" + retry, status=403)
+        try:
+            record = await anyio.to_thread.run_sync(self.shop_manager.invites.get, pending.invite)
+        except ShopAdminError:
+            record = None
+        if record is None or record["status"] in ("used", "revoked"):
+            return self._invite_gone(status=410)
+        codes, shop_ids = request.query_params.getlist("code"), request.query_params.getlist("shop_id")
+        accounts = request.query_params.getlist("main_account_id")
+        if len(codes) != 1 or not codes[0] or len(shop_ids) + len(accounts) != 1 or not (shop_ids or accounts)[0]:
+            return _html_page("Authorization failed", "<p class=\"err\">Shopee did not return a shop or main "
+                              "account approval.</p>" + retry, status=400)
+        async with self._shops_lock:
+            try:
+                result = await anyio.to_thread.run_sync(functools.partial(
+                    self.shop_manager.complete_invite, pending, codes[0], state,
+                    shop_id=shop_ids[0] if shop_ids else None, main_account_id=accounts[0] if accounts else None))
+            except ShopAdminError as error:
+                logger.warning("invite authorization failed (details suppressed)")
+                return _html_page("Authorization failed", f'<p class="err">{html.escape(str(error))}</p>' + retry,
+                                  status=error.status)
+            if result.added:
+                try:
+                    try:
+                        shops = await anyio.to_thread.run_sync(self.shop_manager.read_config)
+                    except Exception:
+                        raise ShopAdminError("The server cannot accept shops right now.", status=500) from None
+                    if set(result.added) & set(shops):
+                        raise ShopAdminError("Please try again.", status=409)
+                    await self._apply_shops({**shops, **result.added})
+                except BaseException as error:
+                    for path in result.added.values():
+                        await anyio.to_thread.run_sync(self.shop_manager.delete_env_file, path)
+                    if isinstance(error, ShopAdminError):
+                        return _html_page("Authorization failed", "<p class=\"err\">The shops could not be saved. "
+                                          "Nothing was changed.</p>" + retry, status=error.status)
+                    raise
+                try:
+                    await anyio.to_thread.run_sync(self.shop_manager.invites.mark_used, pending.invite,
+                                                   sorted(result.added))
+                except ShopAdminError:
+                    logger.error("invite could not be marked as used; revoke it in the admin page")
+        logger.info("invite onboarding: %d shop(s) added, %d already connected, %d failed",
+                    len(result.added), result.already_connected, result.failed)
+        parts = []
+        if result.added:
+            names = []
+            for alias in sorted(result.added):
+                name = result.names.get(alias)
+                names.append(f"<li>{html.escape(name)}</li>" if name else f"<li><code>{html.escape(alias)}</code></li>")
+            parts.append(f"<p>{len(result.added)} shop(s) connected. Thank you, you can close this page.</p>"
+                         f"<ul>{''.join(names)}</ul>")
+        if result.already_connected:
+            parts.append(f"<p>{result.already_connected} shop(s) were already connected.</p>")
+        if result.failed:
+            parts.append(f'<p class="err">{result.failed} shop(s) could not be connected.'
+                         + (" Ask the person who invited you for a new link.</p>" if result.added else
+                            " Open the invite link again to retry.</p>"))
+        if not parts:
+            parts.append("<p>No shops were returned by Shopee.</p>" + retry)
+        nothing_new = bool(result.already_connected) and not result.failed
+        title = "Shops connected" if result.added else ("Nothing new to connect" if nothing_new
+                                                        else "Authorization failed")
+        status = 200 if result.added or nothing_new else 502
+        return _html_page(title, "".join(parts), status=status)
+
+    async def _rename_shop(self, old: str, new: str) -> None:
+        from .shop_admin import ShopAdminError
+        shops = await anyio.to_thread.run_sync(self.shop_manager.renamed_config, old, new)
+        await self._apply_shops(shops)
+        try:
+            await anyio.to_thread.run_sync(self.shop_manager.invites.rename_alias, old, new)
+        except ShopAdminError:
+            logger.warning("invite records could not be updated after a rename")
 
     # ------------------------------------------------------ admin: shops
 
@@ -912,9 +1086,10 @@ Choose the shops to add and an alias for each. Unselected shops are not stored.<
         return response
 
     async def _admin_dashboard(self, request: Request, session: str, *, error: str | None = None,
-                               status: int = 200) -> Response:
-        from .shop_admin import AUTHORIZATION_DAYS, DEFAULT_AUTHORIZATION_DAYS
-        messages = {"removed": "Shop removed.", "signed-in": "Signed in."}
+                               status: int = 200, invite_url: str | None = None) -> Response:
+        from .shop_admin import AUTHORIZATION_DAYS, DEFAULT_AUTHORIZATION_DAYS, ShopAdminError
+        messages = {"removed": "Shop removed.", "signed-in": "Signed in.", "renamed": "Shop renamed.",
+                    "invite-revoked": "Invite link revoked."}
         flash = messages.get(request.query_params.get("msg", ""))
         notice = f'<p class="err" role="alert">{html.escape(error)}</p>' if error else ""
         if flash and not error:
@@ -923,6 +1098,14 @@ Choose the shops to add and an alias for each. Unselected shops are not stored.<
             rows = await anyio.to_thread.run_sync(self.shop_manager.describe)
         except Exception:
             rows = None
+        try:
+            invites = await anyio.to_thread.run_sync(self.shop_manager.invites.list_invites)
+        except ShopAdminError:
+            invites = None
+        sources: dict[str, str] = {}
+        for record in reversed(invites or []):
+            for alias in record["shops"]:
+                sources[alias] = record["label"] or "(invite)"
         if rows is None:
             table = '<p class="err">The shops file could not be read.</p>'
         elif not rows:
@@ -936,10 +1119,18 @@ Choose the shops to add and an alias for each. Unselected shops are not stored.<
                           f'<input type="hidden" name="alias" value="{html.escape(row["alias"])}">'
                           f'<input type="hidden" name="csrf_token" value="{html.escape(self._form_token("remove", session))}">'
                           f'<button type="submit">Remove</button></form>')
+                rename = (f'<form method="post" action="{ADMIN_PATH}" style="margin:0">'
+                          f'<input type="hidden" name="action" value="rename">'
+                          f'<input type="hidden" name="alias" value="{html.escape(row["alias"])}">'
+                          f'<input type="hidden" name="csrf_token" value="{html.escape(self._form_token("rename", session))}">'
+                          f'<input name="new_alias" required maxlength="32" size="12" pattern="[a-z0-9][a-z0-9_\\-]{{0,31}}" '
+                          f'aria-label="New alias for {html.escape(row["alias"])}"> <button type="submit">Rename</button></form>')
+                source = sources.get(row["alias"], "")
                 lines.append(f"<tr><td><code>{html.escape(row['alias'])}</code></td><td>{html.escape(row['env'])}</td>"
-                             f"<td>{html.escape(expires)}</td><td>{html.escape(row['status'])}</td><td>{remove}</td></tr>")
+                             f"<td>{html.escape(expires)}</td><td>{html.escape(row['status'])}</td>"
+                             f"<td>{html.escape(source)}</td><td>{rename}</td><td>{remove}</td></tr>")
             table = ("<table><thead><tr><th>Alias</th><th>Env</th><th>Authorization expires (UTC)</th><th>Status</th>"
-                     "<th></th></tr></thead><tbody>" + "".join(lines) + "</tbody></table>")
+                     "<th>Invite</th><th></th><th></th></tr></thead><tbody>" + "".join(lines) + "</tbody></table>")
         environments = self.shop_manager.available_environments()
         if environments:
             env_options = "".join(f'<option value="{env}">{env}</option>' for env in environments)
@@ -963,10 +1154,58 @@ Shopee then redirects back to
             add = ('<p class="err">Adding shops needs partner credentials in the server environment '
                    '(SHOPEE_PARTNER_ID and SHOPEE_PARTNER_KEY, optionally SHOPEE_SANDBOX_PARTNER_ID and '
                    'SHOPEE_SANDBOX_PARTNER_KEY).</p>')
+        invite_section = self._invites_section(session, environments, invites, invite_url)
         logout = (f'<form method="post" action="{ADMIN_PATH}"><input type="hidden" name="action" value="logout">'
                   f'<input type="hidden" name="csrf_token" value="{html.escape(self._form_token("logout", session))}">'
                   f'<button type="submit">Sign out</button></form>')
-        return _html_page("Shop administration", f"{notice}<h2>Shops</h2>{table}{add}<hr>{logout}", status=status)
+        return _html_page("Shop administration", f"{notice}<h2>Shops</h2>{table}{add}{invite_section}<hr>{logout}",
+                          status=status)
+
+    def _invites_section(self, session: str, environments: list[str], invites: list | None,
+                         invite_url: str | None) -> str:
+        from .shop_admin import DEFAULT_INVITE_TTL, INVITE_TTLS
+        parts = ["<h2>Invite links</h2>"]
+        if invite_url:
+            parts.append('<div class="box" role="status"><p><strong>New invite link</strong> (shown only once; copy it '
+                         'now and send it to the shop owner):</p>'
+                         f'<p><code id="invite-url">{html.escape(invite_url)}</code></p></div>')
+        if environments:
+            ordered = [env for env in ("production", "sandbox") if env in environments]
+            env_options = "".join(f'<option value="{env}">{"live" if env == "production" else env}</option>'
+                                  for env in ordered)
+            ttl_options = "".join(f'<option value="{key}"{" selected" if key == DEFAULT_INVITE_TTL else ""}>{key}</option>'
+                                  for key in INVITE_TTLS)
+            parts.append(f"""<form method="post" action="{ADMIN_PATH}" autocomplete="off">
+<input type="hidden" name="action" value="invite-create">
+<input type="hidden" name="csrf_token" value="{html.escape(self._form_token('invite-create', session))}">
+<p><label for="invite-label">Label (optional)</label><br><input id="invite-label" name="label" maxlength="40"
+ placeholder="owner of store-a"></p>
+<p><label for="invite-env">Environment</label><br><select id="invite-env" name="env">{env_options}</select></p>
+<p><label for="invite-ttl">Expires after</label><br><select id="invite-ttl" name="ttl">{ttl_options}</select></p>
+<p><button type="submit">Create invite link</button></p></form>
+<p>Send the link to a seller who holds a main account or a shop account. They approve on Shopee without the
+admin passphrase; their shops are added with automatic aliases you can rename above. Each link works once.</p>""")
+        if invites is None:
+            parts.append('<p class="err">The invites file could not be read.</p>')
+        elif invites:
+            lines = []
+            for record in invites:
+                action = ""
+                if record["status"] == "active":
+                    action = (f'<form method="post" action="{ADMIN_PATH}" style="margin:0">'
+                              f'<input type="hidden" name="action" value="invite-revoke">'
+                              f'<input type="hidden" name="invite" value="{html.escape(record["id"])}">'
+                              f'<input type="hidden" name="csrf_token" value="{html.escape(self._form_token("invite-revoke", session))}">'
+                              f'<button type="submit">Revoke</button></form>')
+                env = "live" if record["env"] == "production" else record["env"]
+                lines.append(f"<tr><td>{html.escape(record['label'] or '-')}</td><td>{html.escape(env)}</td>"
+                             f"<td>{html.escape(_format_time(record['created_at']) or '-')}</td>"
+                             f"<td>{html.escape(_format_time(record['expires_at']) or '-')}</td>"
+                             f"<td>{html.escape(record['status'])}</td>"
+                             f"<td>{html.escape(', '.join(record['shops']))}</td><td>{action}</td></tr>")
+            parts.append("<table><thead><tr><th>Label</th><th>Env</th><th>Created (UTC)</th><th>Expires (UTC)</th>"
+                         "<th>Status</th><th>Shops</th><th></th></tr></thead><tbody>" + "".join(lines) + "</tbody></table>")
+        return "".join(parts)
 
     async def admin_shops(self, request: Request) -> Response:
         if self.shop_manager is None:
@@ -1013,7 +1252,8 @@ Shopee then redirects back to
             return response
         if session is None:
             return await self._admin_login_page(request, error="Please sign in.", status=403)
-        if action not in ("add", "add-main", "remove", "logout") or not self._form_consume(
+        if action not in ("add", "add-main", "remove", "logout", "rename", "invite-create",
+                          "invite-revoke") or not self._form_consume(
                 form.get("csrf_token"), action, session):
             return await self._admin_dashboard(request, session, error=expired, status=403)
         if action == "logout":
@@ -1024,6 +1264,25 @@ Shopee then redirects back to
         if action == "add-main":
             return await self._add_main_account(request, session, form)
         try:
+            if action == "invite-create":
+                env = form.get("env", "")
+                if env not in self.shop_manager.available_environments():
+                    raise ShopAdminError("That environment is not configured on the server.")
+                token, _record = await anyio.to_thread.run_sync(self.shop_manager.invites.create, env,
+                                                                form.get("ttl", ""), form.get("label", ""))
+                logger.info("invite link created")
+                return await self._admin_dashboard(request, session,
+                                                   invite_url=self.issuer + INVITE_PATH_PREFIX + token)
+            if action == "invite-revoke":
+                if not await anyio.to_thread.run_sync(self.shop_manager.invites.revoke, form.get("invite")):
+                    raise ShopAdminError("That invite link is not active.", status=404)
+                logger.info("invite link revoked")
+                return RedirectResponse(ADMIN_PATH + "?msg=invite-revoked", status_code=303, headers=_NO_STORE)
+            if action == "rename":
+                async with self._shops_lock:
+                    await self._rename_shop(form.get("alias", ""), form.get("new_alias", "").strip())
+                logger.info("shop renamed through admin page")
+                return RedirectResponse(ADMIN_PATH + "?msg=renamed", status_code=303, headers=_NO_STORE)
             if action == "add":
                 days_text = form.get("days", "365")
                 days = int(days_text) if days_text.isascii() and days_text.isdecimal() and len(days_text) < 5 else 0

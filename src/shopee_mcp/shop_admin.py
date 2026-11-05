@@ -19,18 +19,25 @@ module owns the file side:
   shop separately (Shopee refreshes per ``shop_id``) so every shop gets its own
   independent token pair in its own env file.
 * ``write_config`` replaces the shops JSON atomically (temp file + rename).
+* ``InviteStore`` keeps operator-created *invite links* in an owner-only JSON
+  file in the data directory (only a SHA-256 hash of each invite token is
+  stored). ``start_invite`` / ``complete_invite`` let a remote seller authorize
+  shops through an invite without the admin passphrase; shops are added with
+  automatic aliases that the operator can rename later.
 
 Nothing here logs or returns authorization codes, tokens or partner keys.
 """
 from __future__ import annotations
 
 import contextlib
+import hashlib
 import hmac
 import json
 import os
 import secrets
 import stat
 import tempfile
+import threading
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -53,6 +60,13 @@ SHOPS_SUBDIR = "shops"
 
 
 MAX_MAIN_GRANTS = 16
+INVITES_FILE = "invites.json"
+INVITE_TTLS = {"1h": 3600, "24h": 86400, "72h": 3 * 86400, "7d": 7 * 86400}
+DEFAULT_INVITE_TTL = "24h"
+MAX_ACTIVE_INVITES = 20
+MAX_INVITE_RECORDS = 100     # used/revoked/expired records kept for display, newest first
+INVITE_RECORD_RETENTION = 30 * 86400
+INVITE_LABEL_MAX = 40
 
 
 class ShopAdminError(ValueError):
@@ -76,6 +90,16 @@ class PendingAuthorization:
     session: str = field(repr=False)   # hash of the admin session that started the flow
     expires_at: float
     days: int
+    invite: str | None = None          # invite id when the flow was started from an invite link
+
+
+@dataclass
+class InviteResult:
+    """Outcome of an invite authorization. Aliases and names only; no ids or tokens leave this module."""
+    added: dict[str, Path]
+    names: dict[str, str | None]
+    already_connected: int = 0
+    failed: int = 0
 
 
 @dataclass
@@ -150,6 +174,210 @@ def _fsync_directory(directory: Path) -> None:
             os.close(fd)
 
 
+def _hash_token(token: str) -> str:
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
+
+def _clean_label(label: str | None) -> str:
+    label = (label or "").strip()
+    if len(label) > INVITE_LABEL_MAX or not label.isprintable():
+        raise ShopAdminError(f"The label must be at most {INVITE_LABEL_MAX} printable characters.")
+    return label
+
+
+class InviteStore:
+    """Invite links in an owner-only JSON file. Stores ``sha256(token)``, never the token.
+
+    Every operation reads the file, changes it in memory and replaces it
+    atomically, under a process-wide lock (the server runs one instance per data
+    directory).
+    """
+
+    def __init__(self, path: Path, clock: Callable[[], float] = time.time):
+        self.path = path
+        self.clock = clock
+        self._lock = threading.Lock()
+
+    # -------------------------------------------------------------- io
+
+    def _load(self) -> list[dict]:
+        try:
+            fd = os.open(self.path, os.O_RDONLY | os.O_NOFOLLOW)
+        except FileNotFoundError:
+            return []
+        except OSError:
+            raise ShopAdminError("The invites file could not be read.", status=500) from None
+        try:
+            with os.fdopen(fd, "r", encoding="utf-8") as stream:
+                info = os.fstat(stream.fileno())
+                if info.st_uid != os.getuid() or info.st_mode & 0o077:
+                    raise ShopAdminError("The invites file must be owned by the server user with mode 0600.",
+                                         status=500)
+                data = json.load(stream)
+        except (OSError, ValueError):
+            raise ShopAdminError("The invites file could not be read.", status=500) from None
+        records = data.get("invites") if isinstance(data, dict) else None
+        if not isinstance(records, list):
+            raise ShopAdminError("The invites file is invalid.", status=500)
+        return [record for record in records if isinstance(record, dict) and isinstance(record.get("id"), str)
+                and isinstance(record.get("hash"), str)]
+
+    def _save(self, records: list[dict]) -> None:
+        body = json.dumps({"invites": records}, indent=2, sort_keys=True) + "\n"
+        directory = self.path.parent
+        try:
+            fd, name = tempfile.mkstemp(dir=directory, prefix=f".{self.path.name}.")
+        except OSError:
+            raise ShopAdminError("Unable to update the invites file.", status=500) from None
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as stream:
+                os.fchmod(stream.fileno(), 0o600)
+                stream.write(body)
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(name, self.path)
+        except OSError:
+            raise ShopAdminError("Unable to update the invites file.", status=500) from None
+        finally:
+            with contextlib.suppress(OSError):
+                os.unlink(name)
+        _fsync_directory(directory)
+
+    # ----------------------------------------------------------- helpers
+
+    @staticmethod
+    def status(record: Mapping, now: float) -> str:
+        if record.get("revoked_at"):
+            return "revoked"
+        if record.get("used_at"):
+            return "used"
+        expires = record.get("expires_at")
+        if not isinstance(expires, (int, float)) or expires <= now:
+            return "expired"
+        return "active"
+
+    def _prune(self, records: list[dict], now: float) -> list[dict]:
+        keep = []
+        for record in records:
+            if self.status(record, now) != "active":
+                ended = max(float(record.get(key) or 0) for key in ("expires_at", "used_at", "revoked_at"))
+                if ended + INVITE_RECORD_RETENTION <= now:
+                    continue
+            keep.append(record)
+        keep.sort(key=lambda record: record.get("created_at") or 0, reverse=True)
+        return keep[:MAX_INVITE_RECORDS]
+
+    @staticmethod
+    def _public(record: Mapping, now: float) -> dict:
+        return {"id": record["id"], "label": record.get("label") or "", "env": record.get("env") or "",
+                "created_at": record.get("created_at"), "expires_at": record.get("expires_at"),
+                "used_at": record.get("used_at"), "status": InviteStore.status(record, now),
+                "shops": list(record.get("shops") or [])}
+
+    # --------------------------------------------------------- operations
+
+    def create(self, env: str, ttl: str, label: str | None) -> tuple[str, dict]:
+        """Returns ``(token, public record)``. The token is shown once and never stored."""
+        if ttl not in INVITE_TTLS:
+            raise ShopAdminError("Unsupported invite lifetime.")
+        label = _clean_label(label)
+        with self._lock:
+            now = self.clock()
+            records = self._prune(self._load(), now)
+            if sum(1 for record in records if self.status(record, now) == "active") >= MAX_ACTIVE_INVITES:
+                raise ShopAdminError("Too many active invite links; revoke one first.", status=429)
+            token = secrets.token_urlsafe(32)
+            record = {"id": secrets.token_hex(8), "hash": _hash_token(token), "label": label, "env": env,
+                      "created_at": int(now), "expires_at": int(now) + INVITE_TTLS[ttl], "used_at": None,
+                      "revoked_at": None, "shops": []}
+            records.insert(0, record)
+            self._save(records[:MAX_INVITE_RECORDS])
+            return token, self._public(record, now)
+
+    def list_invites(self) -> list[dict]:
+        with self._lock:
+            now = self.clock()
+            return [self._public(record, now) for record in self._prune(self._load(), now)]
+
+    def find_active(self, token: object) -> dict | None:
+        """Active invite for a presented token (constant-time hash comparison), else ``None``."""
+        if not isinstance(token, str) or not 20 <= len(token) <= 100:
+            return None
+        digest = _hash_token(token)
+        with self._lock:
+            now = self.clock()
+            found = None
+            for record in self._load():
+                if hmac.compare_digest(record["hash"], digest):
+                    found = record
+            if found is None or self.status(found, now) != "active":
+                return None
+            return self._public(found, now)
+
+    def get(self, invite_id: str | None) -> dict | None:
+        if not isinstance(invite_id, str) or not invite_id or len(invite_id) > 64:
+            return None
+        with self._lock:
+            now = self.clock()
+            for record in self._load():
+                if hmac.compare_digest(record["id"], invite_id):
+                    return self._public(record, now)
+        return None
+
+    def _update(self, invite_id: str, change: Callable[[dict, float], bool]) -> bool:
+        with self._lock:
+            now = self.clock()
+            records = self._load()
+            for record in records:
+                if hmac.compare_digest(record["id"], invite_id):
+                    if not change(record, now):
+                        return False
+                    self._save(self._prune(records, now))
+                    return True
+        return False
+
+    def revoke(self, invite_id: str | None) -> bool:
+        if not isinstance(invite_id, str) or not invite_id or len(invite_id) > 64:
+            return False
+
+        def change(record, now):
+            if self.status(record, now) != "active":
+                return False
+            record["revoked_at"] = int(now)
+            return True
+        return self._update(invite_id, change)
+
+    def mark_used(self, invite_id: str, aliases: list[str]) -> bool:
+        def change(record, now):
+            if record.get("used_at") or record.get("revoked_at"):
+                return False
+            record["used_at"] = int(now)
+            record["shops"] = sorted(set(aliases))
+            return True
+        return self._update(invite_id, change)
+
+    def rename_alias(self, old: str, new: str) -> None:
+        with self._lock:
+            now = self.clock()
+            records = self._load()
+            changed = False
+            for record in records:
+                shops = record.get("shops") or []
+                if old in shops:
+                    record["shops"] = sorted({new if alias == old else alias for alias in shops})
+                    changed = True
+            if changed:
+                self._save(self._prune(records, now))
+
+    def sources(self) -> dict[str, str]:
+        """``{alias: invite label}`` for shops that were added through an invite."""
+        result = {}
+        for record in reversed(self.list_invites()):
+            for alias in record["shops"]:
+                result[alias] = record["label"] or "(invite)"
+        return result
+
+
 class ShopManager:
     """File-side operations for adding/removing shops. Thread-safe only under the caller's lock."""
 
@@ -174,6 +402,7 @@ class ShopManager:
         self.clock = clock
         self._pending: dict[str, PendingAuthorization] = {}
         self._grants: dict[str, MainAccountGrant] = {}
+        self.invites = InviteStore(self.data_dir / INVITES_FILE, clock)
 
     # ----------------------------------------------------------- reading
 
@@ -228,15 +457,27 @@ class ShopManager:
             raise ShopAdminError("That alias is already in use.")
         if len(shops) >= MAX_SHOPS:
             raise ShopAdminError("The maximum number of shops is already configured.")
+        return self._register_pending(PendingAuthorization(alias, env, session, self.clock() + PENDING_TTL, days))
+
+    def _register_pending(self, pending: PendingAuthorization) -> str:
         self._prune()
         if len(self._pending) >= MAX_PENDING:
             raise ShopAdminError("Too many authorizations in progress; try again later.", status=429)
         state = secrets.token_urlsafe(32)
-        self._pending[state] = PendingAuthorization(alias, env, session, self.clock() + PENDING_TTL, days)
-        creds = self.partners[env]
-        config = PartnerConfig(env, ALLOWED_BASE_URLS[env], creds.partner_id, creds.partner_key,
+        self._pending[state] = pending
+        creds = self.partners[pending.env]
+        config = PartnerConfig(pending.env, ALLOWED_BASE_URLS[pending.env], creds.partner_id, creds.partner_key,
                                self.redirect_url, state, self.shops_dir / "unused.env")
         return build_authorization_url(config, state)
+
+    def start_invite(self, invite_id: str, env: str, session: str) -> str:
+        """Fresh pending state bound to an invite and the invitee's browser. Does not consume the invite."""
+        if env not in self.available_environments():
+            raise ShopAdminError("That environment is not configured on the server.")
+        if not session or not invite_id:
+            raise ShopAdminError("Browser session required.", status=403)
+        return self._register_pending(PendingAuthorization("", env, session, self.clock() + PENDING_TTL,
+                                                           DEFAULT_AUTHORIZATION_DAYS, invite_id))
 
     def take_pending(self, state: str | None) -> PendingAuthorization | None:
         """Single use: the state is consumed whether or not the callback succeeds."""
@@ -425,6 +666,120 @@ class ShopManager:
             added[alias] = final
         _fsync_directory(self.shops_dir)
         return added, failed
+
+    # ------------------------------------------------------- invite flow
+
+    def _auto_alias(self, name: str | None, shop_id: int, taken: set[str]) -> str:
+        """Shop-name slug if valid and free, else ``shop-<id>`` (with a numeric suffix if needed)."""
+        def free(alias: str) -> bool:
+            return _valid_alias(alias) and alias not in taken and not os.path.lexists(self.shops_dir / f"{alias}.env")
+        candidate = _slug(name)
+        if free(candidate):
+            return candidate
+        base = f"shop-{shop_id}"[:28]
+        candidate, number = base, 2
+        while not free(candidate):
+            candidate = f"{base}-{number}"
+            number += 1
+        return candidate
+
+    def complete_invite(self, pending: PendingAuthorization, code: str, state: str, *,
+                        shop_id: str | None = None, main_account_id: str | None = None) -> InviteResult:
+        """Exchange an invite callback and write env files with automatic aliases (not yet in the config).
+
+        Shops that are already connected are skipped. With a main account every
+        shop is refreshed separately; a shop whose refresh fails is skipped.
+        """
+        if self.redirect_url is None or pending.env not in self.partners:
+            raise ShopAdminError("Shop onboarding is not configured.", status=500)
+        try:
+            shops = self.read_config()
+        except CredentialError:
+            raise ShopAdminError("The server cannot accept shops right now.", status=500) from None
+        connected = self._connected_shop_ids(shops)
+        taken = set(shops)
+        self._ensure_shops_dir()
+        config = self._partner_config(pending.env)
+        if shop_id is not None:
+            try:
+                sid = parse_positive_id(shop_id, "shop_id")
+            except ConfigError:
+                raise ShopAdminError("The authorization response was invalid.", status=400) from None
+            if sid in connected:
+                return InviteResult({}, {}, already_connected=1)
+            if len(shops) >= MAX_SHOPS:
+                raise ShopAdminError("This server cannot accept more shops.", status=409)
+            temporary = PendingAuthorization(f"invite-{secrets.token_hex(4)}", pending.env, pending.session,
+                                             pending.expires_at, pending.days)
+            path = self.complete(temporary, code, shop_id, state)
+            try:
+                snapshot = CredentialStore(path).snapshot("shop")
+                if snapshot.subject_id != sid:
+                    raise ShopAdminError("The authorization response was invalid.", status=400)
+                name = fetch_shop_name(config, sid, snapshot.access_token, opener=self.opener, clock=self.clock)
+                alias = self._auto_alias(name, sid, taken)
+                final = self.shops_dir / f"{alias}.env"
+                os.link(path, final)
+            except (CredentialError, OSError):
+                raise ShopAdminError("Unable to save the shop credential file.", status=500) from None
+            finally:
+                with contextlib.suppress(OSError):
+                    os.unlink(path)
+            _fsync_directory(self.shops_dir)
+            return InviteResult({alias: final}, {alias: name})
+        try:
+            account = parse_positive_id(main_account_id, "main_account_id")
+            tokens = exchange_main_account_code(config, code, account, opener=self.opener, clock=self.clock)
+        except ShopeeAPIError as error:
+            code_text = error.code if isinstance(error.code, str) and error.code.isprintable() else None
+            detail = f" (Shopee error: {code_text[:64]})" if code_text else ""
+            raise ShopAdminError(f"Shopee did not accept the authorization{detail}.", status=502) from None
+        except ConfigError:
+            raise ShopAdminError("The authorization response was invalid.", status=400) from None
+        auth_expires_at = int(self.clock()) + pending.days * 24 * 60 * 60
+        result = InviteResult({}, {})
+        for sid in tokens.shop_ids:
+            if sid in connected:
+                result.already_connected += 1
+                continue
+            if len(shops) + len(result.added) >= MAX_SHOPS:
+                result.failed += 1
+                continue
+            name = fetch_shop_name(config, sid, tokens.update.access_token, opener=self.opener, clock=self.clock)
+            alias = self._auto_alias(name, sid, taken)
+            final = self.shops_dir / f"{alias}.env"
+            try:
+                update = refresh_shop_token(config, sid, tokens.update.refresh_token, opener=self.opener,
+                                            clock=self.clock)
+                _atomic_write(final, shop_env_text(config, sid, update, auth_expires_at), replace=False,
+                              failure_message="Unable to save the shop credential file")
+            except (ShopeeAPIError, ConfigError, OSError):
+                result.failed += 1
+                continue
+            taken.add(alias)
+            result.added[alias] = final
+            result.names[alias] = name
+        _fsync_directory(self.shops_dir)
+        return result
+
+    # ------------------------------------------------------------ rename
+
+    def renamed_config(self, old: str, new: str) -> dict[str, Path]:
+        """The shops mapping with ``old`` renamed to ``new``; the env file stays where it is."""
+        if not _valid_alias(new):
+            raise ShopAdminError("Alias must be 1-32 characters: lowercase letters, digits, '-' or '_', "
+                                 "starting with a letter or digit.")
+        try:
+            shops = self.read_config()
+        except CredentialError:
+            raise ShopAdminError("The shops file is invalid; nothing was changed.", status=500) from None
+        if old not in shops:
+            raise ShopAdminError("Unknown shop alias.", status=404)
+        if new == old:
+            raise ShopAdminError("The new alias is the same as the current one.")
+        if new in shops:
+            raise ShopAdminError("That alias is already in use.", status=409)
+        return {(new if alias == old else alias): path for alias, path in shops.items()}
 
     # ------------------------------------------------------------ writes
 

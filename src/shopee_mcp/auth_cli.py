@@ -333,7 +333,7 @@ class AuthorizationCallback:
     shop_id: int
 
 
-def parse_authorization_callback(config: PartnerConfig, callback_url: str) -> AuthorizationCallback:
+def _callback_pairs(config: PartnerConfig, callback_url: str) -> list[tuple[str, str]]:
     callback_url = _validate_single_line(callback_url, "callback URL")
     try:
         actual = urlsplit(callback_url)
@@ -346,15 +346,32 @@ def parse_authorization_callback(config: PartnerConfig, callback_url: str) -> Au
     expected_endpoint = (expected.scheme, expected.hostname, expected_port, expected.path or "/")
     if actual_endpoint != expected_endpoint or actual.fragment:
         raise ConfigError("Callback URL does not match SHOPEE_REDIRECT_URL")
-    pairs = parse_qsl(actual.query, keep_blank_values=True)
+    return parse_qsl(actual.query, keep_blank_values=True)
+
+
+def _callback_values(config: PartnerConfig, pairs: list[tuple[str, str]], names: tuple[str, ...]) -> dict[str, str]:
     parameters: dict[str, str] = {}
-    for name in ("code", "shop_id", "state"):
+    for name in names:
         matches = [value for key, value in pairs if key == name]
         if len(matches) != 1 or not matches[0]:
             raise ConfigError(f"Callback URL must contain exactly one {name}")
         parameters[name] = matches[0]
     if not config.auth_state or not hmac.compare_digest(parameters["state"], config.auth_state):
         raise ConfigError("Callback state does not match the saved authorization state")
+    return parameters
+
+
+def parse_positive_id(value: object, label: str) -> int:
+    if isinstance(value, str) and value.isascii() and value.isdecimal() and len(value) <= 19:
+        number = int(value)
+        if number > 0:
+            return number
+    raise ConfigError(f"Callback {label} must be a positive integer")
+
+
+def parse_authorization_callback(config: PartnerConfig, callback_url: str) -> AuthorizationCallback:
+    pairs = _callback_pairs(config, callback_url)
+    parameters = _callback_values(config, pairs, ("code", "shop_id", "state"))
     code = _validate_single_line(parameters["code"], "authorization code")
     try:
         shop_id = int(parameters["shop_id"])
@@ -363,6 +380,22 @@ def parse_authorization_callback(config: PartnerConfig, callback_url: str) -> Au
     if shop_id <= 0:
         raise ConfigError("Callback shop_id must be a positive integer")
     return AuthorizationCallback(code, shop_id)
+
+
+@dataclass(frozen=True)
+class MainAccountCallback:
+    code: str
+    main_account_id: int
+
+
+def parse_main_account_callback(config: PartnerConfig, callback_url: str) -> MainAccountCallback:
+    """Callback of an authorization done on a Shopee *main account* (``code`` + ``main_account_id``)."""
+    pairs = _callback_pairs(config, callback_url)
+    if any(key == "shop_id" for key, _ in pairs):
+        raise ConfigError("Callback URL contains a shop_id; use exchange-code for single-shop authorizations")
+    parameters = _callback_values(config, pairs, ("code", "main_account_id", "state"))
+    code = _validate_single_line(parameters["code"], "authorization code")
+    return MainAccountCallback(code, parse_positive_id(parameters["main_account_id"], "main_account_id"))
 
 
 class ShopeePartnerClient:
@@ -602,6 +635,139 @@ def exchange_authorization_code(
     return load_config(config.env_file)
 
 
+TOKEN_GET_PATH = "/api/v2/auth/token/get"
+REFRESH_TOKEN_PATH = "/api/v2/auth/access_token/get"
+
+
+@dataclass(frozen=True)
+class MainAccountTokens:
+    """Result of exchanging a main-account code.
+
+    Shopee returns one access/refresh token pair for the whole authorization
+    (identical for every shop of the main account) plus ``shop_id_list``.
+    Callers must turn it into independent per-shop credentials with
+    :func:`refresh_shop_token` before storing anything.
+    """
+    main_account_id: int
+    shop_ids: tuple[int, ...]
+    update: TokenUpdate
+
+
+def _positive_id_list(value: object, label: str) -> tuple[int, ...]:
+    if value is None:
+        return ()
+    if not isinstance(value, list):
+        raise ShopeeAPIError(f"Token response has invalid {label}")
+    ids: list[int] = []
+    for item in value:
+        if type(item) is not int or item <= 0:
+            raise ShopeeAPIError(f"Token response has invalid {label}")
+        if item not in ids:
+            ids.append(item)
+    return tuple(ids)
+
+
+def exchange_main_account_code(config: PartnerConfig, code: str, main_account_id: int, *,
+                               opener: Callable = _open_without_redirects,
+                               clock: Callable[[], float] = time.time) -> MainAccountTokens:
+    code = _validate_single_line(code, "authorization code")
+    if type(main_account_id) is not int or main_account_id <= 0:
+        raise ConfigError("main_account_id must be a positive integer")
+    client = ShopeePartnerClient(config, opener=opener, clock=clock)
+    client.secrets.add(code)
+    now = int(clock())
+    payload = client.public_post(TOKEN_GET_PATH, {"code": code, "main_account_id": main_account_id,
+                                                  "partner_id": config.partner_id})
+    update = _validated_token_update(payload, now)
+    shop_ids = _positive_id_list(payload.get("shop_id_list"), "shop_id_list")
+    if not shop_ids:
+        raise ShopeeAPIError("The main account authorization did not include any shops")
+    return MainAccountTokens(main_account_id, shop_ids, update)
+
+
+def refresh_shop_token(config: PartnerConfig, shop_id: int, refresh_token: str, *,
+                       opener: Callable = _open_without_redirects,
+                       clock: Callable[[], float] = time.time) -> TokenUpdate:
+    """``access_token/get`` for one shop. Shopee refreshes each shop_id separately."""
+    client = ShopeePartnerClient(config, opener=opener, clock=clock)
+    client.secrets.add(refresh_token)
+    now = int(clock())
+    payload = client.public_post(REFRESH_TOKEN_PATH, {"partner_id": config.partner_id, "shop_id": shop_id,
+                                                      "refresh_token": refresh_token})
+    returned = payload.get("shop_id")
+    if returned not in (None, 0) and returned != shop_id:
+        raise ShopeeAPIError("Token response is for a different shop")
+    return _validated_token_update(payload, now)
+
+
+def shop_env_text(config: PartnerConfig, shop_id: int, update: TokenUpdate, auth_expires_at: int) -> str:
+    """Complete single-shop env file content (same keys as an exchanged single-shop file)."""
+    values = {
+        "SHOPEE_ENV": config.env,
+        "SHOPEE_BASE_URL": ALLOWED_BASE_URLS[config.env],
+        "SHOPEE_PARTNER_ID": str(config.partner_id),
+        "SHOPEE_PARTNER_KEY": config.partner_key,
+        "SHOPEE_REDIRECT_URL": config.redirect_url,
+        "SHOPEE_AUTH_STATE": "",
+        "SHOPEE_SHOP_ID": str(shop_id),
+        "SHOPEE_ACCESS_TOKEN": update.access_token,
+        "SHOPEE_REFRESH_TOKEN": update.refresh_token,
+        "SHOPEE_ACCESS_TOKEN_EXPIRES_AT": str(update.access_token_expires_at),
+        "SHOPEE_REFRESH_TOKEN_EXPIRES_AT": str(update.refresh_token_expires_at),
+        "SHOPEE_AUTH_EXPIRES_AT": str(auth_expires_at),
+    }
+    return "".join(f"{key}={value}\n" for key, value in values.items())
+
+
+def fetch_shop_name(config: PartnerConfig, shop_id: int, access_token: str, *,
+                    opener: Callable = _open_without_redirects,
+                    clock: Callable[[], float] = time.time) -> str | None:
+    """Best-effort, read-only ``get_shop_info`` for display. Never raises."""
+    try:
+        client = ShopeePartnerClient(config, opener=opener, clock=clock)
+        client.secrets.add(access_token)
+        timestamp = int(clock())
+        signature = _sign(config.partner_key, f"{config.partner_id}{SHOP_INFO_PATH}{timestamp}{access_token}{shop_id}")
+        query = urlencode({"partner_id": config.partner_id, "timestamp": timestamp, "sign": signature,
+                           "access_token": access_token, "shop_id": shop_id})
+        payload = client._open(Request(f"{config.base_url}{SHOP_INFO_PATH}?{query}", method="GET"), SHOP_INFO_PATH)
+        name = payload.get("shop_name")
+        if isinstance(name, str) and name.strip() and name.isprintable():
+            return name.strip()[:100]
+    except Exception:  # noqa: BLE001 - display only
+        return None
+    return None
+
+
+def exchange_main_account_to_files(config: PartnerConfig, callback_url: str, authorization_days: int,
+                                   output_dir: Path, *, opener: Callable = _open_without_redirects,
+                                   clock: Callable[[], float] = time.time) -> dict[str, object]:
+    """CLI path: exchange a main-account callback and write one owner-only env file per shop."""
+    store = CredentialStore(config.env_file, clock=clock)
+    try:
+        with store.local_update() as transaction:
+            config = load_partner_config(config.env_file)
+            callback = parse_main_account_callback(config, callback_url)
+            transaction.update({"SHOPEE_AUTH_STATE": ""})
+    except (CredentialError, OSError):
+        raise ShopeeAPIError("Unable to clear the saved authorization state") from None
+    tokens = exchange_main_account_code(config, callback.code, callback.main_account_id, opener=opener, clock=clock)
+    auth_expires_at = int(clock()) + authorization_days * 24 * 60 * 60
+    written, failed = [], []
+    for shop_id in tokens.shop_ids:
+        target = output_dir / f"shop-{shop_id}.env"
+        try:
+            update = refresh_shop_token(config, shop_id, tokens.update.refresh_token, opener=opener, clock=clock)
+            _atomic_write(target, shop_env_text(config, shop_id, update, auth_expires_at), replace=False,
+                          failure_message="Unable to save the shop credential file")
+        except ShopeeAPIError as error:
+            failed.append({"shop_id": shop_id, "error": str(error.code or "failed")[:64]})
+            continue
+        written.append({"shop_id": shop_id, "env_file": str(target)})
+    return {"status": "authorized" if written else "failed", "main_account_id": tokens.main_account_id,
+            "shops": written, "failed": failed}
+
+
 SHOP_INFO_PATH = "/api/v2/shop/get_shop_info"
 ITEM_LIST_PATH = "/api/v2/product/get_item_list"
 
@@ -618,6 +784,12 @@ def build_parser() -> argparse.ArgumentParser:
     exchange = commands.add_parser("exchange-code")
     exchange.add_argument("--callback-url-stdin", action="store_true")
     exchange.add_argument("--authorization-days", type=int, choices=(7, 30, 90, 180, 365), default=365)
+    main_account = commands.add_parser("exchange-main-account",
+                                       help="exchange a main-account callback (code + main_account_id)")
+    main_account.add_argument("--callback-url-stdin", action="store_true")
+    main_account.add_argument("--authorization-days", type=int, choices=(7, 30, 90, 180, 365), default=365)
+    main_account.add_argument("--output-dir", type=Path, required=True,
+                              help="directory for the per-shop env files (shop-<shop_id>.env)")
     commands.add_parser("shop-info")
     items = commands.add_parser("list-items")
     items.add_argument("--item-status", choices=("NORMAL", "BANNED", "DELETED", "UNLIST"), default="NORMAL")
@@ -701,6 +873,16 @@ def run(argv: list[str] | None = None, *, opener: Callable = _open_without_redir
                 },
             )
             return 0
+        if args.command == "exchange-main-account":
+            partner_config = load_partner_config(args.env_file)
+            if args.callback_url_stdin:
+                callback_url = _read_single_value(stdin, label="callback URL")
+            else:
+                callback_url = _validate_single_line(getpass.getpass("Callback URL: "), "callback URL")
+            result = exchange_main_account_to_files(partner_config, callback_url, args.authorization_days,
+                                                    args.output_dir, opener=opener, clock=clock)
+            _write_json(stdout, result)
+            return 0 if result["shops"] else 1
         client = ShopeeClient(load_config(args.env_file), opener=opener, clock=clock)
         if args.command == "refresh-token":
             config = client.refresh_tokens()

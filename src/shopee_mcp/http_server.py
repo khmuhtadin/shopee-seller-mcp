@@ -17,7 +17,9 @@ proxy networks (``--trusted-proxy``).
   Shopee seller authorization flow, "Remove shop". Changes are applied without
   a restart.
 * ``GET /callback`` - completes an "Add shop" flow when it carries a pending,
-  session-bound state; otherwise a static page for the ``shopee-auth`` CLI flow.
+  session-bound state (``shop_id`` callbacks add the shop; ``main_account_id``
+  callbacks open a shop picker); otherwise a static page for the
+  ``shopee-auth`` CLI flow.
 * ``GET /healthz``.
 
 No token, code, passphrase or query string is ever logged.
@@ -676,11 +678,21 @@ Redirects to: <code>{html.escape(request["redirect_uri"])}</code></p></div>{conf
                               "your current admin session (or the session expired). Nothing was saved. Sign in and "
                               "start <em>Add shop</em> again.</p>" + back, status=403)
         codes, shop_ids = request.query_params.getlist("code"), request.query_params.getlist("shop_id")
-        if len(codes) != 1 or len(shop_ids) != 1 or not codes[0] or not shop_ids[0]:
-            return _html_page("Shop authorization failed", "<p class=\"err\">Shopee did not return a single-shop "
-                              "authorization. Authorize one shop (not a main/merchant account) and try again.</p>" + back,
-                              status=400)
+        accounts = request.query_params.getlist("main_account_id")
         from .shop_admin import ShopAdminError
+        if len(codes) == 1 and codes[0] and not shop_ids and len(accounts) == 1 and accounts[0]:
+            try:
+                grant = await anyio.to_thread.run_sync(functools.partial(
+                    self.shop_manager.complete_main_account, pending, codes[0], accounts[0]))
+            except ShopAdminError as error:
+                logger.warning("main account authorization failed (details suppressed)")
+                return _html_page("Shop authorization failed", f'<p class="err">{html.escape(str(error))}</p>' + back,
+                                  status=error.status)
+            logger.info("main account authorization exchanged; awaiting shop selection")
+            return self._main_account_page(session, grant)
+        if len(codes) != 1 or len(shop_ids) != 1 or not codes[0] or not shop_ids[0] or accounts:
+            return _html_page("Shop authorization failed", "<p class=\"err\">Shopee did not return a shop or main "
+                              "account authorization. Start <em>Add shop</em> again.</p>" + back, status=400)
         try:
             async with self._shops_lock:
                 await self._add_shop(pending, codes[0], shop_ids[0], states[0])
@@ -752,6 +764,78 @@ Redirects to: <code>{html.escape(request["redirect_uri"])}</code></p></div>{conf
                 keep.append((retired_at, retired))
         self._retired = keep
         logger.info("shop configuration reloaded (%d shops)", len(shops))
+
+    def _main_account_page(self, session: str, grant, *, error: str | None = None,
+                           entered: dict | None = None, status: int = 200) -> Response:
+        """Shop picker after a main-account authorization. Shows ids and names only, never tokens."""
+        suggested = self.shop_manager.suggest_aliases(grant)
+        rows = []
+        for shop_id in grant.shop_ids:
+            name = grant.names.get(shop_id) or ""
+            if entered is not None:
+                checked = " checked" if shop_id in entered else ""
+                alias = entered.get(shop_id, suggested[shop_id])
+            else:
+                checked, alias = " checked", suggested[shop_id]
+            rows.append(f'<tr><td><input type="checkbox" name="select-{shop_id}" id="select-{shop_id}"{checked}></td>'
+                        f'<td><label for="select-{shop_id}">{shop_id}</label></td><td>{html.escape(name)}</td>'
+                        f'<td><input name="alias-{shop_id}" value="{html.escape(alias)}" maxlength="32" '
+                        f'pattern="[a-z0-9][a-z0-9_\\-]{{0,31}}" aria-label="Alias for shop {shop_id}"></td></tr>')
+        notice = f'<p class="err" role="alert">{html.escape(error)}</p>' if error else ""
+        body = f"""{notice}<p>The main account authorized {len(grant.shop_ids)} shop(s) ({html.escape(grant.env)}).
+Choose the shops to add and an alias for each. Unselected shops are not stored.</p>
+<form method="post" action="{ADMIN_PATH}" autocomplete="off">
+<input type="hidden" name="action" value="add-main">
+<input type="hidden" name="grant" value="{html.escape(grant.grant_id)}">
+<input type="hidden" name="csrf_token" value="{html.escape(self._form_token('add-main', session))}">
+<table><thead><tr><th>Add</th><th>Shop ID</th><th>Name</th><th>Alias</th></tr></thead><tbody>{''.join(rows)}</tbody></table>
+<p><button type="submit">Add selected shops</button></p></form>
+<p>This selection expires in 15 minutes. <a href="{ADMIN_PATH}">Cancel</a></p>"""
+        return _html_page("Choose shops", body, status=status)
+
+    async def _add_main_account(self, request: Request, session: str, form: dict) -> Response:
+        from .shop_admin import ShopAdminError
+        grant = self.shop_manager.peek_grant(form.get("grant"), session)
+        if grant is None:
+            return await self._admin_dashboard(request, session, status=400, error=(
+                "This shop selection expired or was already used. Start Add shop again."))
+        selection = {shop_id: form.get(f"alias-{shop_id}", "").strip()
+                     for shop_id in grant.shop_ids if form.get(f"select-{shop_id}") == "on"}
+        async with self._shops_lock:
+            try:
+                await anyio.to_thread.run_sync(self.shop_manager.validate_selection, grant, selection)
+            except ShopAdminError as error:
+                return self._main_account_page(session, grant, error=str(error), entered=selection,
+                                               status=error.status)
+            added, failed = await anyio.to_thread.run_sync(self.shop_manager.add_main_account_shops, grant, selection)
+            if added:
+                try:
+                    try:
+                        shops = await anyio.to_thread.run_sync(self.shop_manager.read_config)
+                    except Exception:
+                        raise ShopAdminError("The shops file is invalid; nothing was changed.", status=500) from None
+                    if set(added) & set(shops):
+                        raise ShopAdminError("An alias was added meanwhile; nothing was changed.", status=409)
+                    await self._apply_shops({**shops, **added})
+                except ShopAdminError as error:
+                    for path in added.values():
+                        await anyio.to_thread.run_sync(self.shop_manager.delete_env_file, path)
+                    return await self._admin_dashboard(request, session, error=str(error), status=error.status)
+                except BaseException:
+                    for path in added.values():
+                        await anyio.to_thread.run_sync(self.shop_manager.delete_env_file, path)
+                    raise
+        logger.info("main account onboarding: %d shop(s) added, %d failed", len(added), len(failed))
+        parts = []
+        if added:
+            parts.append("<p>Connected and available to MCP clients now: " + ", ".join(
+                f"<strong>{html.escape(alias)}</strong>" for alias in sorted(added)) + ".</p>")
+        if failed:
+            parts.append('<p class="err">Shopee did not issue a token for shop(s) ' + ", ".join(
+                str(shop_id) for shop_id in failed) + ". Authorize them again with Add shop.</p>")
+        return _html_page("Shops connected" if added else "Shop authorization failed",
+                          "".join(parts) + f'<p><a href="{ADMIN_PATH}">Back to shops</a></p>',
+                          status=200 if added else 502)
 
     def _admin_session(self, request: Request) -> str | None:
         value = request.cookies.get(self.admin_cookie)
@@ -869,7 +953,9 @@ Redirects to: <code>{html.escape(request["redirect_uri"])}</code></p></div>{conf
 <p><label for="env">Environment</label><br><select id="env" name="env">{env_options}</select></p>
 <p><label for="days">Authorization period</label><br><select id="days" name="days">{day_options}</select></p>
 <p><button type="submit">Continue to Shopee</button></p></form>
-<p>You will sign in to Shopee as the seller and approve this app. Shopee then redirects back to
+<p>You will sign in to Shopee as the seller and approve this app. With a main account you can approve
+several shops at once; the alias then becomes the default prefix and you pick shops and aliases next.
+Shopee then redirects back to
 <code>{html.escape(self.shop_manager.redirect_url or "")}</code>.</p>"""
         elif self.shop_manager.redirect_url is None:
             add = '<p class="err">Adding shops needs an https public URL.</p>'
@@ -927,13 +1013,16 @@ Redirects to: <code>{html.escape(request["redirect_uri"])}</code></p></div>{conf
             return response
         if session is None:
             return await self._admin_login_page(request, error="Please sign in.", status=403)
-        if action not in ("add", "remove", "logout") or not self._form_consume(form.get("csrf_token"), action, session):
+        if action not in ("add", "add-main", "remove", "logout") or not self._form_consume(
+                form.get("csrf_token"), action, session):
             return await self._admin_dashboard(request, session, error=expired, status=403)
         if action == "logout":
             self._admin_sessions.pop(session, None)
             response = RedirectResponse(ADMIN_PATH, status_code=303, headers=_NO_STORE)
             response.delete_cookie(self.admin_cookie, path="/", secure=self.secure_cookies, httponly=True, samesite="lax")
             return response
+        if action == "add-main":
+            return await self._add_main_account(request, session, form)
         try:
             if action == "add":
                 days_text = form.get("days", "365")

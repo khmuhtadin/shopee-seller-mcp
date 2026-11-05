@@ -12,6 +12,12 @@ module owns the file side:
 * ``complete`` exchanges the authorization code by reusing the CLI exchange
   logic (``auth_cli.exchange_authorization_code``) against a freshly created,
   owner-only env file in ``<data-dir>/shops/``.
+* ``complete_main_account`` handles a *main account* callback (``code`` +
+  ``main_account_id``): it exchanges the code once, keeps the result in memory
+  (bound to the admin session, single use, 15 minutes) and lets the operator
+  pick shops and aliases. ``add_main_account_shops`` then refreshes each chosen
+  shop separately (Shopee refreshes per ``shop_id``) so every shop gets its own
+  independent token pair in its own env file.
 * ``write_config`` replaces the shops JSON atomically (temp file + rename).
 
 Nothing here logs or returns authorization codes, tokens or partner keys.
@@ -33,7 +39,8 @@ from urllib.parse import urlencode
 
 from .auth_cli import (ALLOWED_BASE_URLS, ConfigError, PartnerConfig, ShopeeAPIError, _atomic_write,
                        _open_without_redirects, _validate_redirect_url, build_authorization_url,
-                       exchange_authorization_code, load_partner_config)
+                       exchange_authorization_code, exchange_main_account_code, fetch_shop_name,
+                       load_partner_config, parse_positive_id, refresh_shop_token, shop_env_text)
 from .credentials import CredentialError, CredentialStore
 from .multi_shop import MAX_SHOPS, _valid_alias, load_shop_config
 
@@ -43,6 +50,9 @@ DEFAULT_AUTHORIZATION_DAYS = 365
 PENDING_TTL = 900          # seconds a started "Add shop" flow stays valid
 MAX_PENDING = 64
 SHOPS_SUBDIR = "shops"
+
+
+MAX_MAIN_GRANTS = 16
 
 
 class ShopAdminError(ValueError):
@@ -66,6 +76,36 @@ class PendingAuthorization:
     session: str = field(repr=False)   # hash of the admin session that started the flow
     expires_at: float
     days: int
+
+
+@dataclass
+class MainAccountGrant:
+    """In-memory result of a main-account exchange awaiting the operator's shop selection."""
+    grant_id: str = field(repr=False)
+    session: str = field(repr=False)
+    env: str
+    days: int
+    alias_prefix: str
+    main_account_id: int
+    shop_ids: tuple[int, ...]
+    names: dict[int, str | None]
+    refresh_token: str = field(repr=False)
+    auth_expires_at: int
+    expires_at: float
+
+
+def _slug(name: str | None) -> str:
+    if not name:
+        return ""
+    out, dash = [], False
+    for char in name.lower():
+        if char.isascii() and char.isalnum():
+            out.append(char)
+            dash = False
+        elif out and not dash:
+            out.append("-")
+            dash = True
+    return "".join(out).strip("-")[:32].strip("-")
 
 
 def partner_credentials_from_env(environ: Mapping[str, str] | None = None) -> dict[str, PartnerCredentials]:
@@ -133,6 +173,7 @@ class ShopManager:
         self.opener = opener
         self.clock = clock
         self._pending: dict[str, PendingAuthorization] = {}
+        self._grants: dict[str, MainAccountGrant] = {}
 
     # ----------------------------------------------------------- reading
 
@@ -165,6 +206,8 @@ class ShopManager:
         now = self.clock()
         for state in [key for key, value in self._pending.items() if value.expires_at <= now]:
             del self._pending[state]
+        for grant_id in [key for key, value in self._grants.items() if value.expires_at <= now]:
+            del self._grants[grant_id]
 
     def start(self, alias: str, env: str, session: str, days: int = DEFAULT_AUTHORIZATION_DAYS) -> str:
         """Register a single-use pending state and return the Shopee authorization URL."""
@@ -257,6 +300,131 @@ class ShopManager:
                 staging.unlink()
         _fsync_directory(self.shops_dir)
         return final
+
+    # ------------------------------------------------- main account flow
+
+    def _partner_config(self, env: str, env_file: Path | None = None) -> PartnerConfig:
+        creds = self.partners[env]
+        return PartnerConfig(env, ALLOWED_BASE_URLS[env], creds.partner_id, creds.partner_key, self.redirect_url,
+                             "", env_file or self.shops_dir / "unused.env")
+
+    def complete_main_account(self, pending: PendingAuthorization, code: str, main_account_id: str) -> MainAccountGrant:
+        """Exchange a main-account code once; nothing is written until the operator picks shops."""
+        if self.redirect_url is None or pending.env not in self.partners:
+            raise ShopAdminError("Shop onboarding is not configured.", status=500)
+        try:
+            account = parse_positive_id(main_account_id, "main_account_id")
+            config = self._partner_config(pending.env)
+            tokens = exchange_main_account_code(config, code, account, opener=self.opener, clock=self.clock)
+        except ShopeeAPIError as error:
+            code_text = error.code if isinstance(error.code, str) and error.code.isprintable() else None
+            detail = f" (Shopee error: {code_text[:64]})" if code_text else ""
+            raise ShopAdminError(f"Shopee did not accept the authorization{detail}. Start again.", status=502) from None
+        except ConfigError:
+            raise ShopAdminError("The authorization response was invalid. Start again.", status=400) from None
+        if len(tokens.shop_ids) > MAX_SHOPS:
+            raise ShopAdminError("The main account authorized more shops than this server supports.", status=400)
+        names = {shop_id: fetch_shop_name(config, shop_id, tokens.update.access_token, opener=self.opener,
+                                          clock=self.clock) for shop_id in tokens.shop_ids}
+        self._prune()
+        while len(self._grants) >= MAX_MAIN_GRANTS:
+            self._grants.pop(next(iter(self._grants)))
+        grant = MainAccountGrant(secrets.token_urlsafe(24), pending.session, pending.env, pending.days, pending.alias,
+                                 account, tokens.shop_ids, names, tokens.update.refresh_token,
+                                 int(self.clock()) + pending.days * 24 * 60 * 60, self.clock() + PENDING_TTL)
+        self._grants[grant.grant_id] = grant
+        return grant
+
+    def peek_grant(self, grant_id: str | None, session: str | None) -> MainAccountGrant | None:
+        if not isinstance(grant_id, str) or not grant_id or len(grant_id) > 200 or not session:
+            return None
+        self._prune()
+        for known, grant in self._grants.items():
+            if hmac.compare_digest(known, grant_id):
+                return grant if hmac.compare_digest(grant.session, session) else None
+        return None
+
+    def discard_grant(self, grant: MainAccountGrant) -> None:
+        self._grants.pop(grant.grant_id, None)
+
+    def _connected_shop_ids(self, shops: Mapping[str, Path]) -> dict[int, str]:
+        connected = {}
+        for alias, path in shops.items():
+            with contextlib.suppress(CredentialError, OSError):
+                connected[CredentialStore(path).snapshot("shop").subject_id] = alias
+        return connected
+
+    def suggest_aliases(self, grant: MainAccountGrant) -> dict[int, str]:
+        """Unique, valid default aliases: shop-name slug, else ``<alias>-<n>``."""
+        try:
+            taken = set(self.read_config())
+        except CredentialError:
+            taken = set()
+        result: dict[int, str] = {}
+        for index, shop_id in enumerate(grant.shop_ids, start=1):
+            candidate = _slug(grant.names.get(shop_id))
+            if not _valid_alias(candidate) or candidate in taken:
+                candidate = f"{grant.alias_prefix}-{index}"[:32] if len(grant.shop_ids) > 1 else grant.alias_prefix
+            if not _valid_alias(candidate) or candidate in taken:
+                candidate = f"shop-{shop_id}"[:32]
+            taken.add(candidate)
+            result[shop_id] = candidate
+        return result
+
+    def validate_selection(self, grant: MainAccountGrant, selection: Mapping[int, str]) -> None:
+        if not selection:
+            raise ShopAdminError("Select at least one shop.")
+        if not set(selection) <= set(grant.shop_ids):
+            raise ShopAdminError("Unknown shop in the selection.")
+        try:
+            shops = self.read_config()
+        except CredentialError:
+            raise ShopAdminError("The shops file is invalid; fix it before adding shops.", status=500) from None
+        aliases = list(selection.values())
+        for alias in aliases:
+            if not _valid_alias(alias):
+                raise ShopAdminError("Each alias must be 1-32 characters: lowercase letters, digits, '-' or '_', "
+                                     "starting with a letter or digit.")
+            if alias in shops:
+                raise ShopAdminError(f"The alias {alias} is already in use.")
+        if len(set(aliases)) != len(aliases):
+            raise ShopAdminError("Each selected shop needs a different alias.")
+        if len(shops) + len(selection) > MAX_SHOPS:
+            raise ShopAdminError("That would exceed the maximum number of shops.")
+        connected = self._connected_shop_ids(shops)
+        for shop_id in selection:
+            if shop_id in connected:
+                raise ShopAdminError(f"Shop {shop_id} is already connected as {connected[shop_id]}.", status=409)
+        for alias in aliases:
+            if os.path.lexists(self.shops_dir / f"{alias}.env"):
+                raise ShopAdminError(f"A credential file for {alias} already exists; remove that shop first.",
+                                     status=409)
+
+    def add_main_account_shops(self, grant: MainAccountGrant,
+                               selection: Mapping[int, str]) -> tuple[dict[str, Path], list[int]]:
+        """Refresh each selected shop separately and write its own env file.
+
+        Shops are processed one at a time. A shop whose refresh fails is skipped
+        (reported in the second return value); shops already written stay.
+        """
+        self.validate_selection(grant, selection)
+        self._ensure_shops_dir()
+        self.discard_grant(grant)  # single use from here on
+        config = self._partner_config(grant.env)
+        added: dict[str, Path] = {}
+        failed: list[int] = []
+        for shop_id, alias in selection.items():
+            final = self.shops_dir / f"{alias}.env"
+            try:
+                update = refresh_shop_token(config, shop_id, grant.refresh_token, opener=self.opener, clock=self.clock)
+                _atomic_write(final, shop_env_text(config, shop_id, update, grant.auth_expires_at), replace=False,
+                              failure_message="Unable to save the shop credential file")
+            except (ShopeeAPIError, ConfigError, OSError):
+                failed.append(shop_id)
+                continue
+            added[alias] = final
+        _fsync_directory(self.shops_dir)
+        return added, failed
 
     # ------------------------------------------------------------ writes
 

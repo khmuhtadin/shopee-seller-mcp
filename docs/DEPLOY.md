@@ -120,6 +120,11 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         access_log off;            # the query string carries the Shopee authorization code
     }
+    location ^~ /invite/ {
+        proxy_pass http://127.0.0.1:8091;
+        proxy_set_header X-Real-IP $remote_addr;
+        access_log off;            # the path carries the invite token
+    }
 }
 ```
 
@@ -182,6 +187,15 @@ A seller's *main account* can authorize several shops in one approval. Shopee th
 
 Merchant-only authorizations (`merchant_id_list` without shops) are not supported.
 
+### Invite links
+
+Use an invite when the person who can approve access (a main account or shop account holder) is not the operator. In `/admin/shops` > *Invite links*, choose the environment (live by default), the lifetime (`1h`, `24h`, `72h` or `7d`) and an optional label, then send the URL that is shown once.
+
+- The invitee opens `/invite/<token>`, clicks *Continue to Shopee*, signs in (main account via *Switch to Sub Account*, or a shop account) and approves. Each click creates a fresh, signed Shopee link, so the 5-minute signature limit does not matter.
+- The approval must be completed in the same browser within 15 minutes. Shops are added with automatic aliases (shop-name slug, else `shop-<shop_id>`); already connected shops are skipped. Rename aliases afterwards in the shop list.
+- The invite becomes used once at least one shop is saved. If every shop fails, the link stays usable until it expires. Active links can be revoked; at most 20 can be active.
+- Invites are stored in `<data-dir>/invites.json` (`0600`) as SHA-256 hashes plus label, environment and timestamps, so they survive restarts.
+
 ## Operator commands
 
 ```bash
@@ -207,5 +221,6 @@ In a container, prefix with `docker exec -it shopee-mcp` (or use the platform sh
 | `POST /token` | `authorization_code` and `refresh_token` grants |
 | `POST /revoke` | RFC 7009 revocation |
 | `GET/POST /admin/shops` | Operator shop onboarding (passphrase, CSRF, throttling) |
-| `GET /callback` | Completes an "Add shop" flow; otherwise a static page for the CLI flow |
+| `GET/POST /invite/<token>` | Invite landing page for a remote seller (throttled; single use) |
+| `GET /callback` | Completes an invite or "Add shop" flow; otherwise a static page for the CLI flow |
 | `GET /healthz` | Liveness check |

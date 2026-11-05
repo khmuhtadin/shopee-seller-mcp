@@ -35,7 +35,16 @@ All auth state is one owner-only SQLite file (WAL; database and `-wal`/`-shm` fi
 3. The code is exchanged with the CLI's exchange logic against a new `0600` env file in `<data-dir>/shops/` (`0700`). The new service is built and validated first (duplicate shop identities are rejected), then the shops JSON is replaced atomically (temp file, `fsync`, rename), then the running MCP service is swapped. In-flight requests finish on the previous registry, which is closed later.
 4. Any failure removes the new env file and leaves the configuration unchanged.
 
-Authorization codes, `state` values, tokens and query strings are never logged. Keep reverse-proxy access logs for `/callback` disabled or free of query strings.
+### Invite links
+
+- An invite token is 256 random bits, shown to the operator once. Only its SHA-256 hash is stored (`<data-dir>/invites.json`, `0600`, atomic replace) and lookups compare hashes in constant time. Unknown, expired, used and revoked links all get the same generic 404 page.
+- Every request to `/invite/...` counts against a throttle (20 per client and 300 in total per 15 minutes). The token is redacted from the server log.
+- The landing page sets an `HttpOnly`, `Secure`, `SameSite=Lax` `__Host-` cookie that identifies the invitee's browser. *Continue to Shopee* is a POST with a single-use form token bound to the invite and that cookie. It creates a new 15-minute `state` bound to the invite and to the cookie; creating it does not consume the invite.
+- `/callback` exchanges an invite `state` only when the same browser cookie is presented and the invite is not used or revoked. Otherwise nothing is exchanged or written.
+- Invitees never see the passphrase, admin pages, other shops, shop IDs or tokens. The result page shows only the number of shops connected and their names or aliases. Shops added by an invite are read-only like every other shop; review and rename or remove them in `/admin/shops`.
+- An invite is single use once at least one shop is saved. Anyone holding an active link can connect *their own* shops to this server, so send links privately, keep lifetimes short and revoke unused links.
+
+Authorization codes, `state` values, invite tokens, tokens and query strings are never logged. Keep reverse-proxy access logs for `/callback` disabled or free of query strings.
 
 ## Network exposure
 
@@ -58,6 +67,7 @@ The per-client part of the passphrase throttle needs the real client address.
 | --- | --- | --- |
 | Shop tokens and partner key copy | `<data-dir>/shops/<alias>.env` | `0600`, directory `0700`, owner checks, no symlinks |
 | Shops map | `shops.json` | `0600`, aliases and paths only |
+| Invite links | `<data-dir>/invites.json` | `0600`, SHA-256 token hashes and metadata only |
 | Auth database | `auth.db` | `0600`, hashes only |
 | Partner credentials | server environment | never sent to browsers or clients |
 

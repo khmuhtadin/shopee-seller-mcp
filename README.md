@@ -93,8 +93,10 @@ Open `https://<your-host>/admin/shops` and sign in with the operator passphrase.
 
 - **Add shop**: choose an alias (for example `store-a`), the environment (sandbox or production) and the authorization period, then click *Continue to Shopee*. Sign in as the seller and approve the app. You return to `/callback` and the shop is available to MCP clients immediately.
 - **Main account (several shops at once)**: on the Shopee login page, sign in with the *main account* that manages your shops and tick the shops to authorize. Shopee returns a `main_account_id` instead of a `shop_id`. You then see the authorized shop IDs (with shop names when Shopee returns them), pick which ones to add and give each an alias. The alias you typed in *Add shop* is used as the default prefix. Each selected shop gets its own credential file and is refreshed independently.
+- **Invite link (remote seller)**: under *Invite links*, pick the environment (live by default), a lifetime (1 hour to 7 days) and an optional label, then click *Create invite link*. The link (`https://<your-host>/invite/<token>`) is shown once; send it to the person who holds the seller's main account or shop account. They open it, click *Continue to Shopee* and approve there. They never see the passphrase or the admin page. Their shops are added automatically with aliases from the shop name (or `shop-<shop_id>`); shops that are already connected are skipped. A link works once (after at least one shop is saved) and can be revoked while it is active. A Shopee sub account cannot approve access.
+- **Rename**: change any shop's alias (for example an automatic alias from an invite). The credential file stays the same.
 - **Remove shop**: removes the alias and deletes its stored tokens.
-- The list shows alias, environment and authorization expiry. To renew, remove the shop and add it again before the authorization expires.
+- The list shows alias, environment, authorization expiry and, for shops added through an invite, the invite label. To renew, remove the shop and add it again before the authorization expires.
 
 The `shopee-auth` CLI flow and a hand-written shops file still work; see [docs/DEPLOY.md](docs/DEPLOY.md#shops-file-and-cli-authorization).
 

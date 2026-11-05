@@ -166,6 +166,22 @@ shopee-auth --env-file /secure/shops/store-a.env exchange-code --callback-url-st
 
 Add the alias to the shops file and restart `serve` (or use `/admin/shops`, which reloads automatically). `/callback` shows a static page for this flow and does not process the code.
 
+### Main account authorization
+
+A seller's *main account* can authorize several shops in one approval. Shopee then redirects with `code` and `main_account_id` (no `shop_id`), and `token/get` with `main_account_id` returns `shop_id_list` plus one access/refresh token pair that is identical for every shop in that authorization. Shopee refreshes tokens per `shop_id`, so the server immediately calls `access_token/get` once for each selected shop, one shop at a time, and stores the resulting independent token pair in that shop's own env file. Later refreshes of one shop never touch another shop's file. A shop whose first refresh fails is skipped and reported, and the other shops are still added.
+
+- Browser: start *Add shop* as usual. After the main-account approval, `/admin/shops` shows a picker (shop ID, name when available, alias). Nothing is written until you submit it. The picker is bound to your admin session, works once and expires after 15 minutes.
+- Terminal: after `authorization-url`, paste the callback into
+
+  ```bash
+  shopee-auth --env-file /secure/partner.env exchange-main-account --callback-url-stdin \
+    --output-dir /secure/shops
+  ```
+
+  This writes `shop-<shop_id>.env` for each authorized shop and prints the shop IDs (never tokens). Add the aliases you want to the shops file.
+
+Merchant-only authorizations (`merchant_id_list` without shops) are not supported.
+
 ## Operator commands
 
 ```bash

@@ -187,16 +187,31 @@ def _oauth_json_error(error: OAuthError) -> JSONResponse:
     return JSONResponse(body, status_code=error.status, headers=_NO_STORE)
 
 
-def _html_page(title: str, body: str, status: int = 200, headers: dict | None = None) -> HTMLResponse:
+def _ui_badge(value: str) -> str:
+    classes = {"production": "live", "live": "live", "sandbox": "sandbox", "ok": "ok",
+               "active": "active", "expired": "expired", "revoked": "revoked"}
+    kind = classes.get(value, "neutral")
+    label = "live" if value == "production" else value
+    return f'<span class="badge badge-{kind}">{html.escape(label)}</span>'
+
+
+def _html_page(title: str, body: str, status: int = 200, headers: dict | None = None, *,
+               layout: str = "default", header_actions: str = "") -> HTMLResponse:
+    css = """
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#243247;background:#f5f7fa;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0;font-size:14px;line-height:1.55}a{color:#bd4b18}h1,h2,h3,p{margin:0}h1{font-size:25px;line-height:1.25;letter-spacing:-.6px;color:#182438}h2{font-size:18px;letter-spacing:-.3px;color:#182438}h3{font-size:15px}.shell{width:min(100% - 48px,720px);margin:48px auto}.dashboard .shell{width:min(100% - 48px,1180px);margin:32px auto}.page-header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:10px;font-weight:750;color:#bf531f;margin-bottom:9px}.subtitle,.muted{color:#748094}.subtitle{margin-top:7px}.content{min-width:0}.content>p,.content>form,.content>.box{margin-bottom:18px}.card,.box{background:#fff;border:1px solid #e2e7ee;border-radius:14px;padding:24px;min-width:0}.card{margin-bottom:22px}.card-heading{margin-bottom:20px}.card-heading p{color:#748094;margin-top:5px}.card-accent{border-top:3px solid #e97942}.card p+p{margin-top:10px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 24px}.stat{background:#fff;border:1px solid #e2e7ee;border-radius:12px;padding:19px 22px}.stat-label{font-size:12px;color:#748094}.stat-value{display:block;font-size:30px;letter-spacing:-1px;font-weight:650;margin-top:3px;color:#182438}.stat-note{font-size:11px;color:#929aab}.table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}.table-scroll table{min-width:780px}table{border-collapse:collapse;width:100%;font-size:12px}th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:#8590a0;font-weight:650;background:#f8fafc}td,th{padding:13px 12px;border-bottom:1px solid #edf0f4;vertical-align:middle}tbody tr:last-child td{border-bottom:0}.date{white-space:nowrap;font-size:11px;color:#748094}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9em;overflow-wrap:anywhere;word-break:break-word}table code{font-weight:650;color:#33445b}.badge{display:inline-flex;align-items:center;border-radius:5px;padding:3px 8px;font-size:10px;font-weight:650;background:#eef2f6;color:#69778c;white-space:nowrap}.badge-live,.badge-ok,.badge-active{background:#ecf7f0;color:#2f7c50}.badge-sandbox{background:#fff4e7;color:#ad6d22}.badge-expired,.badge-revoked{background:#f4f5f7;color:#8b95a4}.badge-error{background:#fff0ee;color:#b34a3e}form{margin:0}label{display:inline-block;font-size:12px;font-weight:600;color:#4f5e72;margin-bottom:6px}input,select,button{font:inherit}input:not([type=hidden]),select{border:1px solid #dbe1e9;border-radius:7px;background:#fff;color:#33445b;max-width:100%;padding:10px 11px;min-height:40px}input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:3px solid #fbd9c5;outline-offset:2px;border-color:#e97942}input[type=password]{width:100%}button{border:1px solid transparent;border-radius:7px;background:#df6a32;color:#fff;font-weight:600;font-size:12px;padding:10px 15px;min-height:40px;cursor:pointer;white-space:nowrap}button:hover{background:#c95c29}.button-secondary{background:#fff;color:#56647a;border-color:#dde3eb}.button-secondary:hover{background:#f6f8fb}.button-danger{background:transparent;color:#a66863;padding:7px 10px;font-weight:500}.button-danger:hover{background:#fff0ee;color:#a43f35}.inline-form{display:flex;align-items:center;gap:7px}.inline-form input{width:122px;min-height:32px;padding:6px 8px;font-size:12px}.inline-form button{min-height:32px;padding:6px 10px;font-size:11px}.form-grid{display:grid;grid-template-columns:minmax(180px,2fr) minmax(120px,1fr) minmax(120px,1fr) auto;gap:15px;align-items:end;margin:18px 0}.form-grid p{min-width:0}.form-grid p+p{margin:0}.form-grid input,.form-grid select{width:100%}.help{font-size:12px;color:#7c8797;max-width:760px;margin:12px 0 20px;overflow-wrap:anywhere}.notice{background:#edf7f0;border:1px solid #d7ebdd;border-radius:8px;padding:11px 15px;margin-bottom:20px;color:#39774f}.err{color:#ab3b31;background:#fff1ee;border-radius:8px;padding:12px 15px;margin-bottom:18px}.empty{padding:28px;text-align:center;color:#8590a0;background:#f9fafc;border-radius:8px}.invite-url{border:1px solid #f2cfb9;background:#fff9f4;border-radius:9px;padding:15px;margin:16px 0;overflow-wrap:anywhere}.invite-url p{font-size:12px;color:#976243}.invite-url code{display:block;margin-top:9px;color:#ab4a1b}.invites-history{margin-top:22px}.section-details>summary{cursor:pointer;font-size:16px;font-weight:650;color:#46556a}.section-details[open]>summary{margin-bottom:20px}.section-details>h2{display:none}.login .shell{max-width:430px;margin:clamp(30px,12vh,110px) auto}.login .page-header{display:block;margin-bottom:28px}.login .content{padding:27px;background:#fff;border:1px solid #e2e7ee;border-radius:14px}.login form p+p{margin-top:20px}.login form button{width:100%}.login .content>form{margin:0}.login .subtitle{max-width:360px}.default .content form p{margin-bottom:15px}.default .content label{margin-top:5px}.default .content input{max-width:100%}hr{border:0;border-top:1px solid #e2e7ee;margin:24px 0}
+@media(max-width:760px){.shell,.dashboard .shell{width:calc(100% - 32px);margin:24px auto}.page-header{align-items:flex-start;gap:12px}h1{font-size:22px}.subtitle{font-size:12px}.stats{gap:10px}.stat{padding:15px}.stat-value{font-size:26px}.card{padding:18px}.form-grid{grid-template-columns:1fr 1fr}.form-grid p:first-of-type{grid-column:1/-1}.form-grid .form-submit{grid-column:1/-1}.form-submit button{width:100%}.login .shell{margin-top:36px}}
+@media(max-width:440px){.stats{grid-template-columns:1fr}.stat{display:grid;grid-template-columns:1fr auto;align-items:center;padding:12px 16px}.stat-value{grid-column:2;grid-row:1/3;font-size:27px;margin:0}.stat-note{grid-column:1}.form-grid{grid-template-columns:1fr}.form-grid p{grid-column:1!important}.page-header .button-secondary{padding:8px 11px;min-height:35px}.card{padding:17px}.login .content{padding:22px}.eyebrow{font-size:9px}.card-heading{margin-bottom:15px}}
+"""
+    subtitle = {"dashboard": "Manage connected shops and authorization invites.",
+                "login": "Sign in to manage your shops and invitation links."}.get(layout, "")
     page = f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex"><title>{html.escape(title)}</title>
-<style>body{{font-family:system-ui,sans-serif;max-width:44rem;margin:3rem auto;padding:0 1rem;line-height:1.5;color:#222}}
-.box{{border:1px solid #ccc;border-radius:8px;padding:1rem 1.25rem}}.err{{color:#a00}}code{{word-break:break-all}}
-input[type=password]{{width:100%;padding:.5rem;font-size:1rem;box-sizing:border-box}}button{{padding:.5rem 1rem;font-size:1rem;margin-right:.5rem}}
-table{{border-collapse:collapse;width:100%}}td,th{{padding:.3rem .5rem;border-bottom:1px solid #ddd;text-align:left}}
-input,select{{padding:.4rem;font-size:1rem}}</style>
-</head><body><h1>{html.escape(title)}</h1>{body}</body></html>"""
+<style>{css}</style></head><body class="{html.escape(layout)}"><main class="shell">
+<header class="page-header"><div><p class="eyebrow">Seller MCP</p><h1>{html.escape(title)}</h1>
+{f'<p class="subtitle">{html.escape(subtitle)}</p>' if subtitle else ''}</div>{header_actions}</header>
+<div class="content">{body}</div></main></body></html>"""
     merged = {**_NO_STORE, "Content-Security-Policy": _HTML_CSP, "X-Robots-Tag": "noindex"}
     merged.update(headers or {})
     return HTMLResponse(page, status_code=status, headers=merged)
@@ -1080,7 +1095,7 @@ Choose the shops to add and an alias for each. Unselected shops are not stored.<
 <p><label for="passphrase">Operator passphrase</label><br>
 <input id="passphrase" name="passphrase" type="password" autocomplete="current-password" required autofocus></p>
 <p><button type="submit">Sign in</button></p></form>"""
-        response = _html_page("Shop administration", body, status=status)
+        response = _html_page("Shop administration", body, status=status, layout="login")
         response.set_cookie(self.csrf_cookie, cookie, max_age=CSRF_TTL * 2, path="/", secure=self.secure_cookies,
                             httponly=True, samesite="strict")
         return response
@@ -1093,7 +1108,7 @@ Choose the shops to add and an alias for each. Unselected shops are not stored.<
         flash = messages.get(request.query_params.get("msg", ""))
         notice = f'<p class="err" role="alert">{html.escape(error)}</p>' if error else ""
         if flash and not error:
-            notice = f"<p>{html.escape(flash)}</p>"
+            notice = f'<p class="notice" role="status">{html.escape(flash)}</p>'
         try:
             rows = await anyio.to_thread.run_sync(self.shop_manager.describe)
         except Exception:
@@ -1109,7 +1124,7 @@ Choose the shops to add and an alias for each. Unselected shops are not stored.<
         if rows is None:
             table = '<p class="err">The shops file could not be read.</p>'
         elif not rows:
-            table = "<p>No shops connected yet.</p>"
+            table = '<p class="empty">No shops connected yet. Create an invite below to get started.</p>'
         else:
             lines = []
             for row in rows:
@@ -1118,33 +1133,33 @@ Choose the shops to add and an alias for each. Unselected shops are not stored.<
                           f'<input type="hidden" name="action" value="remove">'
                           f'<input type="hidden" name="alias" value="{html.escape(row["alias"])}">'
                           f'<input type="hidden" name="csrf_token" value="{html.escape(self._form_token("remove", session))}">'
-                          f'<button type="submit">Remove</button></form>')
-                rename = (f'<form method="post" action="{ADMIN_PATH}" style="margin:0">'
+                          f'<button type="submit" class="button-danger">Remove</button></form>')
+                rename = (f'<form method="post" action="{ADMIN_PATH}" class="inline-form">'
                           f'<input type="hidden" name="action" value="rename">'
                           f'<input type="hidden" name="alias" value="{html.escape(row["alias"])}">'
                           f'<input type="hidden" name="csrf_token" value="{html.escape(self._form_token("rename", session))}">'
                           f'<input name="new_alias" required maxlength="32" size="12" pattern="[a-z0-9][a-z0-9_\\-]{{0,31}}" '
-                          f'aria-label="New alias for {html.escape(row["alias"])}"> <button type="submit">Rename</button></form>')
+                          f'aria-label="New alias for {html.escape(row["alias"])}" placeholder="New alias"> <button type="submit" class="button-secondary">Rename</button></form>')
                 source = sources.get(row["alias"], "")
-                lines.append(f"<tr><td><code>{html.escape(row['alias'])}</code></td><td>{html.escape(row['env'])}</td>"
-                             f"<td>{html.escape(expires)}</td><td>{html.escape(row['status'])}</td>"
+                lines.append(f"<tr><td><code>{html.escape(row['alias'])}</code></td><td>{_ui_badge(row['env'])}</td>"
+                             f'<td class="date">{html.escape(expires)}</td><td>{_ui_badge(row["status"])}</td>'
                              f"<td>{html.escape(source)}</td><td>{rename}</td><td>{remove}</td></tr>")
-            table = ("<table><thead><tr><th>Alias</th><th>Env</th><th>Authorization expires (UTC)</th><th>Status</th>"
-                     "<th>Invite</th><th></th><th></th></tr></thead><tbody>" + "".join(lines) + "</tbody></table>")
+            table = ('<div class="table-scroll" role="region" aria-label="Connected shops table" tabindex="0"><table><thead><tr><th>Alias</th><th>Env</th><th>Authorization expires (UTC)</th><th>Status</th>'
+                     "<th>Invite</th><th>Rename alias</th><th></th></tr></thead><tbody>" + "".join(lines) + "</tbody></table></div>")
         environments = self.shop_manager.available_environments()
         if environments:
             env_options = "".join(f'<option value="{env}">{env}</option>' for env in environments)
             day_options = "".join(f'<option value="{days}"{" selected" if days == DEFAULT_AUTHORIZATION_DAYS else ""}>'
                                   f"{days} days</option>" for days in AUTHORIZATION_DAYS)
-            add = f"""<h2>Add shop</h2><form method="post" action="{ADMIN_PATH}" autocomplete="off">
+            add = f"""<h2>Add shop</h2><p class="help">Connect a shop yourself when the owner is with you.</p><form method="post" action="{ADMIN_PATH}" class="form-grid" autocomplete="off">
 <input type="hidden" name="action" value="add">
 <input type="hidden" name="csrf_token" value="{html.escape(self._form_token('add', session))}">
 <p><label for="alias">Alias</label><br><input id="alias" name="alias" required maxlength="32"
  pattern="[a-z0-9][a-z0-9_\\-]{{0,31}}" placeholder="store-a"></p>
 <p><label for="env">Environment</label><br><select id="env" name="env">{env_options}</select></p>
 <p><label for="days">Authorization period</label><br><select id="days" name="days">{day_options}</select></p>
-<p><button type="submit">Continue to Shopee</button></p></form>
-<p>You will sign in to Shopee as the seller and approve this app. With a main account you can approve
+<p class="form-submit"><button type="submit">Continue to Shopee</button></p></form>
+<p class="help">You will sign in to Shopee as the seller and approve this app. With a main account you can approve
 several shops at once; the alias then becomes the default prefix and you pick shops and aliases next.
 Shopee then redirects back to
 <code>{html.escape(self.shop_manager.redirect_url or "")}</code>.</p>"""
@@ -1157,16 +1172,29 @@ Shopee then redirects back to
         invite_section = self._invites_section(session, environments, invites, invite_url)
         logout = (f'<form method="post" action="{ADMIN_PATH}"><input type="hidden" name="action" value="logout">'
                   f'<input type="hidden" name="csrf_token" value="{html.escape(self._form_token("logout", session))}">'
-                  f'<button type="submit">Sign out</button></form>')
-        return _html_page("Shop administration", f"{notice}<h2>Shops</h2>{table}{add}{invite_section}<hr>{logout}",
-                          status=status)
+                  f'<button type="submit" class="button-secondary">Sign out</button></form>')
+        connected = len(rows or [])
+        live = sum(row["env"] in ("production", "live") for row in (rows or []))
+        active = sum(record["status"] == "active" for record in (invites or []))
+        stats = (f'<section class="stats" aria-label="Overview">'
+                 f'<div class="stat"><p class="stat-label">Connected shops</p><strong class="stat-value">{connected}</strong>'
+                 '<span class="stat-note">All environments</span></div>'
+                 f'<div class="stat"><p class="stat-label">Live shops</p><strong class="stat-value">{live}</strong>'
+                 '<span class="stat-note">Production access</span></div>'
+                 f'<div class="stat"><p class="stat-label">Active invites</p><strong class="stat-value">{active}</strong>'
+                 '<span class="stat-note">Ready to share</span></div></section>')
+        shops_card = ('<section class="card"><div class="card-heading"><h2>Connected shops</h2>'
+                      '<p>Manage aliases and check authorization status.</p></div>' + table + '</section>')
+        add_card = '<details class="card section-details"><summary>Add shop directly</summary>' + add + '</details>'
+        body = f"{notice}{stats}{shops_card}{invite_section}{add_card}"
+        return _html_page("Shop administration", body, status=status, layout="dashboard", header_actions=logout)
 
     def _invites_section(self, session: str, environments: list[str], invites: list | None,
                          invite_url: str | None) -> str:
         from .shop_admin import DEFAULT_INVITE_TTL, INVITE_TTLS
-        parts = ["<h2>Invite links</h2>"]
+        parts = ['<section class="card card-accent"><div class="card-heading"><h2>Invite links</h2><p>Let the shop owner connect securely, without your admin passphrase.</p></div>']
         if invite_url:
-            parts.append('<div class="box" role="status"><p><strong>New invite link</strong> (shown only once; copy it '
+            parts.append('<div class="invite-url" role="status"><p><strong>New invite link</strong> (shown only once; copy it '
                          'now and send it to the shop owner):</p>'
                          f'<p><code id="invite-url">{html.escape(invite_url)}</code></p></div>')
         if environments:
@@ -1175,15 +1203,15 @@ Shopee then redirects back to
                                   for env in ordered)
             ttl_options = "".join(f'<option value="{key}"{" selected" if key == DEFAULT_INVITE_TTL else ""}>{key}</option>'
                                   for key in INVITE_TTLS)
-            parts.append(f"""<form method="post" action="{ADMIN_PATH}" autocomplete="off">
+            parts.append(f"""<form method="post" action="{ADMIN_PATH}" class="form-grid" autocomplete="off">
 <input type="hidden" name="action" value="invite-create">
 <input type="hidden" name="csrf_token" value="{html.escape(self._form_token('invite-create', session))}">
 <p><label for="invite-label">Label (optional)</label><br><input id="invite-label" name="label" maxlength="40"
  placeholder="owner of store-a"></p>
 <p><label for="invite-env">Environment</label><br><select id="invite-env" name="env">{env_options}</select></p>
 <p><label for="invite-ttl">Expires after</label><br><select id="invite-ttl" name="ttl">{ttl_options}</select></p>
-<p><button type="submit">Create invite link</button></p></form>
-<p>Send the link to a seller who holds a main account or a shop account. They approve on Shopee without the
+<p class="form-submit"><button type="submit">Create invite link</button></p></form>
+<p class="help">Send the link to a seller who holds a main account or a shop account. They approve on Shopee without the
 admin passphrase; their shops are added with automatic aliases you can rename above. Each link works once.</p>""")
         if invites is None:
             parts.append('<p class="err">The invites file could not be read.</p>')
@@ -1196,15 +1224,16 @@ admin passphrase; their shops are added with automatic aliases you can rename ab
                               f'<input type="hidden" name="action" value="invite-revoke">'
                               f'<input type="hidden" name="invite" value="{html.escape(record["id"])}">'
                               f'<input type="hidden" name="csrf_token" value="{html.escape(self._form_token("invite-revoke", session))}">'
-                              f'<button type="submit">Revoke</button></form>')
+                              f'<button type="submit" class="button-danger">Revoke</button></form>')
                 env = "live" if record["env"] == "production" else record["env"]
-                lines.append(f"<tr><td>{html.escape(record['label'] or '-')}</td><td>{html.escape(env)}</td>"
-                             f"<td>{html.escape(_format_time(record['created_at']) or '-')}</td>"
-                             f"<td>{html.escape(_format_time(record['expires_at']) or '-')}</td>"
-                             f"<td>{html.escape(record['status'])}</td>"
+                lines.append(f"<tr><td>{html.escape(record['label'] or '-')}</td><td>{_ui_badge(env)}</td>"
+                             f'<td class="date">{html.escape(_format_time(record["created_at"]) or "-")}</td>'
+                             f'<td class="date">{html.escape(_format_time(record["expires_at"]) or "-")}</td>'
+                             f"<td>{_ui_badge(record['status'])}</td>"
                              f"<td>{html.escape(', '.join(record['shops']))}</td><td>{action}</td></tr>")
-            parts.append("<table><thead><tr><th>Label</th><th>Env</th><th>Created (UTC)</th><th>Expires (UTC)</th>"
-                         "<th>Status</th><th>Shops</th><th></th></tr></thead><tbody>" + "".join(lines) + "</tbody></table>")
+            parts.append('<div class="table-scroll invites-history" role="region" aria-label="Invite history table" tabindex="0"><table><thead><tr><th>Label</th><th>Env</th><th>Created (UTC)</th><th>Expires (UTC)</th>'
+                         "<th>Status</th><th>Shops</th><th></th></tr></thead><tbody>" + "".join(lines) + "</tbody></table></div>")
+        parts.append("</section>")
         return "".join(parts)
 
     async def admin_shops(self, request: Request) -> Response:

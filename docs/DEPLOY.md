@@ -196,6 +196,29 @@ Use an invite when the person who can approve access (a main account or shop acc
 - The invite becomes used once at least one shop is saved. If every shop fails, the link stays usable until it expires. Active links can be revoked; at most 20 can be active.
 - Invites are stored in `<data-dir>/invites.json` (`0600`) as SHA-256 hashes plus label, environment and timestamps, so they survive restarts.
 
+### Dashboard API (optional)
+
+A small server-to-server JSON API lets your own operator dashboard list shops and create or revoke invite links, so the passphrase-protected admin page is not needed for day-to-day onboarding. It is off unless a token is configured.
+
+| Variable | Purpose |
+| --- | --- |
+| `SHOPEE_MCP_DASHBOARD_TOKEN` | Bearer token for `/api/dashboard/*` (32-512 printable ASCII characters, no spaces). Generate one with `openssl rand -hex 32`. |
+| `SHOPEE_MCP_DASHBOARD_TOKEN_FILE` | Alternative: path to a file that holds the token (set only one of the two). |
+| `SHOPEE_MCP_DASHBOARD_URL` | Optional https page invitees are sent back to, e.g. `https://dashboard.example.com/settings/shopee`. |
+
+Put them in the same root-owned `0600` environment file as the partner credentials. Call the API only from your dashboard's backend; never expose the token to a browser.
+
+| Request | Response |
+| --- | --- |
+| `GET /api/dashboard/shops` | `{"shops": [{alias, env, shop_id, shop_name, status, auth_expires_at, refresh_expires_at, source}], "invites": [{id, label, env, status, created_at, expires_at, aliases}], "environments": ["live", "sandbox"]}` |
+| `POST /api/dashboard/invites` with `{"label"?, "ttl"?: "1h"\|"24h"\|"3d"\|"7d", "env"?: "live"\|"sandbox", "return_to_dashboard"?: bool}` | `201 {id, url, expires_at, env, label}`; `url` is the invite link (shown once) |
+| `DELETE /api/dashboard/invites/<id>` | `{"ok": true}` or `404` |
+
+- Header `Authorization: Bearer <token>`. MCP OAuth and static tokens are not accepted here. Missing or wrong token: `401 {"error": "unauthorized"}`; repeated failures are throttled (`429`). Without a configured token every route answers `404`.
+- `env` defaults to `live` when live partner credentials are configured; `ttl` defaults to `24h`. Validation errors return `400 {"error": "..."}`. Times are Unix epoch seconds.
+- With `return_to_dashboard: true` (requires `SHOPEE_MCP_DASHBOARD_URL`), the invitee's final page shows a *Back to dashboard* link to `<SHOPEE_MCP_DASHBOARD_URL>?shopee=connected&added=<n>&failed=<m>`, or `?shopee=failed` when nothing could be connected. Use it when the person approving is at your dashboard; leave it off for invites sent to outside sellers.
+- Example: `curl -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d '{"label":"store-a owner","return_to_dashboard":true}' https://mcp.example.com/api/dashboard/invites`
+
 ## Operator commands
 
 ```bash
@@ -223,4 +246,5 @@ In a container, prefix with `docker exec -it shopee-mcp` (or use the platform sh
 | `GET/POST /admin/shops` | Operator shop onboarding (passphrase, CSRF, throttling) |
 | `GET/POST /invite/<token>` | Invite landing page for a remote seller (throttled; single use) |
 | `GET /callback` | Completes an invite or "Add shop" flow; otherwise a static page for the CLI flow |
+| `GET /api/dashboard/shops`, `POST /api/dashboard/invites`, `DELETE /api/dashboard/invites/<id>` | Optional dashboard API (own bearer token; see [Dashboard API](#dashboard-api-optional)) |
 | `GET /healthz` | Liveness check |

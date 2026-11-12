@@ -272,12 +272,21 @@ class InviteStore:
         return {"id": record["id"], "label": record.get("label") or "", "env": record.get("env") or "",
                 "created_at": record.get("created_at"), "expires_at": record.get("expires_at"),
                 "used_at": record.get("used_at"), "status": InviteStore.status(record, now),
-                "shops": list(record.get("shops") or [])}
+                "shops": list(record.get("shops") or []),
+                "return_to_dashboard": record.get("return_to_dashboard") is True,
+                "names": {alias: name for alias, name in (record.get("names") or {}).items()
+                          if isinstance(alias, str) and (name is None or isinstance(name, str))}
+                if isinstance(record.get("names"), dict) else {}}
 
     # --------------------------------------------------------- operations
 
-    def create(self, env: str, ttl: str, label: str | None) -> tuple[str, dict]:
-        """Returns ``(token, public record)``. The token is shown once and never stored."""
+    def create(self, env: str, ttl: str, label: str | None, *,
+               return_to_dashboard: bool = False) -> tuple[str, dict]:
+        """Returns ``(token, public record)``. The token is shown once and never stored.
+
+        ``return_to_dashboard`` marks invites created by the operator's dashboard:
+        their final page links back to the configured dashboard URL.
+        """
         if ttl not in INVITE_TTLS:
             raise ShopAdminError("Unsupported invite lifetime.")
         label = _clean_label(label)
@@ -290,6 +299,8 @@ class InviteStore:
             record = {"id": secrets.token_hex(8), "hash": _hash_token(token), "label": label, "env": env,
                       "created_at": int(now), "expires_at": int(now) + INVITE_TTLS[ttl], "used_at": None,
                       "revoked_at": None, "shops": []}
+            if return_to_dashboard:
+                record["return_to_dashboard"] = True
             records.insert(0, record)
             self._save(records[:MAX_INVITE_RECORDS])
             return token, self._public(record, now)
@@ -347,12 +358,15 @@ class InviteStore:
             return True
         return self._update(invite_id, change)
 
-    def mark_used(self, invite_id: str, aliases: list[str]) -> bool:
+    def mark_used(self, invite_id: str, aliases: list[str],
+                  names: Mapping[str, str | None] | None = None) -> bool:
         def change(record, now):
             if record.get("used_at") or record.get("revoked_at"):
                 return False
             record["used_at"] = int(now)
             record["shops"] = sorted(set(aliases))
+            if names:
+                record["names"] = {alias: names.get(alias) for alias in record["shops"]}
             return True
         return self._update(invite_id, change)
 
@@ -365,6 +379,9 @@ class InviteStore:
                 shops = record.get("shops") or []
                 if old in shops:
                     record["shops"] = sorted({new if alias == old else alias for alias in shops})
+                    names = record.get("names")
+                    if isinstance(names, dict) and old in names:
+                        names[new] = names.pop(old)
                     changed = True
             if changed:
                 self._save(self._prune(records, now))
@@ -424,6 +441,24 @@ class ShopManager:
                 snapshot = CredentialStore(path).snapshot("shop")
                 expires = min(snapshot.auth_expires_at, snapshot.refresh_token_expires_at)
                 row.update(env=snapshot.env, expires_at=expires, status="expired" if expires <= now else "ok")
+            except (CredentialError, OSError):
+                pass
+            rows.append(row)
+        return rows
+
+    def describe_detailed(self) -> list[dict]:
+        """Like :meth:`describe` plus the Shopee shop id and both expiry stamps. Never paths or secrets."""
+        now = int(self.clock())
+        rows = []
+        for alias, path in sorted(self.read_config().items()):
+            row = {"alias": alias, "env": "unknown", "shop_id": None, "status": "invalid",
+                   "auth_expires_at": None, "refresh_expires_at": None}
+            try:
+                snapshot = CredentialStore(path).snapshot("shop")
+                expires = min(snapshot.auth_expires_at, snapshot.refresh_token_expires_at)
+                row.update(env=snapshot.env, shop_id=snapshot.subject_id, auth_expires_at=snapshot.auth_expires_at,
+                           refresh_expires_at=snapshot.refresh_token_expires_at,
+                           status="expired" if expires <= now else "ok")
             except (CredentialError, OSError):
                 pass
             rows.append(row)

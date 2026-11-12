@@ -24,6 +24,10 @@ proxy networks (``--trusted-proxy``).
   session-bound state (``shop_id`` callbacks add the shop; ``main_account_id``
   callbacks open a shop picker); otherwise a static page for the
   ``shopee-auth`` CLI flow.
+* ``/api/dashboard/*`` - optional server-to-server JSON API for an operator
+  dashboard (list shops and invites, create and revoke invite links). Enabled
+  only when ``SHOPEE_MCP_DASHBOARD_TOKEN`` (or ``..._FILE``) is set; it uses
+  its own bearer token, never an MCP/OAuth token.
 * ``GET /healthz``.
 
 No token, code, passphrase or query string is ever logged.
@@ -78,12 +82,21 @@ ADMIN_PATH = "/admin/shops"
 ADMIN_SESSION_TTL = 3600
 INVITE_PATH_PREFIX = "/invite/"
 INVITE_COOKIE_TTL = 3600
+DASHBOARD_API_PREFIX = "/api/dashboard"
+DASHBOARD_SHOPS_PATH = DASHBOARD_API_PREFIX + "/shops"
+DASHBOARD_INVITES_PATH = DASHBOARD_API_PREFIX + "/invites"
+DASHBOARD_TOKEN_MIN_LENGTH = 32
+# The dashboard API speaks "live"/"sandbox"; shop files and invites use "production"/"sandbox".
+_DASHBOARD_ENV_NAMES = {"production": "live", "sandbox": "sandbox"}
+_DASHBOARD_ENV_INPUT = {"live": "production", "production": "production", "sandbox": "sandbox"}
+_DASHBOARD_TTLS = {"1h": "1h", "24h": "24h", "3d": "72h", "72h": "72h", "7d": "7d"}
 RETIRED_REGISTRY_GRACE = 300  # seconds an old shop registry stays open for in-flight requests
 _INSTRUCTIONS = ("Read-only Shopee seller tools for operator-configured shops. Call list_connected_shops first and "
                  "pass an explicit shop alias. One Shopee API call fetches one data page; use returned cursors.")# At most two scrypt verifications at once (CPU/memory bound); extra attempts get 429 immediately.
 PASSPHRASE_LIMITER = anyio.CapacityLimiter(2)
 _LOGGED_PATHS = frozenset({
     "/mcp", "/mcp/", "/authorize", "/token", "/register", "/revoke", "/callback", "/healthz", ADMIN_PATH,
+    DASHBOARD_SHOPS_PATH, DASHBOARD_INVITES_PATH,
     "/.well-known/oauth-protected-resource", "/.well-known/oauth-protected-resource/mcp",
     "/.well-known/oauth-authorization-server", "/.well-known/oauth-authorization-server/mcp",
 })
@@ -113,6 +126,49 @@ def normalize_public_url(value: str) -> str:
     if parts.path not in ("", "/") or parts.query or parts.fragment or parts.username or parts.password:
         raise ValueError("public URL must not contain a path, query, fragment or credentials")
     return urlunsplit((parts.scheme, parts.netloc.lower(), "", "", ""))
+
+
+def normalize_dashboard_url(value: str) -> str:
+    """Absolute https URL of the operator dashboard page (path allowed; no query, fragment or credentials)."""
+    try:
+        parts = urlsplit(value.strip())
+        host = (parts.hostname or "").lower()
+        parts.port  # noqa: B018 - validates the port
+    except (ValueError, AttributeError):
+        raise ValueError("SHOPEE_MCP_DASHBOARD_URL is invalid") from None
+    if parts.scheme != "https" or not host:
+        raise ValueError("SHOPEE_MCP_DASHBOARD_URL must be an absolute https URL")
+    if parts.query or parts.fragment or parts.username or parts.password or not value.strip().isprintable():
+        raise ValueError("SHOPEE_MCP_DASHBOARD_URL must not contain a query, fragment or credentials")
+    return urlunsplit(("https", parts.netloc.lower(), parts.path or "/", "", ""))
+
+
+def dashboard_settings_from_env(environ: dict | None = None) -> tuple[str | None, str | None]:
+    """``(token, url)`` for the dashboard API from the environment; ``(None, None)`` when not configured.
+
+    ``SHOPEE_MCP_DASHBOARD_TOKEN`` (or ``SHOPEE_MCP_DASHBOARD_TOKEN_FILE``, a file
+    holding the token) enables ``/api/dashboard/*``. ``SHOPEE_MCP_DASHBOARD_URL``
+    is the page invitees are sent back to after an invite created with
+    ``return_to_dashboard``.
+    """
+    environ = os.environ if environ is None else environ
+    token = environ.get("SHOPEE_MCP_DASHBOARD_TOKEN") or None
+    token_file = environ.get("SHOPEE_MCP_DASHBOARD_TOKEN_FILE") or None
+    if token and token_file:
+        raise ValueError("set only one of SHOPEE_MCP_DASHBOARD_TOKEN and SHOPEE_MCP_DASHBOARD_TOKEN_FILE")
+    if token_file:
+        try:
+            token = Path(token_file).read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            raise ValueError("SHOPEE_MCP_DASHBOARD_TOKEN_FILE could not be read") from None
+    if token is not None:
+        token = token.strip()
+        if (len(token) < DASHBOARD_TOKEN_MIN_LENGTH or len(token) > 512 or not token.isascii()
+                or not token.isprintable() or " " in token):
+            raise ValueError(f"the dashboard token must be {DASHBOARD_TOKEN_MIN_LENGTH}-512 printable ASCII "
+                             "characters without spaces")
+    url = environ.get("SHOPEE_MCP_DASHBOARD_URL") or None
+    return token, normalize_dashboard_url(url) if url else None
 
 
 class Throttle:
@@ -199,7 +255,7 @@ def _html_page(title: str, body: str, status: int = 200, headers: dict | None = 
                layout: str = "default", header_actions: str = "") -> HTMLResponse:
     css = """
 :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#243247;background:#f5f7fa;font-synthesis:none}
-*{box-sizing:border-box}body{margin:0;font-size:14px;line-height:1.55}a{color:#bd4b18}h1,h2,h3,p{margin:0}h1{font-size:25px;line-height:1.25;letter-spacing:-.6px;color:#182438}h2{font-size:18px;letter-spacing:-.3px;color:#182438}h3{font-size:15px}.shell{width:min(100% - 48px,720px);margin:48px auto}.dashboard .shell{width:min(100% - 48px,1180px);margin:32px auto}.page-header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:10px;font-weight:750;color:#bf531f;margin-bottom:9px}.subtitle,.muted{color:#748094}.subtitle{margin-top:7px}.content{min-width:0}.content>p,.content>form,.content>.box{margin-bottom:18px}.card,.box{background:#fff;border:1px solid #e2e7ee;border-radius:14px;padding:24px;min-width:0}.card{margin-bottom:22px}.card-heading{margin-bottom:20px}.card-heading p{color:#748094;margin-top:5px}.card-accent{border-top:3px solid #e97942}.card p+p{margin-top:10px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 24px}.stat{background:#fff;border:1px solid #e2e7ee;border-radius:12px;padding:19px 22px}.stat-label{font-size:12px;color:#748094}.stat-value{display:block;font-size:30px;letter-spacing:-1px;font-weight:650;margin-top:3px;color:#182438}.stat-note{font-size:11px;color:#929aab}.table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}.table-scroll table{min-width:780px}table{border-collapse:collapse;width:100%;font-size:12px}th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:#8590a0;font-weight:650;background:#f8fafc}td,th{padding:13px 12px;border-bottom:1px solid #edf0f4;vertical-align:middle}tbody tr:last-child td{border-bottom:0}.date{white-space:nowrap;font-size:11px;color:#748094}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9em;overflow-wrap:anywhere;word-break:break-word}table code{font-weight:650;color:#33445b}.badge{display:inline-flex;align-items:center;border-radius:5px;padding:3px 8px;font-size:10px;font-weight:650;background:#eef2f6;color:#69778c;white-space:nowrap}.badge-live,.badge-ok,.badge-active{background:#ecf7f0;color:#2f7c50}.badge-sandbox{background:#fff4e7;color:#ad6d22}.badge-expired,.badge-revoked{background:#f4f5f7;color:#8b95a4}.badge-error{background:#fff0ee;color:#b34a3e}form{margin:0}label{display:inline-block;font-size:12px;font-weight:600;color:#4f5e72;margin-bottom:6px}input,select,button{font:inherit}input:not([type=hidden]),select{border:1px solid #dbe1e9;border-radius:7px;background:#fff;color:#33445b;max-width:100%;padding:10px 11px;min-height:40px}input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:3px solid #fbd9c5;outline-offset:2px;border-color:#e97942}input[type=password]{width:100%}button{border:1px solid transparent;border-radius:7px;background:#df6a32;color:#fff;font-weight:600;font-size:12px;padding:10px 15px;min-height:40px;cursor:pointer;white-space:nowrap}button:hover{background:#c95c29}.button-secondary{background:#fff;color:#56647a;border-color:#dde3eb}.button-secondary:hover{background:#f6f8fb}.button-danger{background:transparent;color:#a66863;padding:7px 10px;font-weight:500}.button-danger:hover{background:#fff0ee;color:#a43f35}.inline-form{display:flex;align-items:center;gap:7px}.inline-form input{width:122px;min-height:32px;padding:6px 8px;font-size:12px}.inline-form button{min-height:32px;padding:6px 10px;font-size:11px}.form-grid{display:grid;grid-template-columns:minmax(180px,2fr) minmax(120px,1fr) minmax(120px,1fr) auto;gap:15px;align-items:end;margin:18px 0}.form-grid p{min-width:0}.form-grid p+p{margin:0}.form-grid input,.form-grid select{width:100%}.help{font-size:12px;color:#7c8797;max-width:760px;margin:12px 0 20px;overflow-wrap:anywhere}.notice{background:#edf7f0;border:1px solid #d7ebdd;border-radius:8px;padding:11px 15px;margin-bottom:20px;color:#39774f}.err{color:#ab3b31;background:#fff1ee;border-radius:8px;padding:12px 15px;margin-bottom:18px}.empty{padding:28px;text-align:center;color:#8590a0;background:#f9fafc;border-radius:8px}.invite-url{border:1px solid #f2cfb9;background:#fff9f4;border-radius:9px;padding:15px;margin:16px 0;overflow-wrap:anywhere}.invite-url p{font-size:12px;color:#976243}.invite-url code{display:block;margin-top:9px;color:#ab4a1b}.invites-history{margin-top:22px}.section-details>summary{cursor:pointer;font-size:16px;font-weight:650;color:#46556a}.section-details[open]>summary{margin-bottom:20px}.section-details>h2{display:none}.login .shell{max-width:430px;margin:clamp(30px,12vh,110px) auto}.login .page-header{display:block;margin-bottom:28px}.login .content{padding:27px;background:#fff;border:1px solid #e2e7ee;border-radius:14px}.login form p+p{margin-top:20px}.login form button{width:100%}.login .content>form{margin:0}.login .subtitle{max-width:360px}.default .content form p{margin-bottom:15px}.default .content label{margin-top:5px}.default .content input{max-width:100%}hr{border:0;border-top:1px solid #e2e7ee;margin:24px 0}
+*{box-sizing:border-box}body{margin:0;font-size:14px;line-height:1.55}a{color:#bd4b18}h1,h2,h3,p{margin:0}h1{font-size:25px;line-height:1.25;letter-spacing:-.6px;color:#182438}h2{font-size:18px;letter-spacing:-.3px;color:#182438}h3{font-size:15px}.shell{width:min(100% - 48px,720px);margin:48px auto}.dashboard .shell{width:min(100% - 48px,1180px);margin:32px auto}.page-header{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:26px}.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:10px;font-weight:750;color:#bf531f;margin-bottom:9px}.subtitle,.muted{color:#748094}.subtitle{margin-top:7px}.content{min-width:0}.content>p,.content>form,.content>.box{margin-bottom:18px}.card,.box{background:#fff;border:1px solid #e2e7ee;border-radius:14px;padding:24px;min-width:0}.card{margin-bottom:22px}.card-heading{margin-bottom:20px}.card-heading p{color:#748094;margin-top:5px}.card-accent{border-top:3px solid #e97942}.card p+p{margin-top:10px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:0 0 24px}.stat{background:#fff;border:1px solid #e2e7ee;border-radius:12px;padding:19px 22px}.stat-label{font-size:12px;color:#748094}.stat-value{display:block;font-size:30px;letter-spacing:-1px;font-weight:650;margin-top:3px;color:#182438}.stat-note{font-size:11px;color:#929aab}.table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}.table-scroll table{min-width:780px}table{border-collapse:collapse;width:100%;font-size:12px}th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:#8590a0;font-weight:650;background:#f8fafc}td,th{padding:13px 12px;border-bottom:1px solid #edf0f4;vertical-align:middle}tbody tr:last-child td{border-bottom:0}.date{white-space:nowrap;font-size:11px;color:#748094}code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9em;overflow-wrap:anywhere;word-break:break-word}table code{font-weight:650;color:#33445b}.badge{display:inline-flex;align-items:center;border-radius:5px;padding:3px 8px;font-size:10px;font-weight:650;background:#eef2f6;color:#69778c;white-space:nowrap}.badge-live,.badge-ok,.badge-active{background:#ecf7f0;color:#2f7c50}.badge-sandbox{background:#fff4e7;color:#ad6d22}.badge-expired,.badge-revoked{background:#f4f5f7;color:#8b95a4}.badge-error{background:#fff0ee;color:#b34a3e}form{margin:0}label{display:inline-block;font-size:12px;font-weight:600;color:#4f5e72;margin-bottom:6px}input,select,button{font:inherit}input:not([type=hidden]),select{border:1px solid #dbe1e9;border-radius:7px;background:#fff;color:#33445b;max-width:100%;padding:10px 11px;min-height:40px}input:focus,select:focus,button:focus-visible,summary:focus-visible{outline:3px solid #fbd9c5;outline-offset:2px;border-color:#e97942}input[type=password]{width:100%}button{border:1px solid transparent;border-radius:7px;background:#df6a32;color:#fff;font-weight:600;font-size:12px;padding:10px 15px;min-height:40px;cursor:pointer;white-space:nowrap}button:hover{background:#c95c29}.button-secondary{background:#fff;color:#56647a;border-color:#dde3eb}.button-secondary:hover{background:#f6f8fb}.button-danger{background:transparent;color:#a66863;padding:7px 10px;font-weight:500}.button-danger:hover{background:#fff0ee;color:#a43f35}.inline-form{display:flex;align-items:center;gap:7px}.inline-form input{width:122px;min-height:32px;padding:6px 8px;font-size:12px}.inline-form button{min-height:32px;padding:6px 10px;font-size:11px}.form-grid{display:grid;grid-template-columns:minmax(180px,2fr) minmax(120px,1fr) minmax(120px,1fr) auto;gap:15px;align-items:end;margin:18px 0}.form-grid p{min-width:0}.form-grid p+p{margin:0}.form-grid input,.form-grid select{width:100%}.help{font-size:12px;color:#7c8797;max-width:760px;margin:12px 0 20px;overflow-wrap:anywhere}.notice{background:#edf7f0;border:1px solid #d7ebdd;border-radius:8px;padding:11px 15px;margin-bottom:20px;color:#39774f}.err{color:#ab3b31;background:#fff1ee;border-radius:8px;padding:12px 15px;margin-bottom:18px}.empty{padding:28px;text-align:center;color:#8590a0;background:#f9fafc;border-radius:8px}.invite-url{border:1px solid #f2cfb9;background:#fff9f4;border-radius:9px;padding:15px;margin:16px 0;overflow-wrap:anywhere}.invite-url p{font-size:12px;color:#976243}.invite-url code{display:block;margin-top:9px;color:#ab4a1b}.invites-history{margin-top:22px}.section-details>summary{cursor:pointer;font-size:16px;font-weight:650;color:#46556a}.section-details[open]>summary{margin-bottom:20px}.section-details>h2{display:none}.login .shell{max-width:430px;margin:clamp(30px,12vh,110px) auto}.login .page-header{display:block;margin-bottom:28px}.login .content{padding:27px;background:#fff;border:1px solid #e2e7ee;border-radius:14px}.login form p+p{margin-top:20px}.login form button{width:100%}.login .content>form{margin:0}.login .subtitle{max-width:360px}.default .content form p{margin-bottom:15px}.default .content label{margin-top:5px}.default .content input{max-width:100%}.button-link{display:inline-block;border-radius:7px;background:#df6a32;color:#fff;font-weight:600;font-size:13px;padding:11px 18px;text-decoration:none}.button-link:hover{background:#c95c29}.dashboard-back{margin-top:22px}hr{border:0;border-top:1px solid #e2e7ee;margin:24px 0}
 @media(max-width:760px){.shell,.dashboard .shell{width:calc(100% - 32px);margin:24px auto}.page-header{align-items:flex-start;gap:12px}h1{font-size:22px}.subtitle{font-size:12px}.stats{gap:10px}.stat{padding:15px}.stat-value{font-size:26px}.card{padding:18px}.form-grid{grid-template-columns:1fr 1fr}.form-grid p:first-of-type{grid-column:1/-1}.form-grid .form-submit{grid-column:1/-1}.form-submit button{width:100%}.login .shell{margin-top:36px}}
 @media(max-width:440px){.stats{grid-template-columns:1fr}.stat{display:grid;grid-template-columns:1fr auto;align-items:center;padding:12px 16px}.stat-value{grid-column:2;grid-row:1/3;font-size:27px;margin:0}.stat-note{grid-column:1}.form-grid{grid-template-columns:1fr}.form-grid p{grid-column:1!important}.page-header .button-secondary{padding:8px 11px;min-height:35px}.card{padding:17px}.login .content{padding:22px}.eyebrow{font-size:9px}.card-heading{margin-bottom:15px}}
 """
@@ -225,7 +281,8 @@ class ShopeeHTTPApp:
     def __init__(self, service: Any, store: AuthStore, public_url: str, *, client_ip_header: str | None = None,
                  clock: Callable[[], float] = time.time, register_limit_per_hour: int = 60,
                  trusted_proxies: list[str] | None = None, shop_manager: Any = None,
-                 service_factory: Callable[[dict], tuple[Any, Any]] | None = None, registry: Any = None):
+                 service_factory: Callable[[dict], tuple[Any, Any]] | None = None, registry: Any = None,
+                 dashboard_token: str | None = None, dashboard_url: str | None = None):
         # ``service`` is swapped atomically when shops are added/removed; the MCP
         # server below always dispatches to the current one, so no restart is needed.
         self.service = service
@@ -251,6 +308,10 @@ class ShopeeHTTPApp:
                                           window=3600, clock=clock)
         # Every /invite request counts (valid or not): 20 per client and 300 overall per 15 minutes.
         self.invite_throttle = Throttle(per_key=20, global_limit=300, window=900, clock=clock)
+        # Dashboard API: only the sha256 of its token is kept; failed attempts are throttled.
+        self._dashboard_token_hash = hash_secret(dashboard_token) if dashboard_token else None
+        self.dashboard_url = normalize_dashboard_url(dashboard_url) if dashboard_url else None
+        self.dashboard_throttle = Throttle(per_key=10, global_limit=100, window=900, clock=clock)
         self._used_nonces: dict[str, float] = {}  # single-use consent form tokens, until expiry
         # Stateless + JSON: every POST is self-contained (no Mcp-Session-Id, no
         # long-lived SSE), so proxies with idle timeouts and server restarts
@@ -276,6 +337,9 @@ class ShopeeHTTPApp:
             Route("/callback", self.callback, methods=["GET"]),
             Route(ADMIN_PATH, self.admin_shops, methods=["GET", "POST"]),
             Route(INVITE_PATH_PREFIX + "{token}", self.invite, methods=["GET", "POST"]),
+            Route(DASHBOARD_SHOPS_PATH, self.dashboard_shops, methods=["GET"]),
+            Route(DASHBOARD_INVITES_PATH, self.dashboard_create_invite, methods=["POST"]),
+            Route(DASHBOARD_INVITES_PATH + "/{invite_id}", self.dashboard_revoke_invite, methods=["DELETE"]),
             Route("/healthz", self.healthz, methods=["GET"]),
         ]
         self.web = RequestBodyLimitMiddleware(Starlette(routes=routes, lifespan=lambda _app: self.run()), MAX_FORM_BYTES)
@@ -340,6 +404,8 @@ class ShopeeHTTPApp:
                 path = scope["path"]
             elif scope["path"].startswith(INVITE_PATH_PREFIX):
                 path = INVITE_PATH_PREFIX + "(redacted)"   # the path carries the invite token
+            elif scope["path"].startswith(DASHBOARD_INVITES_PATH + "/"):
+                path = DASHBOARD_INVITES_PATH + "/(id)"
             else:
                 path = "(other)"
             logger.info("%s %s %s %.0fms", scope.get("method", "-"), path, status_holder["status"],
@@ -837,8 +903,8 @@ Nothing is changed in your shop.</p>
                     shop_id=shop_ids[0] if shop_ids else None, main_account_id=accounts[0] if accounts else None))
             except ShopAdminError as error:
                 logger.warning("invite authorization failed (details suppressed)")
-                return _html_page("Authorization failed", f'<p class="err">{html.escape(str(error))}</p>' + retry,
-                                  status=error.status)
+                return _html_page("Authorization failed", f'<p class="err">{html.escape(str(error))}</p>' + retry
+                                  + self._dashboard_back(record, failed=True), status=error.status)
             if result.added:
                 try:
                     try:
@@ -853,11 +919,12 @@ Nothing is changed in your shop.</p>
                         await anyio.to_thread.run_sync(self.shop_manager.delete_env_file, path)
                     if isinstance(error, ShopAdminError):
                         return _html_page("Authorization failed", "<p class=\"err\">The shops could not be saved. "
-                                          "Nothing was changed.</p>" + retry, status=error.status)
+                                          "Nothing was changed.</p>" + retry + self._dashboard_back(record, failed=True),
+                                          status=error.status)
                     raise
                 try:
                     await anyio.to_thread.run_sync(self.shop_manager.invites.mark_used, pending.invite,
-                                                   sorted(result.added))
+                                                   sorted(result.added), dict(result.names))
                 except ShopAdminError:
                     logger.error("invite could not be marked as used; revoke it in the admin page")
         logger.info("invite onboarding: %d shop(s) added, %d already connected, %d failed",
@@ -882,7 +949,18 @@ Nothing is changed in your shop.</p>
         title = "Shops connected" if result.added else ("Nothing new to connect" if nothing_new
                                                         else "Authorization failed")
         status = 200 if result.added or nothing_new else 502
+        parts.append(self._dashboard_back(record, failed=status != 200, added=len(result.added),
+                                          not_added=result.failed))
         return _html_page(title, "".join(parts), status=status)
+
+    def _dashboard_back(self, record: dict | None, *, failed: bool, added: int = 0, not_added: int = 0) -> str:
+        """Link back to the dashboard, only for invites created with ``return_to_dashboard``."""
+        if not self.dashboard_url or not record or record.get("return_to_dashboard") is not True:
+            return ""
+        query = ({"shopee": "failed"} if failed else
+                 {"shopee": "connected", "added": str(added), "failed": str(not_added)})
+        url = self.dashboard_url + "?" + urlencode(query)
+        return (f'<p class="dashboard-back"><a class="button-link" href="{html.escape(url)}">Back to dashboard</a></p>')
 
     async def _rename_shop(self, old: str, new: str) -> None:
         from .shop_admin import ShopAdminError
@@ -1325,6 +1403,126 @@ admin passphrase; their shops are added with automatic aliases you can rename ab
         except ShopAdminError as error:
             return await self._admin_dashboard(request, session, error=str(error), status=error.status)
 
+    # ------------------------------------------------------ dashboard API
+
+    def _dashboard_json(self, body: dict, status: int = 200, headers: dict | None = None) -> Response:
+        return JSONResponse(body, status_code=status, headers={**_NO_STORE, **(headers or {})})
+
+    def _dashboard_guard(self, request: Request) -> Response | None:
+        """``None`` when the request carries the dashboard token; otherwise the error response.
+
+        Only ``SHOPEE_MCP_DASHBOARD_TOKEN`` is accepted: MCP OAuth and static
+        tokens live in the auth store and are never consulted here.
+        """
+        if self._dashboard_token_hash is None:
+            return self._dashboard_json({"error": "not_found"}, 404)
+        key = self.client_ip(request.scope)
+        wait = self.dashboard_throttle.retry_after(key)
+        if wait:
+            return self._dashboard_json({"error": "too_many_requests"}, 429, {"Retry-After": str(wait)})
+        stamp = self.dashboard_throttle.failure(key)
+        scheme, _, presented = (request.headers.get("authorization") or "").partition(" ")
+        presented = presented.strip()
+        if (scheme.lower() != "bearer" or not presented or len(presented) > 512
+                or not hmac.compare_digest(hash_secret(presented), self._dashboard_token_hash)):
+            logger.warning("dashboard API request rejected: invalid token")
+            return self._dashboard_json({"error": "unauthorized"}, 401)
+        self.dashboard_throttle.success(key, stamp)
+        if self.shop_manager is None:
+            return self._dashboard_json({"error": "shop administration is disabled on this server"}, 503)
+        return None
+
+    def _dashboard_envs(self) -> list[str]:
+        available = self.shop_manager.available_environments()
+        return [_DASHBOARD_ENV_NAMES[env] for env in ("production", "sandbox") if env in available]
+
+    async def dashboard_shops(self, request: Request) -> Response:
+        from .credentials import CredentialError
+        from .shop_admin import ShopAdminError
+        denied = self._dashboard_guard(request)
+        if denied is not None:
+            return denied
+        try:
+            rows = await anyio.to_thread.run_sync(self.shop_manager.describe_detailed)
+        except (CredentialError, ShopAdminError, OSError):
+            return self._dashboard_json({"error": "The shops file could not be read."}, 500)
+        try:
+            invites = await anyio.to_thread.run_sync(self.shop_manager.invites.list_invites)
+        except ShopAdminError:
+            return self._dashboard_json({"error": "The invites file could not be read."}, 500)
+        sources: dict[str, str] = {}
+        names: dict[str, str | None] = {}
+        for record in reversed(invites):   # oldest first, so the newest invite wins
+            for alias in record["shops"]:
+                sources[alias] = record["label"] or None
+                if alias in record["names"]:
+                    names[alias] = record["names"][alias]
+        shops = [{"alias": row["alias"], "env": _DASHBOARD_ENV_NAMES.get(row["env"], row["env"]),
+                  "shop_id": row["shop_id"], "shop_name": names.get(row["alias"]), "status": row["status"],
+                  "auth_expires_at": row["auth_expires_at"], "refresh_expires_at": row["refresh_expires_at"],
+                  "source": sources.get(row["alias"])} for row in rows]
+        listed = [{"id": record["id"], "label": record["label"],
+                   "env": _DASHBOARD_ENV_NAMES.get(record["env"], record["env"]), "status": record["status"],
+                   "created_at": record["created_at"], "expires_at": record["expires_at"],
+                   "aliases": list(record["shops"])} for record in invites]
+        return self._dashboard_json({"shops": shops, "invites": listed, "environments": self._dashboard_envs()})
+
+    async def dashboard_create_invite(self, request: Request) -> Response:
+        from .shop_admin import DEFAULT_INVITE_TTL, ShopAdminError
+        denied = self._dashboard_guard(request)
+        if denied is not None:
+            return denied
+        try:
+            body = json.loads((await request.body()) or b"{}")
+        except (ValueError, UnicodeDecodeError):
+            return self._dashboard_json({"error": "The request body must be a JSON object."}, 400)
+        if not isinstance(body, dict):
+            return self._dashboard_json({"error": "The request body must be a JSON object."}, 400)
+        label, ttl = body.get("label"), body.get("ttl", DEFAULT_INVITE_TTL)
+        env, back = body.get("env"), body.get("return_to_dashboard", False)
+        if label is not None and not isinstance(label, str):
+            return self._dashboard_json({"error": "label must be a string."}, 400)
+        if not isinstance(ttl, str) or ttl not in _DASHBOARD_TTLS:
+            return self._dashboard_json({"error": "ttl must be one of 1h, 24h, 3d, 7d."}, 400)
+        if not isinstance(back, bool):
+            return self._dashboard_json({"error": "return_to_dashboard must be a boolean."}, 400)
+        if back and not self.dashboard_url:
+            return self._dashboard_json({"error": "SHOPEE_MCP_DASHBOARD_URL is not configured on the server."}, 400)
+        available = self.shop_manager.available_environments()
+        if env is None:
+            internal = next((name for name in ("production", "sandbox") if name in available), None)
+            if internal is None:
+                return self._dashboard_json({"error": "No Shopee environment is configured on the server."}, 400)
+        elif not isinstance(env, str) or _DASHBOARD_ENV_INPUT.get(env) not in available:
+            return self._dashboard_json({"error": "That environment is not configured on the server."}, 400)
+        else:
+            internal = _DASHBOARD_ENV_INPUT[env]
+        try:
+            token, record = await anyio.to_thread.run_sync(functools.partial(
+                self.shop_manager.invites.create, internal, _DASHBOARD_TTLS[ttl], label,
+                return_to_dashboard=back))
+        except ShopAdminError as error:
+            return self._dashboard_json({"error": str(error)}, error.status)
+        logger.info("invite link created through the dashboard API")
+        return self._dashboard_json({"id": record["id"], "url": self.issuer + INVITE_PATH_PREFIX + token,
+                                     "expires_at": record["expires_at"], "env": _DASHBOARD_ENV_NAMES[internal],
+                                     "label": record["label"]}, 201)
+
+    async def dashboard_revoke_invite(self, request: Request) -> Response:
+        from .shop_admin import ShopAdminError
+        denied = self._dashboard_guard(request)
+        if denied is not None:
+            return denied
+        try:
+            revoked = await anyio.to_thread.run_sync(self.shop_manager.invites.revoke,
+                                                     request.path_params.get("invite_id"))
+        except ShopAdminError as error:
+            return self._dashboard_json({"error": str(error)}, error.status)
+        if not revoked:
+            return self._dashboard_json({"error": "not_found"}, 404)
+        logger.info("invite link revoked through the dashboard API")
+        return self._dashboard_json({"ok": True})
+
     async def healthz(self, request: Request) -> Response:
         return JSONResponse({"status": "ok", "version": __version__}, headers={"Cache-Control": "no-store"})
 
@@ -1507,9 +1705,12 @@ async def _serve(args) -> int:
             print("note: /admin/shops can list and remove shops, but adding needs an https public URL and "
                   "SHOPEE_PARTNER_ID/SHOPEE_PARTNER_KEY in the environment", file=sys.stderr)
     service, registry = factory(load_shop_config(args.shops_file))
+    dashboard_token, dashboard_url = dashboard_settings_from_env()
+    if dashboard_token and shop_manager is None:
+        print("note: the dashboard API is enabled but --disable-admin is set; it will answer 503", file=sys.stderr)
     app = create_app(service, store, args.public_url, client_ip_header=args.client_ip_header,
                      trusted_proxies=args.trusted_proxy, shop_manager=shop_manager, service_factory=factory,
-                     registry=registry)
+                     registry=registry, dashboard_token=dashboard_token, dashboard_url=dashboard_url)
     try:
         config = uvicorn.Config(app, host=args.host, port=args.port, lifespan="on", access_log=False,
                                 proxy_headers=False, server_header=False, log_level=args.log_level,
@@ -1553,6 +1754,7 @@ def run(args) -> int:
         return run_connect(args)
     if args.command == "serve":
         validate_serve_args(args)
+        dashboard_settings_from_env()   # fail fast on an invalid dashboard token or URL
         logging.basicConfig(level=getattr(logging, args.log_level.upper()), format="%(asctime)s %(levelname)s %(name)s: %(message)s")
         # httpx logs full request URLs (including Shopee access tokens) at INFO.
         logging.getLogger("httpx").setLevel(logging.WARNING)

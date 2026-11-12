@@ -98,6 +98,8 @@ Open `https://<your-host>/admin/shops` and sign in with the operator passphrase.
 - **Remove shop**: removes the alias and deletes its stored tokens.
 - The list shows alias, environment, authorization expiry and, for shops added through an invite, the invite label. To renew, remove the shop and add it again before the authorization expires.
 
+Have your own operator dashboard? Set `SHOPEE_MCP_DASHBOARD_TOKEN` (and optionally `SHOPEE_MCP_DASHBOARD_URL`) to enable a small JSON API that lists shops and creates or revokes invite links, with an optional *Back to dashboard* link at the end of the invite flow. See [docs/DEPLOY.md](docs/DEPLOY.md#dashboard-api-optional).
+
 The `shopee-auth` CLI flow and a hand-written shops file still work; see [docs/DEPLOY.md](docs/DEPLOY.md#shops-file-and-cli-authorization).
 
 ## Connecting clients
